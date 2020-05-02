@@ -23,7 +23,8 @@ void showMenu(){
         showCredits();
         showMenu();
     } else if (menu == 4) {
-        exit;
+        std::cout << "Bye Bye" << std::endl;
+        exit(0);
     } else {
         throw std::range_error("Please select an item from the list");
     }
