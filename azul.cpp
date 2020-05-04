@@ -46,19 +46,23 @@ void processArgs(int argc, char** argv, Args* args) {
    // First argument (index 0) - name of the program
 
    // Second args - random seed
-   if (argc >= 3) {
+   if (argc >= 2) {
 
       std::string seedSwitch(argv[1]);
       if (seedSwitch == "-s"){
+
           std::string strSeed(argv[2]);
           std::stringstream sstream(strSeed);
           sstream >> args->seed;
           
           args->haveSeed = true;
-      }
+
+        }
 
     } else {
-      args->haveSeed = false;
-      args->seed = 0;
+
+        args->haveSeed = false;
+        args->seed = 0;
+        
     }
 }
