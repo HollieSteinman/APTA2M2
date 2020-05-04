@@ -7,16 +7,16 @@ class Tile {
 public:
 
     //  Constructor / Destructor
-    Tile(std::string pattern);
+    Tile(char colour);
     ~Tile();
 
     //  Returns pattern of tile
-    std::string getPattern();
+    char getColour();
 
 
 private:
 
-    std::string pattern;
+    char colour;
 
 };
 

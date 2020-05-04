@@ -3,28 +3,29 @@
 
 #include "Player.h"
 #include "Tile.h"
+#include "Factory.h"
 
 class GameManager {
 public:
 
     //  Constructor / Destructor
-    GameManager(Player* players[]);
+    GameManager();
     ~GameManager();
 
-    //  Generates a new game - e.g. tiles, piles and blank player boards
+    //  Generates a new game - e.g. tiles, piles and players
     void generateGame();
 
     //  Returns the current round - used for saving
     void getRound();
 
-    //  Plays a round through each player
+    //  Plays a round through each player and adds to mosaic at end of round
     void playRound();
 
-    //  Returns tiles of one pattern from a pile and discards the rest
-    Tile* getPile(int pile, std::string pattern);
+    //  Returns tiles of one colour from a factory and discards the rest
+    Tile* getFactory(int pile, char colour);
 
-    //  Returns tiles of one pattern from discard pile and places rest in bag
-    Tile* getDiscarded(std::string pattern);
+    //  Returns tiles of one colour from center factory and places rest in bag
+    Tile* getCenter(char colour);
 
     //  Generates piles from the bag
     void generatePiles();
@@ -38,13 +39,17 @@ public:
     //  Menu for each player - option to save and quit
     void menu();
 
+    //  Displays all factories for players
+    void displayFactories();
+
 private:
 
     int round;
-    Player* players;
-    Tile** piles;
-    Tile* discarded;
+    Player* players[2];
+    Factory* factories[5];
+    Factory center;
     Tile* bag;
+    Tile* lid;
 
 };
 

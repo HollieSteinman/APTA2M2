@@ -23,7 +23,7 @@ public:
     //  Sets queue of tiles
     void setQueue(Tile* tiles, int row);
 
-    //  Adds queue to "active" board
+    //  Adds queue to mosaic
     void addQueue();
 
     //  Returns board to save
@@ -32,12 +32,15 @@ public:
     //  Sets board from a save
     void setBoard(std::string** board);
 
+    //  Displays the board
+    void displayBoard();
+
 private:
 
     int points;
     Tile** queue;
-    Tile** tiles;
-    Tile* discard;
+    Tile** mosaic;
+    Tile* broken;
 
 };
 
