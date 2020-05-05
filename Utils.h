@@ -5,8 +5,22 @@
 #include <string>
 #include <exception>
 
+#define BAG_SIZE 100
+
+/**
+ *  Displays the game menu
+ */
 void showMenu();
+
+/**
+ *  Loads a game from a save file or
+ *  makes a new game
+ */
 void loadGame();
+
+/**
+ *  Display programmers
+ */
 void showCredits();
 
 

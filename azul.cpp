@@ -13,6 +13,7 @@
 #include <stdexcept>
 
 #include "Utils.h"
+#include "Bag.h"
 
 class Args {
 public:
@@ -30,7 +31,15 @@ int main(int argc, char** argv){
     try {
 
         // basic main methods should be included in this try block
-        showMenu();
+        // showMenu();
+        TilePtr holder;
+        Bag* gameBag = new Bag(10);
+        std::cout << gameBag->size() << std::endl;
+        for (int i = 0; i < 100; ++i){
+            holder = gameBag->serveTile();
+            std::cout << holder->getColour() << " " << gameBag->size() << std::endl;
+            // delete holder;
+        }
 
     } catch (std::exception& e){
 
