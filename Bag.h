@@ -29,6 +29,7 @@ public:
  */
 class Bag {
     public:
+
         /**
          * Constructor / Deconstructor
          */
@@ -40,18 +41,22 @@ class Bag {
          * tiles in the bag
          */
         int size();
+
         /**
          * Draw a tile from the bag
          */
         TilePtr serveTile();
+
         /**
          * Used to reload the bag
          */
         void addTile(TilePtr tile);
+
         /**
          * Used for destructive purposes
          */
         void removeTile(int index);
+        
         /**
          * Empty the bag
          */

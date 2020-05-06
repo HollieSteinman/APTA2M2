@@ -1,7 +1,11 @@
 #ifndef FACTORY_H
 #define FACTORY_H
 
-#include "Tile.h"
+#include <vector>
+// chosen because factory has a small size
+// and cost is negligible
+
+#include "Bag.h"
 
 class Factory {
 
@@ -11,18 +15,38 @@ public:
     Factory();
     ~Factory();
 
-    //  Returns tiles in the factory
-    Tile* getTiles();
+    /**
+     * Get all the tiles of a colour
+     * returns an array of tiles
+     */
+    TilePtr getTiles(Colour colour, int count);
 
-    //  Sets the tiles in the factory
-    void setTiles(Tile* tiles);
+    /**
+     * Return the number of tiles in the 
+     * factory
+     */
+    int size();
 
-    //  Returns if the factory is empty or not
+    /**
+     * Load the factory from the bag
+     * This is used by the 5 factories
+     */
+    void loadFactory(Bag* bag);
+
+    /**
+     * Add tile to factory, this is used
+     * by the center factory
+     */
+    void addTile(TilePtr tile);
+
+    /**
+     * Returns true if factory is empty
+     */
     bool isEmpty();
 
 private:
 
-    Tile* tiles;
+    std::vector<TilePtr> factory;
 
 };
 
