@@ -22,6 +22,7 @@ public:
 };
 
 void processArgs(int argc, char** argv, Args* args);
+void testBag(Bag* gameBag, TilePtr holder);
 
 int main(int argc, char** argv){
     // Process the args
@@ -31,20 +32,16 @@ int main(int argc, char** argv){
     try {
 
         // basic main methods should be included in this try block
-        // showMenu();
-        TilePtr holder;
-        Bag* gameBag = new Bag(10);
-        std::cout << gameBag->size() << std::endl;
-        for (int i = 0; i < 100; ++i){
-            holder = gameBag->serveTile();
-            std::cout << holder->getColour() << " " << gameBag->size() << std::endl;
-            // delete holder;
-        }
+        showMenu();
+        // TilePtr holder = new Tile(R);
+        // Bag* gameBag = new Bag(10);
+        // To test the bag do not show the menu
+        // testBag(gameBag, holder);
 
     } catch (std::exception& e){
 
-         std::cerr << "Exception Caught: " << e.what() << std::endl;
-         showMenu();
+        std::cerr << "Exception Caught: " << e.what() << std::endl;
+        showMenu();
 
     }
 
@@ -74,4 +71,16 @@ void processArgs(int argc, char** argv, Args* args) {
         args->seed = 0;
         
     }
+}
+
+void testBag(Bag* gameBag, TilePtr holder){
+    std::cout << gameBag->size() << std::endl;
+        for (int i = 0; i < 100; ++i){
+        // while (gameBag->serveTile() != nullptr){
+            holder = gameBag->serveTile();
+            if (holder != nullptr){
+                std::cout << holder->getColour() << " " << gameBag->size() << std::endl;
+                // delete holder;
+            }
+        }
 }

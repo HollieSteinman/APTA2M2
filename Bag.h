@@ -48,6 +48,14 @@ class Bag {
          * Used to reload the bag
          */
         void addTile(TilePtr tile);
+        /**
+         * Used for destructive purposes
+         */
+        void removeTile(int index);
+        /**
+         * Empty the bag
+         */
+        void clear();
 
     private:
         LinkedList* bag;

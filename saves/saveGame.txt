@@ -1,0 +1,34 @@
+// Player 1 Data
+$
+type:player
+id:1
+name:SomeName
+points:123
+mosaic:EEEEE,EEEEE,EEEEE,EEEEE,EEEEE
+pile:E,EE,EEE,EEEE,EEEEE
+broken:EEEEEEEE
+starter:1
+#
+
+// Player 2 Data
+$
+type:player
+id:2
+name:SomeName
+points:123
+mosaic:EEEEE,EEEEE,EEEEE,EEEEE,EEEEE
+pile:E,EE,EEE,EEEE,EEEEE
+broken:EEEEEEEE
+starter:0
+#
+
+// Factory Data
+$
+type:factory
+f1:EEEE
+f2:EEEE
+f3:EEEE
+f4:EEEE
+f5:EEEE
+mid:EEEEEEE
+#

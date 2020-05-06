@@ -90,11 +90,36 @@ void Bag::addTile(TilePtr tile){
     }
 }
 
+void Bag::removeTile(int index) {
+    // create node
+    Node* previous = bag->head;
+    int counter = 0;
+    if (bag->head == nullptr){
+        std::cout << "The bag is empty" << std::endl;
+    } else {
+        while (counter < index - 1){
+            ++counter;
+            previous = previous->next;
+        }
+        Node* holder = previous->next->next;
+        delete previous->next;
+        // previous->next = nullptr;
+        previous->next = holder;
+    }
+}
+
+void Bag::clear() {
+    for (int i = 0; i < 100; ++i){
+        removeTile(i);// remove function handles error checking
+    }
+}
+
 TilePtr Bag::serveTile(){
     Node* current = bag->head;
     TilePtr toReturn = nullptr;
 
-    if (current->next == nullptr){
+    if (current == nullptr){
+        //throw std::out_of_range("Cannot serve from an empty list");
         std::cout << "Bag is empty" << std::endl;
     } else {
         toReturn = current->value;
