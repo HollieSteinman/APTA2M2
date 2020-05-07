@@ -1,9 +1,10 @@
 #ifndef FACTORY_H
 #define FACTORY_H
 
+#include <iostream>
 #include <vector>
 // chosen because factory has a small size
-// and cost is negligible
+// and overall cost is negligible
 
 #include "Bag.h"
 
@@ -11,7 +12,9 @@ class Factory {
 
 public:
 
-    //  Constructor / Destructor
+    /**
+     * Constructor / Deconstructor
+     */
     Factory();
     ~Factory();
 
@@ -19,7 +22,7 @@ public:
      * Get all the tiles of a colour
      * returns an array of tiles
      */
-    TilePtr getTiles(Colour colour, int count);
+    std::vector<TilePtr> getTiles(Colour colour, unsigned int count);
 
     /**
      * Return the number of tiles in the 
@@ -43,6 +46,16 @@ public:
      * Returns true if factory is empty
      */
     bool isEmpty();
+
+    /**
+     * Lists all members of the factory
+     */
+    void listFactory();
+
+    /**
+     * Factory Accessor
+     */
+    std::vector<TilePtr> getFactory();
 
 private:
 

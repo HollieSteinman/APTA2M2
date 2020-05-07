@@ -16,7 +16,7 @@ Colour Tile::getColour(){
 }
 
 char Tile::getChar(){
-    char toReturn = 'A';
+    char toReturn = '.';
 
     if (getColour() == F){
         toReturn = 'F';

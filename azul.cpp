@@ -14,6 +14,7 @@
 
 #include "Utils.h"
 #include "Bag.h"
+#include "Factory.h"
 
 class Args {
 public:
@@ -23,6 +24,7 @@ public:
 
 void processArgs(int argc, char** argv, Args* args);
 void testBag(Bag* gameBag, TilePtr holder);
+void testFactory(Bag* gameBag, Factory* factory01);
 
 int main(int argc, char** argv){
     // Process the args
@@ -35,8 +37,10 @@ int main(int argc, char** argv){
         showMenu();
         // TilePtr holder = new Tile(R);
         // Bag* gameBag = new Bag(10);
-        // To test the bag do not show the menu
+        // Factory* factory01 = new Factory();
+        // To run tests do not show the menu
         // testBag(gameBag, holder);
+        // testFactory(gameBag, factory01);
 
     } catch (std::exception& e){
 
@@ -83,4 +87,18 @@ void testBag(Bag* gameBag, TilePtr holder){
                 // delete holder;
             }
         }
+}
+
+void testFactory(Bag* gameBag, Factory* factory01){
+    factory01->loadFactory(gameBag);
+    factory01->listFactory();
+    Factory* center = new Factory();
+    // simulate player pile
+    std::vector<TilePtr> holder = factory01->getTiles(R, 1);
+    int i = 0;
+    while (i != factory01->size()){
+        center->addTile(factory01->getFactory()[i]);
+        ++i;
+    }
+    center->listFactory();
 }
