@@ -28,7 +28,7 @@ public:
 void processArgs(int argc, char** argv, Args* args);
 void testBag(Bag* gameBag, TilePtr holder);
 void testFactory(Bag* gameBag, Factory* factory01);
-void testBoard(Board* board);
+void testBoard(Board* board, Bag* gameBag, Factory* factory);
 
 int main(int argc, char** argv){
     // Process the args
@@ -42,12 +42,12 @@ int main(int argc, char** argv){
         // TilePtr holder = new Tile(R);
         Bag* gameBag = new Bag(10);
         Factory* factory01 = new Factory();
-        // Board* board = new Board();
+        Board* board = new Board();
         // Pile* playp = new Pile();
         // To run tests do not show the menu
         // testBag(gameBag, holder);
-        testFactory(gameBag, factory01);
-        // testBoard(board);
+        // testFactory(gameBag, factory01);
+        testBoard(board, gameBag, factory01);
         // factory01->loadFactory(gameBag);
         // playp->loadPile(factory01, R, 1);
         // board->getPile()->loadPile(factory01, R, 1);
@@ -118,6 +118,14 @@ void testFactory(Bag* gameBag, Factory* factory01){
     std::cout << std::endl;
 }
 
-void testBoard(Board* board){
+void testBoard(Board* board, Bag* gameBag, Factory* factory){
+    factory->loadFactory(gameBag);
+    factory->listFactory();
+    board->displayBoard();
+    board->getPile()->loadPile(factory, 3, U, 2);
+    board->getPile()->loadPile(factory, 4, Y, 3);
+    board->getPile()->loadPile(factory, 5, U, 4);
+    board->getPile()->loadPile(factory, 2, Y, 3);
+    factory->listFactory();
     board->displayBoard();
 }

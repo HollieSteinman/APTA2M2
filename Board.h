@@ -59,6 +59,7 @@ class Board {
     private:
 
         Mos mosaic;
+        Mos puzzle;
         Pile* pile;
         int points;
 
