@@ -20,9 +20,10 @@ public:
 
     /**
      * Get all the tiles of a colour
-     * returns an array of tiles
+     * returns a vector of tiles
+     * remember to addtiles to center
      */
-    std::vector<TilePtr> getTiles(Colour colour, unsigned int count);
+    std::vector<TilePtr> getTiles(Colour colour);
 
     /**
      * Return the number of tiles in the 

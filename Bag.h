@@ -8,6 +8,7 @@
 #include "Tile.h"
 
 /**
+ * Create a Tile node and pointer
  * Used to move along the pointers
  */
 class Node {

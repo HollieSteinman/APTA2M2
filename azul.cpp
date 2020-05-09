@@ -15,6 +15,8 @@
 #include "Utils.h"
 #include "Bag.h"
 #include "Factory.h"
+#include "Board.h"
+
 
 class Args {
 public:
@@ -34,13 +36,16 @@ int main(int argc, char** argv){
     try {
 
         // basic main methods should be included in this try block
-        showMenu();
+        // showMenu();
         // TilePtr holder = new Tile(R);
         // Bag* gameBag = new Bag(10);
         // Factory* factory01 = new Factory();
+        Board* board = new Board();
         // To run tests do not show the menu
         // testBag(gameBag, holder);
         // testFactory(gameBag, factory01);
+        board->displayBoard();
+        
 
     } catch (std::exception& e){
 
@@ -94,7 +99,7 @@ void testFactory(Bag* gameBag, Factory* factory01){
     factory01->listFactory();
     Factory* center = new Factory();
     // simulate player pile
-    std::vector<TilePtr> holder = factory01->getTiles(R, 1);
+    std::vector<TilePtr> holder = factory01->getTiles(R);
     int i = 0;
     while (i != factory01->size()){
         center->addTile(factory01->getFactory()[i]);

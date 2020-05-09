@@ -9,7 +9,8 @@ enum Colour {
     Y,
     B,
     L,
-    U
+    U,
+    E
 };
 
 class Tile {
@@ -20,6 +21,11 @@ public:
      */
     Tile(Colour colour);
     ~Tile();
+
+    /**
+     * Default constructor to prevent segfault
+     */
+    Tile();
 
     /**
      * Returns tile pattern as 

@@ -5,7 +5,7 @@ all: azul
 clean:
 	rm -f azul *.o
 
-azul: azul.o Utils.o Tile.o Bag.o Factory.o
+azul: azul.o Utils.o Tile.o Bag.o Factory.o Pile.o Board.o
 	g++ -Wall -Werror -std=c++14 -g -O -o $@ $^
 
 %.o: %.cpp

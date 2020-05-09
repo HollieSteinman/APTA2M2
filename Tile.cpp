@@ -11,8 +11,12 @@ Tile::~Tile(){
 
 }
 
+Tile::Tile(){
+    colour = E;
+}
+
 Colour Tile::getColour(){
-    return this->colour;
+    return colour;
 }
 
 char Tile::getChar(){

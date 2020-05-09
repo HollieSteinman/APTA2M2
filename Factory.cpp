@@ -12,15 +12,15 @@ Factory::~Factory(){
 
 }
 
-std::vector<TilePtr> Factory::getTiles(Colour colour, unsigned int count){
+std::vector<TilePtr> Factory::getTiles(Colour colour){
     if(isEmpty()){
         throw std::out_of_range("The factory is empty");
     } else {
         // declare return variables
         std::vector<TilePtr> toReturn;
         // loop through factory and add tiles
-        // of the selected color to holder
-        for(int i = 0; i < size(); ++i){
+        // of the selected color to return var
+        for(int i = 0; i < 4; ++i){
             if (factory[i]->getColour() == colour){
                 toReturn.push_back(factory[i]);
                 // cplusplus.com
@@ -28,7 +28,7 @@ std::vector<TilePtr> Factory::getTiles(Colour colour, unsigned int count){
             }
             // if the selcted color is not in the factory
             // or does not match the amount selected
-            if (toReturn.empty() || toReturn.size() != count){
+            if (toReturn.empty()){
                 throw std::logic_error("Your selection cannot play");
             }
         }
