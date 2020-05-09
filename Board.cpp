@@ -6,12 +6,15 @@ Board::Board(){
     // instantiate the score
     points = 0;
 
+    // instantiate the pile
+    pile = new Pile();
+
     // instantiate the mosaic
     for(int i = 0; i != 5; ++i){
-            for(int j = 0; j != 5; ++j){
-                mosaic[i][j] = new Tile();
-            }
+        for(int j = 0; j != 5; ++j){
+            mosaic[i][j] = new Tile();
         }
+    }
 
 }
 
@@ -73,4 +76,8 @@ void Board::displayBoard(){
         std::cout << mosaic[4][i]->getChar();
     }
     std::cout << std::endl;
+}
+
+Pile* Board::getPile(){
+    return pile;
 }

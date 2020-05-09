@@ -51,6 +51,11 @@ class Board {
          */
         void displayBoard();
 
+        /**
+         * Test Pile Accessor
+         */
+        Pile* getPile();
+
     private:
 
         Mos mosaic;

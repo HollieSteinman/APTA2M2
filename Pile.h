@@ -16,8 +16,9 @@ class Pile {
 
         /**
          * Load the pile from the factory
+         * 
          */
-        void loadPile(Factory* factory, Colour colour, unsigned int row);
+        void loadPile(Factory* factory, unsigned int fRow, Colour colour, unsigned int pRow);
 
         /**
          * Load the broken pile
@@ -48,6 +49,11 @@ class Pile {
          * Return Pile 5
          */
         std::vector<TilePtr> getP5();
+
+        /**
+         * Return broken tiles
+         */
+        std::vector<TilePtr> getBroken();
 
     private:
         std::vector<TilePtr> p1;

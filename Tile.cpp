@@ -8,7 +8,7 @@ Tile::Tile(Colour colour):
 }
 
 Tile::~Tile(){
-
+    
 }
 
 Tile::Tile(){
@@ -37,4 +37,8 @@ char Tile::getChar(){
     }
 
     return toReturn;
+}
+
+void Tile::clear(){
+    colour = E;
 }

@@ -21,15 +21,9 @@ public:
     /**
      * Get all the tiles of a colour
      * returns a vector of tiles
-     * remember to addtiles to center
+     * auto adds tiles to center
      */
-    std::vector<TilePtr> getTiles(Colour colour);
-
-    /**
-     * Return the number of tiles in the 
-     * factory
-     */
-    int size();
+    std::vector<TilePtr> getTiles(Colour colour, int line);
 
     /**
      * Load the factory from the bag
@@ -38,29 +32,39 @@ public:
     void loadFactory(Bag* bag);
 
     /**
-     * Add tile to factory, this is used
-     * by the center factory
-     */
-    void addTile(TilePtr tile);
-
-    /**
      * Returns true if factory is empty
      */
     bool isEmpty();
 
     /**
-     * Lists all members of the factory
+     * Lists all members of the factoryvoid Tile::clear(){
+    colour = E;
+}
      */
     void listFactory();
 
     /**
      * Factory Accessor
+     * use 0 to access the center
+     * factory
      */
-    std::vector<TilePtr> getFactory();
+    std::vector<TilePtr> getFactory(int line);
+
+    /**
+     * Was the center picked
+     */
+    bool pCenter();
 
 private:
 
-    std::vector<TilePtr> factory;
+    // std::vector<TilePtr> factory;
+    std::vector<TilePtr> fa1;
+    std::vector<TilePtr> fa2;
+    std::vector<TilePtr> fa3;
+    std::vector<TilePtr> fa4;
+    std::vector<TilePtr> fa5;
+    std::vector<TilePtr> center;
+    bool pickCenter;
 
 };
 
