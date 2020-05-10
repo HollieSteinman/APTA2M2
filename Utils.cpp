@@ -1,3 +1,5 @@
+#include <fstream>
+#include <sstream>
 #include "Utils.h"
 
 void showMenu(){
@@ -18,7 +20,7 @@ void showMenu(){
     if (menu == 1) {
         // playGame();
     } else if (menu == 2) {
-        // loadGame();
+        loadGame();
     } else if (menu == 3) {
         showCredits();
         showMenu();
@@ -46,4 +48,62 @@ void showCredits(){
     std::cout << "Student ID: s3784783 " << std::endl;
     std::cout << "Email: s784783@student.rmit.edu.au " << std::endl;
     std::cout << "-------------------------------------------" << std::endl;
+}
+
+void loadGame() {
+    // filename for testing, change later
+    std::string filename = "saveGame.txt";
+    std::string dir = "saves/";
+
+    // opens file
+    std::ifstream saveFile (dir.append(filename));
+
+    // checks if file exists
+    if(saveFile.good()) {
+        std::string input;
+        while(!saveFile.eof()) {
+            // searches for the start of an object
+            getline(saveFile, input, '$');
+            // until the end of the object
+            getline(saveFile, input, '#');
+
+            // creates a stringstream of each object
+            std::stringstream ss(input);
+            std::string line, type;
+            // first line is blank - fix
+            getline(ss, line);
+            // gets first line (object type)
+            getline(ss, line);
+
+            // creates stringstream for the first line
+            std::stringstream ls(line);
+
+            // gets label
+            getline(ls, type, ':');
+            // gets type
+            getline(ls, type, ':');
+
+            if(type == "player") {
+                //TODO load player
+            } else if (type == "factory") {
+                std::string facNo, facContent;
+                while(getline(ss, line)) {
+                    // WARNING - check if empty, last line is blank
+                    std::stringstream ls(line);
+
+                    // gets the factory number
+                    getline(ls, facNo, ':');
+                    std::cout << "Factory Number:" << facNo << std::endl;
+
+                    // gets the content of the factory
+                    getline(ls, facContent, ':');
+                    std::cout << "Factory Content:" << facContent << std::endl;
+                }
+            }
+        }
+
+    } else {
+        // Error handling
+    }
+
 }
