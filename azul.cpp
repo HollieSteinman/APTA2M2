@@ -119,6 +119,7 @@ void testFactory(Bag* gameBag, Factory* factory01){
 }
 
 void testBoard(Board* board, Bag* gameBag, Factory* factory){
+    // ge
     factory->loadFactory(gameBag);
     factory->listFactory();
     board->displayBoard();

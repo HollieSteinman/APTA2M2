@@ -52,7 +52,7 @@ class Board {
         void displayBoard();
 
         /**
-         * Test Pile Accessor
+         * Pile Accessor
          */
         Pile* getPile();
 

@@ -42,7 +42,10 @@ void Pile::loadPile(Factory* factory, unsigned int fRow, Colour colour, unsigned
     } else {
         // get the tiles from the factory row
         std::vector<TilePtr> holder = factory->getTiles(colour, fRow);
+        // variable to count empty spaces
         unsigned int counter = 0;
+        // variable to count number of tiles 
+        // selected from the factory
         unsigned int numTiles = holder.size();
         if ( pRow == 1){
             // get the number of empty spaces

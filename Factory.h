@@ -27,7 +27,8 @@ public:
 
     /**
      * Load the factory from the bag
-     * This is used by the 5 factories
+     * This is used by the all factories
+     * center factory is auto loaded
      */
     void loadFactory(Bag* bag);
 
@@ -37,9 +38,7 @@ public:
     bool isEmpty();
 
     /**
-     * Lists all members of the factoryvoid Tile::clear(){
-    colour = E;
-}
+     * Lists all members of the factory
      */
     void listFactory();
 
