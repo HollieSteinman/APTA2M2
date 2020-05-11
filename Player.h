@@ -7,11 +7,14 @@ class Player {
 public:
 
     //  Constructor / Destructor
-    Player(int id);
+    Player(int id, std::string name);
     ~Player();
 
     //  Returns player ID
     int getId();
+
+    //  Returns player name
+    std::string getName();
 
     //  Gets player's board
     Board getBoard();
@@ -22,6 +25,7 @@ public:
 private:
 
     int id;
+    std::string name;
     Board board;
 
 };
