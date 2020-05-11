@@ -30,7 +30,7 @@ public:
      * This is used by the all factories
      * center factory is auto loaded
      */
-    void loadFactories(Bag* bag);
+    void loadFactory(Bag* bag);
 
     /**
      * Loads a specific factory,

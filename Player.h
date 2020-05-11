@@ -1,17 +1,28 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#include <string>
+
 #include "Board.h"
 
 class Player {
 public:
 
-    //  Constructor / Destructor
+    /**
+     * Constructor / Deconstructor
+     */
     Player(int id, std::string name);
     ~Player();
 
-    //  Returns player ID
+    /**
+     * Returns player id
+     */
     int getId();
+
+    /**
+     * Returns player name
+     */
+    std::string getName();
 
     /**
      * Returns player board
@@ -31,6 +42,7 @@ public:
 private:
 
     int id;
+    std::string name;
     Board* board;
     bool isStarter();
 

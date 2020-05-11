@@ -176,7 +176,7 @@ std::vector<TilePtr> Factory::getTiles(Colour colour, int line){
     }
 }
 
-void Factory::loadFactories(Bag* bag){
+void Factory::loadFactory(Bag* bag){
     // remember to check if bag is empty
     // as a fallback to runtime error 
     // trapping

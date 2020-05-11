@@ -15,8 +15,7 @@
 #include "Utils.h"
 #include "Bag.h"
 #include "Factory.h"
-#include "Board.h"
-#include "Pile.h"
+#include "Mosaic.h"
 
 
 class Args {
@@ -28,7 +27,7 @@ public:
 void processArgs(int argc, char** argv, Args* args);
 void testBag(Bag* gameBag, TilePtr holder);
 void testFactory(Bag* gameBag, Factory* factory01);
-void testBoard(Board* board, Bag* gameBag, Factory* factory);
+void testMosaic(Mosaic* mosaic, Bag* gameBag, Factory* factory);
 
 int main(int argc, char** argv){
     // Process the args
@@ -42,12 +41,12 @@ int main(int argc, char** argv){
         // TilePtr holder = new Tile(R);
         Bag* gameBag = new Bag(10);
         Factory* factory01 = new Factory();
-        Board* board = new Board();
+        Mosaic* mosaic = new Mosaic();
         // Pile* playp = new Pile();
         // To run tests do not show the menu
         // testBag(gameBag, holder);
         // testFactory(gameBag, factory01);
-        testBoard(board, gameBag, factory01);
+        testMosaic(mosaic, gameBag, factory01);
         // factory01->loadFactory(gameBag);
         // playp->loadPile(factory01, R, 1);
         // board->getPile()->loadPile(factory01, R, 1);
@@ -118,18 +117,26 @@ void testFactory(Bag* gameBag, Factory* factory01){
     std::cout << std::endl;
 }
 
-void testBoard(Board* board, Bag* gameBag, Factory* factory){
+void testMosaic(Mosaic* mosaic, Bag* gameBag, Factory* factory){
     // ge
     factory->loadFactory(gameBag);
     factory->listFactory();
-    board->displayBoard();
-    board->displayPuzzle();
-    board->getPile()->loadPile(factory, 3, U, 2);
-    board->getPile()->loadPile(factory, 4, Y, 3);
-    board->getPile()->loadPile(factory, 5, U, 4);
-    board->getPile()->loadPile(factory, 2, Y, 3);
-    board->getPile()->loadPile(factory, 0, Y, 5);
-    board->getPile()->loadPile(factory, 0, R, 1);
+    mosaic->displayMosaic();
+    mosaic->displayPuzzle();
+    mosaic->loadPile(factory, 3, U, 2);
+    mosaic->loadPile(factory, 4, Y, 3);
+    mosaic->loadPile(factory, 5, U, 4);
+    mosaic->loadPile(factory, 2, Y, 3);
+    mosaic->loadPile(factory, 0, Y, 5);
+    mosaic->loadPile(factory, 0, R, 1);
+    // use this to test error trap
+    // mosaic->loadPile(factory, 1, R, 4);
     factory->listFactory();
-    board->displayBoard();
+    mosaic->displayMosaic();
+    mosaic->score();
+    mosaic->displayMosaic();
+    for (unsigned int i = 0; i < mosaic->getToBox().size(); ++i){
+        std::cout << mosaic->getToBox().at(i)->getChar();
+    }
+    std::cout << std::endl;
 }
