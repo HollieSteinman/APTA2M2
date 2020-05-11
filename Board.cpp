@@ -10,9 +10,30 @@ Board::Board(){
     pile = new Pile();
 
     // instantiate the mosaic
-    for(int i = 0; i != 5; ++i){
-        for(int j = 0; j != 5; ++j){
+    for (int i = 0; i != 5; ++i){
+        for (int j = 0; j != 5; ++j){
             mosaic[i][j] = new Tile();
+        }
+    }
+
+    // instantiate the puzzle
+    for (int i = 0; i != 5; ++i){
+        for (int j = 0; j != 5; ++j){
+            if (i == j){
+                puzzle[i][j] = new Tile(Y);
+            }
+            if (j == (i + 1) || j == (i - 4)){
+                puzzle[i][j] = new Tile(B);
+            }
+            if (j == (i + 2) || j == (i - 3)){
+                puzzle[i][j] = new Tile(L);
+            }
+            if (j == (i + 3) || j == (i - 2)){
+                puzzle[i][j] = new Tile(R);
+            }
+            if (j == (i + 4) || j == (i - 1)){
+                puzzle[i][j] = new Tile(U);
+            }
         }
     }
 
@@ -87,4 +108,40 @@ void Board::displayBoard(){
 
 Pile* Board::getPile(){
     return pile;
+}
+
+void Board::displayPuzzle(){
+    // line 1
+    for (int i = 0; i < 5; ++i){
+        std::cout << puzzle[0][i]->getChar() << " ";
+    }
+    std::cout << std::endl;
+    // line 2
+    for (int i = 0; i < 5; ++i){
+        std::cout << puzzle[1][i]->getChar() << " ";
+    }
+    std::cout << std::endl;
+    // line 3
+    for (int i = 0; i < 5; ++i){
+        std::cout << puzzle[2][i]->getChar() << " ";
+    }
+    std::cout << std::endl;
+    // line 4
+    for (int i = 0; i < 5; ++i){
+        std::cout << puzzle[3][i]->getChar() << " ";
+    }
+    std::cout << std::endl;
+    // line 5
+    for (int i = 0; i < 5; ++i){
+        std::cout << puzzle[4][i]->getChar() << " ";
+    }
+    std::cout << std::endl;
+}
+
+void Board::score(){
+    for (unsigned int i = 0; i < pile->getP1().size(); ++i){
+        if (pile->getP1().at(i)->getColour() != E){
+            //
+        }
+    }
 }

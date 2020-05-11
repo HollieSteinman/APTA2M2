@@ -13,16 +13,26 @@ public:
     //  Returns player ID
     int getId();
 
-    //  Gets player's board
-    Board getBoard();
+    /**
+     * Returns player board
+     */
+    Board* getBoard();
 
     //  Sets player's board
     void setBoard(Board board);
 
+    /**
+     * Returns true if player 
+     * will start next round
+     */
+    bool toStart();
+
+
 private:
 
     int id;
-    Board board;
+    Board* board;
+    bool isStarter();
 
 };
 

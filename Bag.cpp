@@ -128,3 +128,20 @@ TilePtr Bag::serveTile(){
     }
     return toReturn;
 } 
+
+void Bag::reload(){
+    for (unsigned int i = 0; i < boxLid.size(); ++i){
+        addTile(boxLid[i]);
+    }
+    clearBox();
+}
+
+void Bag::putBox(std::vector<TilePtr> tiles){
+    for (unsigned int i = 0; i < tiles.size(); ++i){
+        boxLid.push_back(tiles[i]);
+    }
+}
+
+void Bag::clearBox(){
+    boxLid.clear();
+}

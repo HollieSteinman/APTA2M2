@@ -123,10 +123,13 @@ void testBoard(Board* board, Bag* gameBag, Factory* factory){
     factory->loadFactory(gameBag);
     factory->listFactory();
     board->displayBoard();
+    board->displayPuzzle();
     board->getPile()->loadPile(factory, 3, U, 2);
     board->getPile()->loadPile(factory, 4, Y, 3);
     board->getPile()->loadPile(factory, 5, U, 4);
     board->getPile()->loadPile(factory, 2, Y, 3);
+    board->getPile()->loadPile(factory, 0, Y, 5);
+    board->getPile()->loadPile(factory, 0, R, 1);
     factory->listFactory();
     board->displayBoard();
 }

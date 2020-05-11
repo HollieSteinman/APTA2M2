@@ -31,13 +31,18 @@ class Board {
         //  Sets board points
         void setPoints(int points);
 
-        //  Calculate score from board
-        void calculateScore();
+        /**
+         * Calculates score from board
+         * also sets the points scored
+         * also loads tiles to be put
+         * back in the box lid
+         */
+        void score();
 
         //  Sets queue of tiles
         void setQueue(Tile* tiles, int row);
 
-        //  Adds queue to mosaic
+        //  Adds queue to mosaicclass Player {};
         void addQueue();
 
         //  Returns board to save
@@ -56,12 +61,24 @@ class Board {
          */
         Pile* getPile();
 
+        /**
+         * Shows the puzzle to solve
+         */
+        void displayPuzzle();
+
+        /**
+         * Returns tiles to be put
+         * in the box lid
+         */
+        std::vector<TilePtr> getToBox();
+
     private:
 
         Mos mosaic;
         Mos puzzle;
         Pile* pile;
         int points;
+        std::vector<TilePtr> toBox;
 
 };
 

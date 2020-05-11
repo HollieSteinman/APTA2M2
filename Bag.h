@@ -4,6 +4,7 @@
 #include <string>
 #include <random>
 #include <iostream>
+#include <vector>
 
 #include "Tile.h"
 
@@ -63,8 +64,24 @@ class Bag {
          */
         void clear();
 
+        /**
+         * Reload the bag from the boxlid
+         */
+        void reload();
+
+        /**
+         * Put tiles in the boxLid
+         */
+        void putBox(std::vector<TilePtr> tiles);
+
+        /**
+         * Clear the boxlid at end of game
+         */
+        void clearBox();
+
     private:
         LinkedList* bag;
+        std::vector<TilePtr> boxLid;
 };
 
 

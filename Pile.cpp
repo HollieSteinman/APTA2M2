@@ -42,6 +42,13 @@ void Pile::loadPile(Factory* factory, unsigned int fRow, Colour colour, unsigned
     } else {
         // get the tiles from the factory row
         std::vector<TilePtr> holder = factory->getTiles(colour, fRow);
+        // check if the player that owns this pile  
+        // should play first next round
+        if (holder[0]->getColour() == F){
+            loadBroken(holder[0]);
+            holder.erase(holder.begin() + 0);
+            starter = true;
+        }
         // variable to count empty spaces
         unsigned int counter = 0;
         // variable to count number of tiles 
@@ -192,7 +199,15 @@ void Pile::loadPile(Factory* factory, unsigned int fRow, Colour colour, unsigned
 }
 
 void Pile::loadBroken(TilePtr tile){
-    broken.push_back(tile);
+    // Variable to ckeck once the first 
+    // empty space is reaches
+    int count = 0;
+    for (int i = 0; i < 7 && count != 1; ++i){
+        if (broken[i]->getColour() == E){
+            broken[i] = tile;
+            ++count;
+        }
+    }
 }
 
 std::vector<TilePtr> Pile::getP1(){
@@ -217,4 +232,8 @@ std::vector<TilePtr> Pile::getP5(){
 
 std::vector<TilePtr> Pile::getBroken(){
     return broken;
+}
+
+bool Pile::toStart(){
+    return starter;
 }

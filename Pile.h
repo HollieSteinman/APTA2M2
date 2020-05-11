@@ -55,6 +55,13 @@ class Pile {
          */
         std::vector<TilePtr> getBroken();
 
+        /**
+         * Returns true if F tile
+         * is picked from center factory
+         */
+        bool toStart();
+
+
     private:
         std::vector<TilePtr> p1;
         std::vector<TilePtr> p2;
@@ -62,6 +69,7 @@ class Pile {
         std::vector<TilePtr> p4;
         std::vector<TilePtr> p5;
         std::vector<TilePtr> broken;
+        bool starter;
 };
 
 #endif // PILE_H
