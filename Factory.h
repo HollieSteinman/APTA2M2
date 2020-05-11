@@ -30,7 +30,13 @@ public:
      * This is used by the all factories
      * center factory is auto loaded
      */
-    void loadFactory(Bag* bag);
+    void loadFactories(Bag* bag);
+
+    /**
+     * Loads a specific factory,
+     * used for loading save file
+     */
+    void loadFactory(int factoryNo, std::vector<TilePtr> factory);
 
     /**
      * Returns true if factory is empty

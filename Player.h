@@ -7,7 +7,7 @@ class Player {
 public:
 
     //  Constructor / Destructor
-    Player(int id);
+    Player(int id, std::string name);
     ~Player();
 
     //  Returns player ID

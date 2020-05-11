@@ -176,8 +176,8 @@ std::vector<TilePtr> Factory::getTiles(Colour colour, int line){
     }
 }
 
-void Factory::loadFactory(Bag* bag){
-    // remeber to check if bag is empty
+void Factory::loadFactories(Bag* bag){
+    // remember to check if bag is empty
     // as a fallback to runtime error 
     // trapping
     fa1.clear();
@@ -202,6 +202,23 @@ void Factory::loadFactory(Bag* bag){
     }
     center.clear();
     center.push_back(new Tile(F));
+}
+
+void Factory::loadFactory(int factoryNo, std::vector<TilePtr> factory) {
+    //TODO copy vector
+    if(factoryNo == 0) {
+        center = factory;
+    } else if (factoryNo == 1) {
+        fa1 = factory;
+    } else if (factoryNo == 2) {
+        fa2 = factory;
+    } else if (factoryNo == 3) {
+        fa3 = factory;
+    } else if (factoryNo == 4) {
+        fa4 = factory;
+    } else if (factoryNo == 5) {
+        fa5 = factory;
+    }
 }
 
 bool Factory::isEmpty(){

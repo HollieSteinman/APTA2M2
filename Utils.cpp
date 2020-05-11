@@ -1,6 +1,10 @@
 #include <fstream>
 #include <sstream>
+#include <vector>
 #include "Utils.h"
+#include "Tile.h"
+#include "Factory.h"
+#include "Player.h"
 
 void showMenu(){
     std::cout << "Welcome To Azul! " << std::endl;
@@ -51,8 +55,14 @@ void showCredits(){
 }
 
 void loadGame() {
+
+    std::cout << "Enter the filename from which load a game" << std::endl;
+    std::cout << "> ";
+
+    std::string filename;
+    std::cin >> filename;
+
     // filename for testing, change later
-    std::string filename = "saveGame.txt";
     std::string dir = "saves/";
 
     // opens file
@@ -84,26 +94,90 @@ void loadGame() {
             getline(ls, type, ':');
 
             if(type == "player") {
-                //TODO load player
+                std::string pId, pName, pPoints, pStarter, label;
+                int id, points, starter;
+                while(getline(ss, line)) {
+                    std::stringstream ls(line);
+
+                    getline(ls, label, ':');
+
+                    if(label == "id") {
+                        getline(ls, pId, ':');
+                        std::istringstream(pId) >> id;
+                    } else if (label == "name") {
+                        getline(ls, pName, ':');
+                    } else if (label == "points") {
+                        getline(ls, pPoints, ':');
+                        std::istringstream(pPoints) >> points;
+                    } else if (label == "mosaic") {
+                        //TODO implement mosaic load
+                    } else if (label == "pile") {
+                        //TODO implement pile load
+                    } else if (label == "broken") {
+                        //TODO implement broken load
+                    } else if (label == "starter") {
+                        getline(ls, pStarter, ':');
+                        std::istringstream(pPoints) >> starter;
+                    }
+                }
+
+                // Player player = new Player(id, pName);
+
             } else if (type == "factory") {
-                std::string facNo, facContent;
+                Factory factory;
+                std::string facStr, facContent;
                 while(getline(ss, line)) {
                     // WARNING - check if empty, last line is blank
                     std::stringstream ls(line);
 
                     // gets the factory number
-                    getline(ls, facNo, ':');
-                    std::cout << "Factory Number:" << facNo << std::endl;
+                    getline(ls, facStr, ':');
 
+                    int facNo;
+                    if (facStr == "mid") {
+                        facNo = 0;
+                    } else {
+                        std::istringstream(facStr.substr(
+                                facStr.length() - 1)) >> facNo;
+                    }
                     // gets the content of the factory
                     getline(ls, facContent, ':');
-                    std::cout << "Factory Content:" << facContent << std::endl;
+
+                    std::vector<TilePtr> fac;
+
+                    //TODO check if empty
+                    for (char &c : facContent) {
+                        //TODO check referencing
+                        if (c == 'F') {
+                            TilePtr tile = new Tile(F);
+                            fac.push_back(tile);
+                        } else if (c == 'R') {
+                            TilePtr tile = new Tile(R);
+                            fac.push_back(tile);
+                        } else if (c == 'Y') {
+                            TilePtr tile = new Tile(Y);
+                            fac.push_back(tile);
+                        } else if (c == 'B') {
+                            TilePtr tile = new Tile(B);
+                            fac.push_back(tile);
+                        } else if (c == 'L') {
+                            TilePtr tile = new Tile(L);
+                            fac.push_back(tile);
+                        } else if (c == 'U') {
+                            TilePtr tile = new Tile(U);
+                            fac.push_back(tile);
+                        }
+                    }
+
+                    factory.loadFactory(facNo, fac);
+                    fac.clear();
                 }
             }
         }
 
     } else {
-        // Error handling
+        std::cout << "File not found, returning to menu." << std::endl;
+        showMenu();
     }
 
 }
