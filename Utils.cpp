@@ -2,8 +2,6 @@
 #include <sstream>
 #include <vector>
 #include "Utils.h"
-#include "Tile.h"
-#include "Factory.h"
 #include "Player.h"
 
 void showMenu(){
@@ -34,6 +32,24 @@ void showMenu(){
     } else {
         throw std::range_error("Please select an item from the list");
     }
+
+}
+
+void playGame(){
+    // setup required files
+    // Bag* gameBag = new Bag(20);
+    // Factory* factory = new Factory();
+    // Player* player1 = new Player(1, "James");
+    // Player* player2 = new Player(2, "John");
+
+    // try {
+
+
+    // } catch (std::exception& e){
+    //     // recover from last save
+    //     std::cerr << "Exception Caught: " << e.what() << std::endl;
+    // }
+
 
 }
 

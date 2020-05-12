@@ -6,7 +6,7 @@ Player::Player(int id, std::string name):
     id(id),
     name(name)
 {
-    board = new Board();
+    mosaic = new Mosaic();
 }
 
 Player::~Player(){
@@ -21,10 +21,14 @@ std::string Player::getName(){
     return name;
 }
 
-Board* Player::getBoard(){
-    return board;
+Mosaic* Player::getMosaic(){
+    return mosaic;
 }
 
 bool Player::toStart(){
-    return board->getPile()->toStart();
+    return mosaic->toStart();
+}
+
+void Player::playTurn(Factory* factory,unsigned int fRow, Colour colour,unsigned int pRow){
+    mosaic->loadPile(factory, fRow, colour, pRow);
 }

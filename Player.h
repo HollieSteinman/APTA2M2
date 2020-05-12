@@ -3,7 +3,7 @@
 
 #include <string>
 
-#include "Board.h"
+#include "Mosaic.h"
 
 class Player {
 public:
@@ -27,10 +27,7 @@ public:
     /**
      * Returns player board
      */
-    Board* getBoard();
-
-    //  Sets player's board
-    void setBoard(Board board);
+    Mosaic* getMosaic();
 
     /**
      * Returns true if player 
@@ -38,12 +35,17 @@ public:
      */
     bool toStart();
 
+    /**
+     * Play a turn
+     */
+    void playTurn(Factory* factory,unsigned int fRow, Colour colour,unsigned int pRow);
+
 
 private:
 
     int id;
     std::string name;
-    Board* board;
+    Mosaic* mosaic;
     bool isStarter();
 
 };

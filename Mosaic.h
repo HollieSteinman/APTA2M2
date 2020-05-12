@@ -48,11 +48,6 @@ class Mosaic {
         void displayMosaic();
 
         /**
-         * Shows the puzzle to solve
-         */
-        void displayPuzzle();
-
-        /**
          * Calculates score from board
          * also sets the points scored
          * also loads tiles to be put
@@ -72,6 +67,12 @@ class Mosaic {
          */
         void clearToBox();
 
+        /**
+         * Returns true if a mosaic
+         * row is filled
+         */
+        bool isGameover();
+
 
     private:
         std::vector<TilePtr> p1;
@@ -85,6 +86,7 @@ class Mosaic {
         Mos mosaic;
         Mos puzzle;
         int points;
+        bool gameover;
 };
 
 #endif // MOSIAC_H

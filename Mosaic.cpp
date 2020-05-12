@@ -27,6 +27,12 @@ Mosaic::Mosaic(){
     // instantiate the score
     points = 0;
 
+    // instantiate the starter variable
+    starter = false;
+
+    // instantiate the gameover variable
+    gameover = false;
+
     // instantiate the mosaic
     for (int i = 0; i != 5; ++i){
         for (int j = 0; j != 5; ++j){
@@ -308,17 +314,18 @@ void Mosaic::loadBroken(TilePtr tile){
     }
 }
 
-bool Mosaic::toStart(){
-    return starter;
-}
-
 void Mosaic::displayMosaic(){
     // line 1
     std::cout << "1:     " << p1.at(0)->getChar() << "||"; 
     for (int i = 0; i < 5; ++i){
         std::cout << mosaic[0][i]->getChar();
     }
+    std::cout << "||";
+    for (int i = 0; i < 5; ++i){
+        std::cout << puzzle[0][i]->getChar() << " ";
+    }
     std::cout << std::endl;
+
     // line 2
     std::cout << "2:    ";
     for (int i = 0; i < 2; ++i){
@@ -328,7 +335,12 @@ void Mosaic::displayMosaic(){
     for (int i = 0; i < 5; ++i){
         std::cout << mosaic[1][i]->getChar();
     }
+    std::cout << "||";
+    for (int i = 0; i < 5; ++i){
+        std::cout << puzzle[1][i]->getChar() << " ";
+    }
     std::cout << std::endl;
+
     // line 3
     std::cout << "3:   ";
     for (int i = 0; i < 3; ++i){
@@ -338,7 +350,12 @@ void Mosaic::displayMosaic(){
     for (int i = 0; i < 5; ++i){
         std::cout << mosaic[2][i]->getChar();
     }
+    std::cout << "||";
+    for (int i = 0; i < 5; ++i){
+        std::cout << puzzle[2][i]->getChar() << " ";
+    }
     std::cout << std::endl;
+
     // line 4
     std::cout << "4:  ";
     for (int i = 0; i < 4; ++i){
@@ -348,7 +365,12 @@ void Mosaic::displayMosaic(){
     for (int i = 0; i < 5; ++i){
         std::cout << mosaic[3][i]->getChar();
     }
+    std::cout << "||";
+    for (int i = 0; i < 5; ++i){
+        std::cout << puzzle[3][i]->getChar() << " ";
+    }
     std::cout << std::endl;
+
     // line 5
     std::cout << "5: ";
     for (int i = 0; i < 5; ++i){
@@ -358,39 +380,16 @@ void Mosaic::displayMosaic(){
     for (int i = 0; i < 5; ++i){
         std::cout << mosaic[4][i]->getChar();
     }
+    std::cout << "||";
+    for (int i = 0; i < 5; ++i){
+        std::cout << puzzle[4][i]->getChar() << " ";
+    }
     std::cout << std::endl;
+
     // broken tiles
     std::cout << "broken: ";
     for (int i = 0; i < 7; ++i){
         std::cout << broken.at(i)->getChar();
-    }
-    std::cout << std::endl;
-}
-
-void Mosaic::displayPuzzle(){
-    // line 1
-    for (int i = 0; i < 5; ++i){
-        std::cout << puzzle[0][i]->getChar() << " ";
-    }class Player {};
-    std::cout << std::endl;
-    // line 2
-    for (int i = 0; i < 5; ++i){
-        std::cout << puzzle[1][i]->getChar() << " ";
-    }
-    std::cout << std::endl;
-    // line 3
-    for (int i = 0; i < 5; ++i){
-        std::cout << puzzle[2][i]->getChar() << " ";
-    }
-    std::cout << std::endl;
-    // line 4
-    for (int i = 0; i < 5; ++i){
-        std::cout << puzzle[3][i]->getChar() << " ";
-    }
-    std::cout << std::endl;
-    // line 5
-    for (int i = 0; i < 5; ++i){
-        std::cout << puzzle[4][i]->getChar() << " ";
     }
     std::cout << std::endl;
 }
@@ -419,6 +418,7 @@ void Mosaic::score(){
         // reset counter
         counter = 0;
     }
+
     // score pile 2
     // check that no empty spaces in pile row
     for (unsigned int i = 0; i < p2.size(); ++i){
@@ -448,6 +448,7 @@ void Mosaic::score(){
         // reset counter
         counter = 0;
     }
+
     // score pile 3
     // check that no empty spaces in pile row
     for (unsigned int i = 0; i < p3.size(); ++i){
@@ -477,6 +478,7 @@ void Mosaic::score(){
         // reset counter
         counter = 0;
     }
+
     // score pile 4
     // check that no empty spaces in pile row
     for (unsigned int i = 0; i < p4.size(); ++i){
@@ -506,6 +508,7 @@ void Mosaic::score(){
         // reset counter
         counter = 0;
     }
+
     // score pile 5
     // check that no empty spaces in pile row
     for (unsigned int i = 0; i < p5.size(); ++i){
@@ -535,6 +538,7 @@ void Mosaic::score(){
         // reset counter
         counter = 0;
     }
+
     // score broken tiles
     // check that broken tiles is not empty
     for (unsigned int i = 0; i < broken.size(); ++i){
@@ -548,6 +552,7 @@ void Mosaic::score(){
         if (broken[0]->getColour() == F){
             points -= 1;
             broken[0] = new Tile(E);
+            starter = false;
         }
         // score the rest of broken
         for (unsigned int i = 0; i < broken.size(); ++i){
@@ -574,6 +579,58 @@ void Mosaic::score(){
         // reset counter
         counter = 0;
     }
+
+    // check if the game is over and set gameover
+    // check mosaic row 1
+    for (int i = 0; i < 5; ++i){
+        if (mosaic[0][i]->getColour() != E){
+            ++counter;
+        }
+    }
+    if (counter == 0){
+        gameover = true;
+    }
+    counter = 0;
+    // check mosaic row 2
+    for (int i = 0; i < 5; ++i){
+        if (mosaic[1][i]->getColour() != E){
+            ++counter;
+        }
+    }
+    if (counter == 0){
+        gameover = true;
+    }
+    counter = 0;
+    // check mosaic row 3
+    for (int i = 0; i < 5; ++i){
+        if (mosaic[2][i]->getColour() != E){
+            ++counter;
+        }
+    }
+    if (counter == 0){
+        gameover = true;
+    }
+    counter = 0;
+    // check mosaic row 4
+    for (int i = 0; i < 5; ++i){
+        if (mosaic[3][i]->getColour() != E){
+            ++counter;
+        }
+    }
+    if (counter == 0){
+        gameover = true;
+    }
+    counter = 0;
+    // check mosiac row 5
+    for (int i = 0; i < 5; ++i){
+        if (mosaic[4][i]->getColour() != E){
+            ++counter;
+        }
+    }
+    if (counter == 0){
+        gameover = true;
+    }
+    counter = 0;
 }
 
 std::vector<TilePtr> Mosaic::getToBox(){
@@ -582,4 +639,12 @@ std::vector<TilePtr> Mosaic::getToBox(){
 
 void Mosaic::clearToBox(){
     toBox.clear();
+}
+
+bool Mosaic::isGameover(){
+    return gameover;
+}
+
+bool Mosaic::toStart(){
+    return starter;
 }

@@ -13,6 +13,11 @@
 void showMenu();
 
 /**
+ *  Plays the game
+ */
+void playGame();
+
+/**
  *  Loads a game from a save file or
  *  makes a new game
  */

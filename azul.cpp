@@ -122,7 +122,6 @@ void testMosaic(Mosaic* mosaic, Bag* gameBag, Factory* factory){
     factory->loadFactory(gameBag);
     factory->listFactory();
     mosaic->displayMosaic();
-    mosaic->displayPuzzle();
     mosaic->loadPile(factory, 3, U, 2);
     mosaic->loadPile(factory, 4, Y, 3);
     mosaic->loadPile(factory, 5, U, 4);
