@@ -18,6 +18,7 @@ class Mosaic {
          * Constructor / Deconstructor
          */
         Mosaic();
+        Mosaic(bool s, Mos m, int p, std::vector<TilePtr> v[6]);
         ~Mosaic();
 
         /**
@@ -73,6 +74,12 @@ class Mosaic {
          */
         bool isGameover();
 
+
+        std::string getMosaic();
+
+        std::string getPile();
+
+        std::string getBroken();
 
     private:
         std::vector<TilePtr> p1;

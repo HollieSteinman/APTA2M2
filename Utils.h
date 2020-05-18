@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <exception>
+#include "Tile.h"
 
 #define BAG_SIZE 100
 
@@ -18,10 +19,16 @@ void showMenu();
 void playGame();
 
 /**
- *  Loads a game from a save file or
- *  makes a new game
+ *  Loads a game from a save file
  */
 void loadGame();
+
+std::vector<TilePtr> loadTiles(std::string s, std::vector<TilePtr> v);
+
+/**
+ *  Saves a game to a save file
+ */
+void saveGame(std::string filename);
 
 /**
  *  Display programmers

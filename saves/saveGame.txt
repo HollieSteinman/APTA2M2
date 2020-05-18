@@ -32,3 +32,13 @@ f4:EEEE
 f5:EEEE
 mid:EEEEEEE
 #
+
+// Game Data
+$
+type:game
+turns:4
+active:1
+seed:123
+bag: EEEEEEEEEEE
+lid: EEEEEEEEEE
+#
