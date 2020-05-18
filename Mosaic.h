@@ -73,6 +73,12 @@ class Mosaic {
          */
         bool isGameover();
 
+        
+        /**
+         * Returns broken tiles
+         */
+        std::vector<TilePtr> getBrokenTile();
+
 
     private:
         std::vector<TilePtr> p1;

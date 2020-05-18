@@ -303,7 +303,7 @@ void Mosaic::loadPile(Factory* factory, unsigned int fRow, Colour colour, unsign
 }
 
 void Mosaic::loadBroken(TilePtr tile){
-    // Variable to ckeck once the first 
+    // Variable to check once the first 
     // empty space is reaches
     int count = 0;
     for (int i = 0; i < 7 && count != 1; ++i){
@@ -647,4 +647,8 @@ bool Mosaic::isGameover(){
 
 bool Mosaic::toStart(){
     return starter;
+}
+
+std::vector<TilePtr> Mosaic::getBrokenTile(){
+    return broken;
 }
