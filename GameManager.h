@@ -4,6 +4,10 @@
 #include "Player.h"
 #include "Tile.h"
 #include "Factory.h"
+#include "Bag.h"
+#include <fstream>
+#include <sstream>
+#include <vector>
 
 class GameManager {
 public:
@@ -16,7 +20,7 @@ public:
     void getRound();
 
     //  Plays a round through each player and adds to mosaic at end of round
-    void playRound();
+    void playRound(Bag* gameBag);
 
     //  Displays player's board and piles
     void displayRound();
@@ -36,7 +40,13 @@ public:
 private:
 
     int round;
-
+    Player* player1;
+    Player* player2;
+    int currPlayerID;
+    Factory* factory;
+    Tile* currTile;
+    std::vector<std::string> turns;
+    std::vector<std::string> stringcommand;  
     // TODO variables for game
 
 };
