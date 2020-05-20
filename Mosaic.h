@@ -28,7 +28,6 @@ class Mosaic {
 
         /**
          * Load the pile from the factory
-         * 
          */
         void loadPile(Factory* factory, unsigned int fRow, Colour colour, unsigned int pRow);
 
@@ -74,11 +73,19 @@ class Mosaic {
          */
         bool isGameover();
 
-
+        /**
+         * Returns mosaic as a string
+         */
         std::string getMosaic();
 
+        /**
+         * Returns Pile as a string
+         */
         std::string getPile();
 
+        /**
+         * Returns Broken tiles as string
+         */
         std::string getBroken();
 
     private:

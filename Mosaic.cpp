@@ -344,7 +344,7 @@ void Mosaic::loadPile(Factory* factory, unsigned int fRow, Colour colour, unsign
 
 void Mosaic::loadBroken(TilePtr tile){
     // Variable to ckeck once the first 
-    // empty space is reaches
+    // empty space is reached
     int count = 0;
     for (int i = 0; i < 7 && count != 1; ++i){
         if (broken[i]->getColour() == E){
