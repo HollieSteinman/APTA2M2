@@ -16,6 +16,7 @@ public:
     //  Constructor / Destructor
     GameManager();
     GameManager(int seed);
+    GameManager(Player* p1, Player* p2, int r, Factory* f);
     ~GameManager();
 
     //  Returns the current round - used for saving

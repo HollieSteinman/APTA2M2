@@ -1,4 +1,5 @@
 #include "GameManager.h"
+#include "Utils.h"
 
 GameManager::GameManager() {
 
@@ -53,6 +54,19 @@ GameManager::GameManager(int seed) {
     // variable to check if game is over
     gameOver = false;
 
+}
+
+GameManager::GameManager(Player* p1, Player* p2, int r, Factory* f):
+    round(r),
+    plyr1(p1),
+    plyr2(p2),
+    factory(f)
+{
+    if(plyr1->getMosaic()->toStart()) {
+        setFirstPlayer(1);
+    } else {
+        setFirstPlayer(2);
+    }
 }
 
 GameManager::~GameManager() {
@@ -259,6 +273,7 @@ void GameManager::playRound() {
             bag->reload();
         }
         factory->loadFactory(bag);
+        ++round;
     }
     
 }
@@ -310,10 +325,3 @@ void GameManager::generatePiles() {
 void GameManager::setFirstPlayer(int playerID) {
     currPlayerID = playerID;
 }
-
-void GameManager::saveGame() {
-
-
-
-}
-

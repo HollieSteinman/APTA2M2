@@ -5,6 +5,7 @@
 #include <string>
 #include <exception>
 #include "Tile.h"
+#include "GameManager.h"
 
 #define BAG_SIZE 100
 
@@ -24,6 +25,11 @@ void showMenu(int seed);
 void playGame(int seed);
 
 /**
+ *  Plays the game from a saved gameManager
+ */
+void playGame(GameManager* gameManager);
+
+/**
  *  Loads a game from a save file
  */
 void loadGame();
@@ -33,7 +39,8 @@ void loadGame();
 /**
  *  Saves a game to a save file
  */
-void saveGame(std::string filename);
+void saveGame(std::string filename, Player *p1, Player *p2,
+              Factory *f, int turns, int active);
 
 /**
  *  Display programmers

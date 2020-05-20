@@ -36,6 +36,7 @@ class Bag {
          * Constructor / Deconstructor
          */
         Bag(int randGen);
+        Bag(std::vector<TilePtr> tempBag);
         ~Bag();
 
         /**
