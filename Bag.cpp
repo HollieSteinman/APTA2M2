@@ -56,6 +56,13 @@ Bag::Bag(int randGen){
 
 }
 
+Bag::Bag(std::vector<TilePtr> tempBag) {
+    bag = new LinkedList();
+    for (unsigned int i = 0; i < tempBag.size(); ++i){
+        addTile(tempBag[i]);
+    }
+}
+
 Bag::~Bag(){
 
 }

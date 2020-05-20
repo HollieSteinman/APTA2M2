@@ -59,6 +59,10 @@ void playGame(int seed){
 
 }
 
+void playGame(GameManager* gameManager) {
+
+}
+
 void showCredits(){
     std::cout << std::endl;
     std::cout << "-------------------------------------------" << std::endl;
@@ -92,6 +96,11 @@ void loadGame() {
 
     // checks if file exists
     if(saveFile.good()) {
+        Player *player1, *player2;
+        Factory *factory;
+        int turns, active, seed;
+        Bag *bag;
+
         std::string input;
         while(!saveFile.eof()) {
             // searches for the start of an object
@@ -163,7 +172,7 @@ void loadGame() {
                         }
                     } else if (label == "pile") {
                         getline(ls, pPile, ':');
-                        std::stringstream ps(pMosaic);
+                        std::stringstream ps(pPile);
 
                         getline(ps, pPile, ',');
                         p1 = loadTiles(pPile, p1);
@@ -200,14 +209,20 @@ void loadGame() {
                 vectors[4] = p5;
                 vectors[5] = broken;
 
-                Player* player = new Player(id, pName);
-                Mosaic* mosaic = new Mosaic(starter, m, points, vectors);
-                player->setMosaic(mosaic);
+                std::string p;
 
-                // TODO save player
+                if(id == 1) {
+                    player1 = new Player(id, pName);
+                    Mosaic* mosaic = new Mosaic(starter, m, points, vectors);
+                    player1->setMosaic(mosaic);
+                } else {
+                    player2 = new Player(id, pName);
+                    Mosaic* mosaic = new Mosaic(starter, m, points, vectors);
+                    player2->setMosaic(mosaic);
+                }
+
 
             } else if (type == "factory") {
-                Factory factory;
                 std::string facStr, facContent;
                 while(getline(ss, line)) {
                     // WARNING - check if empty, last line is blank
@@ -232,10 +247,9 @@ void loadGame() {
 
                     fac = loadTiles(facContent, fac);
 
-                    factory.loadFactory(facNo, fac);
+                    factory = new Factory();
+                    factory->loadFactory(facNo, fac);
                     fac.clear();
-
-                    // TODO save factory
                 }
             } else if (type == "game") {
                 std::string label, gTurns, gActive, gSeed, gBag, gLid;
@@ -246,14 +260,24 @@ void loadGame() {
 
                     if(label == "turns") {
                         getline(ls, gTurns, ':');
+                        std::istringstream(gTurns) >> turns;
                     } else if (label == "active") {
                         getline(ls, gActive, ':');
+                        std::istringstream(gActive) >> active;
                     } else if (label == "seed") {
+                        // TODO store seed
                         getline(ls, gSeed, ':');
+                        std::istringstream(gSeed) >> seed;
                     } else if (label == "bag") {
                         getline(ls, gBag, ':');
+                        std::vector<TilePtr> tempBag;
+                        tempBag = loadTiles(gBag, tempBag);
+                        bag = new Bag(tempBag);
                     } else if (label == "lid") {
                         getline(ls, gLid, ':');
+                        std::vector<TilePtr> lid;
+                        lid = loadTiles(gLid, lid);
+                        bag->putBox(lid);
                     }
                 }
             }
@@ -261,7 +285,8 @@ void loadGame() {
 
         saveFile.close();
 
-
+        GameManager* gameManager = new GameManager(player1, player2, turns, factory);
+        gameManager->playRound(bag);
     } else {
         std::cout << "File not found, returning to menu." << std::endl;
         saveFile.close();
@@ -300,7 +325,7 @@ std::vector<TilePtr> loadTiles(std::string s, std::vector<TilePtr> v) {
     return v;
 }
 
-void saveGame(std::string filename) {
+void saveGame(std::string filename, Player* p1, Player* p2, Factory* f, int turn, int active) {
 
     // filename for testing, change later
     std::string dir = "saves/";
@@ -312,50 +337,48 @@ void saveGame(std::string filename) {
     // Player 1
     saveFile << "$" << std::endl;
     saveFile << "type:player" << std::endl;
-    saveFile << "id:"; // << player.getId() << std::endl;
-    saveFile << "name:"; // << player.getName() << std::endl;
-    saveFile << "points:"; // << mosaic.getPoints() << std::endl;
-    saveFile << "mosaic:"; // << mosaic.getMosaic() << std::endl;
-    saveFile << "pile:"; // << mosaic.getPile() << std::endl;
-    saveFile << "broken:"; // << mosaic.getBroken() << std::endl;
-    saveFile << "starter:"; // << mosaic.toStart() << std::endl;
+    saveFile << "id:" << p1->getId() << std::endl;
+    saveFile << "name:" << p1->getName() << std::endl;
+    saveFile << "points:" << p1->getMosaic()->getPoints() << std::endl;
+    saveFile << "mosaic:" << p1->getMosaic()->getMosaic() << std::endl;
+    saveFile << "pile:" << p1->getMosaic()->getPile() << std::endl;
+    saveFile << "broken:" << p1->getMosaic()->getBroken() << std::endl;
+    saveFile << "starter:" << p1->getMosaic()->toStart() << std::endl;
     saveFile << "#" << std::endl;
 
     // Player 2
     saveFile << "$" << std::endl;
     saveFile << "type:player" << std::endl;
-    saveFile << "id:"; // << player.getId() << std::endl;
-    saveFile << "name:"; // << player.getName() << std::endl;
-    saveFile << "points:"; // << mosaic.getPoints() << std::endl;
-    saveFile << "mosaic:"; // << mosaic.getMosaic() << std::endl;
-    saveFile << "pile:"; // << mosaic.getPile() << std::endl;
-    saveFile << "broken:"; // << mosaic.getBroken() << std::endl;
-    saveFile << "starter:"; // << mosaic.toStart() << std::endl;
+    saveFile << "id:" << p2->getId() << std::endl;
+    saveFile << "name:" << p2->getName() << std::endl;
+    saveFile << "points:" << p2->getMosaic()->getPoints() << std::endl;
+    saveFile << "mosaic:" << p2->getMosaic()->getMosaic() << std::endl;
+    saveFile << "pile:" << p2->getMosaic()->getPile() << std::endl;
+    saveFile << "broken:" << p2->getMosaic()->getBroken() << std::endl;
+    saveFile << "starter:" << p2->getMosaic()->toStart() << std::endl;
     saveFile << "#" << std::endl;
 
     // Factories
     saveFile << "$" << std::endl;
     saveFile << "type:factory" << std::endl;
-    saveFile << "f1:"; // << factory.getFactoryString(0) << std::endl;
-    saveFile << "f2:"; // << factory.getFactoryString(1) << std::endl;
-    saveFile << "f3:"; // << factory.getFactoryString(2) << std::endl;
-    saveFile << "f4:"; // << factory.getFactoryString(3) << std::endl;
-    saveFile << "f5:"; // << factory.getFactoryString(4) << std::endl;
-    saveFile << "mid:"; // << factory.getFactoryString(5) << std::endl;
+    saveFile << "f1:" << f->getFactoryString(0) << std::endl;
+    saveFile << "f2:" << f->getFactoryString(1) << std::endl;
+    saveFile << "f3:" << f->getFactoryString(2) << std::endl;
+    saveFile << "f4:" << f->getFactoryString(3) << std::endl;
+    saveFile << "f5:" << f->getFactoryString(4) << std::endl;
+    saveFile << "mid:" << f->getFactoryString(5) << std::endl;
     saveFile << "#" << std::endl;
 
     // Game Data
     saveFile << "$" << std::endl;
     saveFile << "type:game" << std::endl;
-    saveFile << "turns:";
-    saveFile << "active:";
-    saveFile << "seed:";
-    saveFile << "bag:";
-    saveFile << "lid:";
+    saveFile << "turns:" << turn << std::endl;
+    saveFile << "active:" << active << std::endl;
+    saveFile << "seed:" << std::endl; // TODO save seed
+    saveFile << "bag:" << std::endl; // TODO save bag & lid
+    saveFile << "lid:" << std::endl;
     saveFile << "#" << std::endl;
 
     saveFile.close();
-
-    std::cout << "Game successfully saved to ’" << filename << "'" << std::endl;
 
 }

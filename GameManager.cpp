@@ -1,4 +1,5 @@
 #include "GameManager.h"
+#include "Utils.h"
 
 GameManager::GameManager() {
 
@@ -26,6 +27,19 @@ GameManager::GameManager() {
     std::cout << "Let’s Play!" <<std::endl;
 
 
+}
+
+GameManager::GameManager(Player* p1, Player* p2, int r, Factory* f):
+    round(r),
+    player1(p1),
+    player2(p2),
+    factory(f)
+{
+    if(player1->getMosaic()->toStart()) {
+        setFirstPlayer(1);
+    } else {
+        setFirstPlayer(2);
+    }
 }
 
 GameManager::~GameManager() {
@@ -161,7 +175,7 @@ void GameManager::playRound(Bag* gameBag) {
             }
             else if(stringcommand.front()=="save"){
                 // Save current state of the game
-                saveGame();
+                saveGame(stringcommand.at(1), player1, player2, factory, round, currPlayerID);
                 std::cout << "Game successfully saved to '" << stringcommand.at(1) << "'" << std::endl;
             }
             else{
@@ -176,6 +190,8 @@ void GameManager::playRound(Bag* gameBag) {
         // Score for both players when the round ends
         player1->getMosaic()->score();
         player2->getMosaic()->score();
+
+        round++;
 
         
     }
@@ -225,10 +241,3 @@ void GameManager::generatePiles() {
 void GameManager::setFirstPlayer(int playerID) {
     currPlayerID = playerID;
 }
-
-void GameManager::saveGame() {
-
-
-
-}
-

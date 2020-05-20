@@ -14,6 +14,7 @@ public:
 
     //  Constructor / Destructor
     GameManager();
+    GameManager(Player* p1, Player* p2, int r, Factory* f);
     ~GameManager();
 
     //  Returns the current round - used for saving
@@ -33,9 +34,6 @@ public:
 
     //  Sets player to play first
     void setFirstPlayer(int playerID);
-
-    //  Saves the current game
-    void saveGame();
 
 private:
 

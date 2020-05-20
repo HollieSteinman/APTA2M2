@@ -80,11 +80,19 @@ class Mosaic {
          */
         std::vector<TilePtr> getBrokenTile();
 
-
+        /**
+         * Returns mosaic as string
+         */
         std::string getMosaic();
 
+        /**
+         * Returns pile as string
+         */
         std::string getPile();
 
+        /**
+         * Returns broken as string
+         */
         std::string getBroken();
 
     private:
