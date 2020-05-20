@@ -21,8 +21,11 @@ public:
     //  Returns the current round - used for saving
     void getRound();
 
-    //  Plays a round through each player and adds to mosaic at end of round
-    void playRound(Bag* gameBag);
+    /**
+     * Plays a round through each player 
+     * and scores player mosaic at end of round
+     */
+    void playRound();
 
     //  Displays player's board and piles
     void displayRound();
@@ -41,16 +44,23 @@ public:
     //  Saves the current game
     void saveGame();
 
+    /**
+     * Returns color given a char
+     */
+    Colour makeColour(char c);
+
 private:
 
     int round;
-    Player* player1;
-    Player* player2;
+    Player* plyr1;
+    Player* plyr2;
+    Bag* bag;
     int currPlayerID;
     Factory* factory;
     Tile* currTile;
     std::vector<std::string> turns;
-    std::vector<std::string> stringcommand;  
+    std::vector<std::string> stringcommand;
+    bool gameOver;  
     // TODO variables for game
 
 };

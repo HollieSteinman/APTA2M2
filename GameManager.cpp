@@ -50,9 +50,63 @@ GameManager::GameManager(int seed) {
     // variable to check if game is over
     gameOver = false;
     // make player 1 the first starter
+    std::cout << "Factories" << std::endl;
     factory->listFactory();
     std::cout << " Mosaic for " << plyr1->getName() << std::endl;
+    plyr1->getMosaic()->displayMosaic();
+    std::cout << "TURN FOR PLAYER: " << plyr1->getName();
     std::cout << "> ";
+    // Fix for line space leak
+    // Skips all leading whitespace.
+    std::cin >> std::ws;
+
+    // Detects user input line
+    std::string line;
+    std::string command;
+    std::getline(std::cin,line);
+    std::stringstream ss(line);
+    std::cout << command << std::endl;
+
+    // Clear command vector for new commands
+    stringcommand.clear();
+    while(getline(ss,command, ' ')) // delimiter as space
+    {   
+        std::stringstream stream(command);
+        std::cout<<command<<std::endl;
+        stringcommand.push_back(command);
+    }
+
+    if(stringcommand.front()=="turn"){
+                
+        int fRow = std::stoi(stringcommand.at(1));
+        char color = stringcommand.at(2)[0];
+        int pRow = std::stoi(stringcommand.at(3));
+        std::cout << fRow << color << pRow;
+        //Convert color to enum
+        Colour colour = makeColour(color);
+
+        // Player Turn: Adds selected tiles to mosaic
+        // Records history of turns to vector turns
+        std::string turn =" ";
+        plyr1->playTurn(factory,fRow,colour,pRow);
+        turn = "("+plyr1->getName()+")"+" > turn "+std::to_string(fRow)
+            +" "+color+" "+std::to_string(pRow);
+        
+        // Add turn to vector to record
+        turns.push_back(turn);
+
+        // Switch to player 2
+        currPlayerID = 2;
+
+        std::cout << "Turn successful." <<std::endl;
+        std::cout << std::endl;
+        std::cout<<"< the following turns happen >" << std::endl;
+        for(std::vector<std::string>::iterator i = turns.begin(); i != turns.end(); ++i){
+            std::cout<< *i << std::endl;
+        }  
+    } else {
+        throw std::logic_error("The game just started");
+    }
 
     while (!gameOver){
         playRound();
@@ -62,11 +116,11 @@ GameManager::GameManager(int seed) {
 
 GameManager::~GameManager() {
     //Destructor for game manager
-    delete player1;
-    delete player2;
+    delete plyr1;
+    delete plyr2;
     delete factory;
     delete currTile;
-    //delete bag;
+    delete bag;
 }
 
 void GameManager::getRound() {
@@ -126,31 +180,7 @@ void GameManager::playRound(Bag* gameBag) {
                 int pRow = std::stoi(stringcommand.at(3));
                 std::cout << fRow << color << pRow;
                 //Convert color to enum
-                Colour colour;
-                if(color == 'F'){
-                    colour = Colour::F;
-                }
-                else if(color == 'R'){
-                    colour = Colour::R;
-                }
-                else if(color == 'Y'){
-                    colour = Colour::Y;
-                }
-                else if(color == 'B'){
-                    colour = Colour::B;
-                }
-                else if(color == 'L'){
-                    colour = Colour::L;
-                }
-                else if(color == 'U'){
-                    colour = Colour::U;
-                }
-                else if(color == 'E'){
-                    colour = Colour::E;
-                }
-                else{
-                    colour = Colour::F;
-                }
+                Colour colour = makeColour(color);
 
                 // Player Turn: Adds selected tiles to mosaic
                 // Records history of turns to vector turns
@@ -198,7 +228,8 @@ void GameManager::playRound(Bag* gameBag) {
             }
             else{
                 // No recognizable commands throw error
-                std::cout << "Please enter a valid command" <<std::endl;
+                throw std::out_of_range(" You entered an invalid command");
+                // std::cout << "Please enter a valid command" <<std::endl;
             }
         // End of Round:
         // Shows Players both their score   
@@ -232,18 +263,36 @@ void GameManager::displayRound() {
     std::cout<< "Factories" << std::endl;
     factory->listFactory();
     if(currPlayerID == 1){
-        std::cout<< "Mosaic for" << player1->getName()<<std::endl;
-        player1->getMosaic()->displayMosaic();
+        std::cout<< "Mosaic for" << plyr1->getName()<<std::endl;
+        plyr1->getMosaic()->displayMosaic();
 
     }
     else if(currPlayerID == 2){
-        std::cout<< "Mosaic for" << player2->getName()<<std::endl;
-        player2->getMosaic()->displayMosaic();
+        std::cout<< "Mosaic for" << plyr2->getName()<<std::endl;
+        plyr2->getMosaic()->displayMosaic();
     }
     else{
         std::cout<<"Mosaic currently empty"<<std::endl;
     }
 
+}
+
+Colour GameManager::makeColour(char c){
+    Colour toReturn;
+
+    if (c == 'R'){
+        toReturn = R;
+    } else if (c == 'Y'){
+        toReturn = Y;
+    } else if (c == 'B'){
+        toReturn = B;
+    } else if (c == 'L'){
+        toReturn = L;
+    } else if (c == 'U'){
+        toReturn = U;
+    }
+
+    return toReturn;
 }
 
 Tile *GameManager::getFactory(int pile, char colour) {
