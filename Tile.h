@@ -31,7 +31,7 @@ public:
      * Returns tile pattern as 
      * its enum number
      */
-    char getColour();
+    Colour getColour();
 
     /**
      * Return tile pattern as

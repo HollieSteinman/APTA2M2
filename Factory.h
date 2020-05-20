@@ -7,6 +7,7 @@
 // and overall cost is negligible
 
 #include "Bag.h"
+#include "Tile.h"
 
 class Factory {
 
@@ -64,6 +65,11 @@ public:
      * Returns factory as string
      */
      std::string getFactoryString(int fac);
+
+    /**
+     * Delete the factory
+     */
+    void clear();
 
 private:
 

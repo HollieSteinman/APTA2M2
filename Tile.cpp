@@ -16,15 +16,30 @@ Tile::Tile(){
     colour = E;
 }
 
-char Tile::getColour(){
-    return colours[colour];
+// char Tile::getColour(){
+//     return colours[colour];
+// }
+// can be renamed to get colour char
+
+Colour Tile::getColour(){
+    return colour;
 }
 
 char Tile::getChar(){
     char toReturn = '.';
 
-    if(colour != 6) {
-        toReturn = colours[colour];
+    if (getColour() == F){
+        toReturn = 'F';
+    } else if (getColour() == R){
+        toReturn = 'R';
+    } else if (getColour() == Y){
+        toReturn = 'Y';
+    } else if (getColour() == B){
+        toReturn = 'B';
+    } else if (getColour() == L){
+        toReturn = 'L';
+    } else if (getColour() == U){
+        toReturn = 'U';
     }
 
     return toReturn;

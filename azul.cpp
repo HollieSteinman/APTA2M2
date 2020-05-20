@@ -37,12 +37,12 @@ int main(int argc, char** argv){
     try {
 
         // basic main methods should be included in this try block
-        showMenu();
+        // showMenu();
         // TilePtr holder = new Tile(R);
         // Bag* gameBag = new Bag(10);
         // Factory* factory01 = new Factory();
         // Mosaic* mosaic = new Mosaic();
-        showMenu();
+        showMenu(args.seed);
         // Pile* playp = new Pile();
         // To run tests do not show the menu
         // testBag(gameBag, holder);
@@ -57,7 +57,7 @@ int main(int argc, char** argv){
     } catch (std::exception& e){
 
         std::cerr << "Exception Caught: " << e.what() << std::endl;
-        showMenu();
+        showMenu(args.seed);
 
     }
 

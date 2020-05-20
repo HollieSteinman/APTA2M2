@@ -28,7 +28,7 @@ void playGame(int seed);
  */
 void loadGame();
 
-std::vector<TilePtr> loadTiles(std::string s, std::vector<TilePtr> v);
+// std::vector<TilePtr> loadTiles(std::string s, std::vector<TilePtr> v);
 
 /**
  *  Saves a game to a save file

@@ -119,15 +119,14 @@ int Mosaic::getPoints(){
 void Mosaic::loadPile(Factory* factory, unsigned int fRow, Colour colour, unsigned int pRow){
     
     // check that valid factory row and pile row is entered
-    if (fRow > 5 || pRow > 5){
+    if (fRow > 5 || pRow > 6){
         throw std::out_of_range("Invalid selection, please reselect");
     } else {
         // get the tiles from the factory row
         std::vector<TilePtr> holder = factory->getTiles(colour, fRow);
         // check if the mosiac row has been filled
-        // remember to test after dev gameplay******************
         for (int i = 0; i < 5; ++i){
-            if (holder[0]->getColour() == mosaic[pRow][i]->getColour()){
+            if (holder[0]->getColour() == mosaic[pRow - 1][i]->getColour()){
                 throw std::out_of_range("That colour has played for this row");
             }
         }
@@ -356,7 +355,7 @@ void Mosaic::loadBroken(TilePtr tile){
 
 void Mosaic::displayMosaic(){
     // line 1
-    std::cout << "1:     " << p1.at(0)->getChar() << "||";
+    std::cout << "1:     " << p1.at(0)->getChar() << "|| ";
     for (int i = 0; i < 5; ++i){
         std::cout << mosaic[0][i]->getChar();
     }

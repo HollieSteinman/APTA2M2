@@ -5,6 +5,23 @@
 Factory::Factory(){
     center.push_back(new Tile(F));
     pickCenter = false;
+
+    // prevent segfault
+    for (int i = 0; i < 4; ++i){
+        fa1.push_back(new Tile(E));
+    }
+    for (int i = 0; i < 4; ++i){
+        fa2.push_back(new Tile(E));
+    }
+    for (int i = 0; i < 4; ++i){
+        fa3.push_back(new Tile(E));
+    }
+    for (int i = 0; i < 4; ++i){
+        fa4.push_back(new Tile(E));
+    }
+    for (int i = 0; i < 4; ++i){
+        fa5.push_back(new Tile(E));
+    }
 }
 
 Factory::~Factory(){
@@ -316,4 +333,8 @@ std::string Factory::getFactoryString(int fac) {
 
     std::cout << f << std::endl;
     return f;
+}
+
+void Factory::clear(){
+
 }

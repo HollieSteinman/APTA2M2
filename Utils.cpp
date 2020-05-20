@@ -4,7 +4,7 @@
 #include "Player.h"
 #include "GameManager.h"
 
-void showMenu(){
+void showMenu(int seed){
     std::cout << "Welcome To Azul! " << std::endl;
     std::cout << "------------------" << std::endl;
     std::cout << std::endl;
@@ -27,12 +27,12 @@ void showMenu(){
     std::cin >> menu;
 
     if (menu == 1) {
-         playGame(20);
+         playGame(seed);
     } else if (menu == 2) {
-        loadGame();
+        // loadGame();
     } else if (menu == 3) {
         showCredits();
-        showMenu();
+        showMenu(seed);
     } else if (menu == 4) {
         std::cout << "Bye Bye" << std::endl;
         exit(0);
@@ -44,19 +44,16 @@ void showMenu(){
 
 void playGame(int seed){
     // Start Game
-    // Initialize Bag with seed
-    Bag* gameBag = new Bag(seed);
-
-    GameManager* gameManager = new GameManager();
-    try {
-        // Game Start: Play round
-       gameManager->playRound(gameBag);
-    } catch (std::exception& e){
-        // recover from last save
-        std::cerr << "Exception Caught: " << e.what() << std::endl;
-    }
-
-
+        GameManager* gameManager = new GameManager(seed);
+        gameManager->startGame();
+    // try {
+    //     // Game Start: Play round
+    //    gameManager->playRound(gameBag);
+    // } catch (std::exception& e){
+    //     // recover from last save
+    //     std::cerr << "Exception Caught: " << e.what() << std::endl;
+    // }
+    
 }
 
 void showCredits(){
@@ -76,199 +73,199 @@ void showCredits(){
     std::cout << "-------------------------------------------" << std::endl;
 }
 
-void loadGame() {
+// void loadGame() {
 
-    std::cout << "Enter the filename from which load a game" << std::endl;
-    std::cout << "> ";
+//     std::cout << "Enter the filename from which load a game" << std::endl;
+//     std::cout << "> ";
 
-    std::string filename;
-    std::cin >> filename;
+//     std::string filename;
+//     std::cin >> filename;
 
-    // filename for testing, change later
-    std::string dir = "saves/";
+//     // filename for testing, change later
+//     std::string dir = "saves/";
 
-    // opens file
-    std::ifstream saveFile (dir.append(filename));
+//     // opens file
+//     std::ifstream saveFile (dir.append(filename));
 
-    // checks if file exists
-    if(saveFile.good()) {
-        std::string input;
-        while(!saveFile.eof()) {
-            // searches for the start of an object
-            getline(saveFile, input, '$');
-            // until the end of the object
-            getline(saveFile, input, '#');
+//     // checks if file exists
+//     if(saveFile.good()) {
+//         std::string input;
+//         while(!saveFile.eof()) {
+//             // searches for the start of an object
+//             getline(saveFile, input, '$');
+//             // until the end of the object
+//             getline(saveFile, input, '#');
 
-            // creates a stringstream of each object
-            std::stringstream ss(input);
-            std::string line, type;
-            // first line is blank - fix
-            getline(ss, line);
-            // gets first line (object type)
-            getline(ss, line);
+//             // creates a stringstream of each object
+//             std::stringstream ss(input);
+//             std::string line, type;
+//             // first line is blank - fix
+//             getline(ss, line);
+//             // gets first line (object type)
+//             getline(ss, line);
 
-            // creates stringstream for the first line
-            std::stringstream ls(line);
+//             // creates stringstream for the first line
+//             std::stringstream ls(line);
 
-            // gets label
-            getline(ls, type, ':');
-            // gets type
-            getline(ls, type, ':');
-            // start of the switch statement
-            if(type == "player") {
-                std::string pId, pName, pPoints, pStarter, pMosaic,
-                    pPile, pBroken, label;
-                int id, points;
-                bool starter;
-                Mos m;
-                std::vector<TilePtr> vectors[6], p1, p2, p3, p4, p5, broken;
-                while(getline(ss, line)) {
-                    std::stringstream ls(line);
+//             // gets label
+//             getline(ls, type, ':');
+//             // gets type
+//             getline(ls, type, ':');
+//             // start of the switch statement
+//             if(type == "player") {
+//                 std::string pId, pName, pPoints, pStarter, pMosaic,
+//                     pPile, pBroken, label;
+//                 int id, points;
+//                 bool starter;
+//                 Mos m;
+//                 std::vector<TilePtr> vectors[6], p1, p2, p3, p4, p5, broken;
+//                 while(getline(ss, line)) {
+//                     std::stringstream ls(line);
 
-                    getline(ls, label, ':');
+//                     getline(ls, label, ':');
 
-                    if(label == "id") {
-                        getline(ls, pId, ':');
-                        std::istringstream(pId) >> id;
-                    } else if (label == "name") {
-                        getline(ls, pName, ':');
-                    } else if (label == "points") {
-                        getline(ls, pPoints, ':');
-                        std::istringstream(pPoints) >> points;
-                    } else if (label == "mosaic") {
-                        getline(ls, pMosaic, ':');
-                        std::stringstream ms(pMosaic);
-                        for(int i = 0; i < 5; i++) {
-                            getline(ms, pMosaic, ',');
-                            for(int j = 0; j < 5; j++) {
-                                char c = pMosaic[j];
-                                TilePtr tile;
-                                if (c == 'F') {
-                                    tile = new Tile(F);
-                                } else if (c == 'R') {
-                                    tile = new Tile(R);
-                                } else if (c == 'Y') {
-                                    tile = new Tile(Y);
-                                } else if (c == 'B') {
-                                    tile = new Tile(B);
-                                } else if (c == 'L') {
-                                    tile = new Tile(L);
-                                } else if (c == 'U') {
-                                    tile = new Tile(U);
-                                } else {
-                                    tile = new Tile(E);
-                                }
-                                m[i][j] = tile;
-                            }
-                        }
-                    } else if (label == "pile") {
-                        getline(ls, pPile, ':');
-                        std::stringstream ps(pMosaic);
+//                     if(label == "id") {
+//                         getline(ls, pId, ':');
+//                         std::istringstream(pId) >> id;
+//                     } else if (label == "name") {
+//                         getline(ls, pName, ':');
+//                     } else if (label == "points") {
+//                         getline(ls, pPoints, ':');
+//                         std::istringstream(pPoints) >> points;
+//                     } else if (label == "mosaic") {
+//                         getline(ls, pMosaic, ':');
+//                         std::stringstream ms(pMosaic);
+//                         for(int i = 0; i < 5; i++) {
+//                             getline(ms, pMosaic, ',');
+//                             for(int j = 0; j < 5; j++) {
+//                                 char c = pMosaic[j];
+//                                 TilePtr tile;
+//                                 if (c == 'F') {
+//                                     tile = new Tile(F);
+//                                 } else if (c == 'R') {
+//                                     tile = new Tile(R);
+//                                 } else if (c == 'Y') {
+//                                     tile = new Tile(Y);
+//                                 } else if (c == 'B') {
+//                                     tile = new Tile(B);
+//                                 } else if (c == 'L') {
+//                                     tile = new Tile(L);
+//                                 } else if (c == 'U') {
+//                                     tile = new Tile(U);
+//                                 } else {
+//                                     tile = new Tile(E);
+//                                 }
+//                                 m[i][j] = tile;
+//                             }
+//                         }
+//                     } else if (label == "pile") {
+//                         getline(ls, pPile, ':');
+//                         std::stringstream ps(pMosaic);
 
-                        getline(ps, pPile, ',');
-                        p1 = loadTiles(pPile, p1);
+//                         getline(ps, pPile, ',');
+//                         p1 = loadTiles(pPile, p1);
 
-                        getline(ps, pPile, ',');
-                        p2 = loadTiles(pPile, p2);
+//                         getline(ps, pPile, ',');
+//                         p2 = loadTiles(pPile, p2);
 
-                        getline(ps, pPile, ',');
-                        p3 = loadTiles(pPile, p3);
+//                         getline(ps, pPile, ',');
+//                         p3 = loadTiles(pPile, p3);
 
-                        getline(ps, pPile, ',');
-                        p4 = loadTiles(pPile, p4);
+//                         getline(ps, pPile, ',');
+//                         p4 = loadTiles(pPile, p4);
 
-                        getline(ps, pPile, ',');
-                        p5 = loadTiles(pPile, p5);
-                    } else if (label == "broken") {
-                        getline(ls, pBroken, ':');
-                        broken = loadTiles(pBroken, broken);
-                    } else if (label == "starter") {
-                        getline(ls, pStarter, ':');
-                        if(pStarter == "0") {
-                            starter = false;
-                        } else {
-                            starter = true;
-                        }
+//                         getline(ps, pPile, ',');
+//                         p5 = loadTiles(pPile, p5);
+//                     } else if (label == "broken") {
+//                         getline(ls, pBroken, ':');
+//                         broken = loadTiles(pBroken, broken);
+//                     } else if (label == "starter") {
+//                         getline(ls, pStarter, ':');
+//                         if(pStarter == "0") {
+//                             starter = false;
+//                         } else {
+//                             starter = true;
+//                         }
 
-                    }
-                }
+//                     }
+//                 }
 
-                vectors[0] = p1;
-                vectors[1] = p2;
-                vectors[2] = p3;
-                vectors[3] = p4;
-                vectors[4] = p5;
-                vectors[5] = broken;
+//                 vectors[0] = p1;
+//                 vectors[1] = p2;
+//                 vectors[2] = p3;
+//                 vectors[3] = p4;
+//                 vectors[4] = p5;
+//                 vectors[5] = broken;
 
-                Player* player = new Player(id, pName);
-                Mosaic* mosaic = new Mosaic(starter, m, points, vectors);
-                player->setMosaic(mosaic);
+//                 Player* player = new Player(id, pName);
+//                 Mosaic* mosaic = new Mosaic(starter, m, points, vectors);
+//                 player->setMosaic(mosaic);
 
-                // TODO save player
+//                 // TODO save player
 
-            } else if (type == "factory") {
-                Factory factory;
-                std::string facStr, facContent;
-                while(getline(ss, line)) {
-                    // WARNING - check if empty, last line is blank
-                    std::stringstream ls(line);
+//             } else if (type == "factory") {
+//                 Factory factory;
+//                 std::string facStr, facContent;
+//                 while(getline(ss, line)) {
+//                     // WARNING - check if empty, last line is blank
+//                     std::stringstream ls(line);
 
-                    // gets the factory number
-                    getline(ls, facStr, ':');
+//                     // gets the factory number
+//                     getline(ls, facStr, ':');
 
-                    int facNo;
-                    if (facStr == "mid") {
-                        facNo = 0;
-                    } else {
-                        std::istringstream(facStr.substr(
-                                facStr.length() - 1)) >> facNo;
-                    }
-                    // gets the content of the factory
-                    getline(ls, facContent, ':');
+//                     int facNo;
+//                     if (facStr == "mid") {
+//                         facNo = 0;
+//                     } else {
+//                         std::istringstream(facStr.substr(
+//                                 facStr.length() - 1)) >> facNo;
+//                     }
+//                     // gets the content of the factory
+//                     getline(ls, facContent, ':');
 
-                    std::vector<TilePtr> fac;
+//                     std::vector<TilePtr> fac;
 
-                    //TODO check if empty
+//                     //TODO check if empty
 
-                    fac = loadTiles(facContent, fac);
+//                     fac = loadTiles(facContent, fac);
 
-                    factory.loadFactory(facNo, fac);
-                    fac.clear();
+//                     factory.loadFactory(facNo, fac);
+//                     fac.clear();
 
-                    // TODO save factory
-                }
-            } else if (type == "game") {
-                std::string label, gTurns, gActive, gSeed, gBag, gLid;
-                while(getline(ss, line)) {
-                    std::stringstream ls(line);
+//                     // TODO save factory
+//                 }
+//             } else if (type == "game") {
+//                 std::string label, gTurns, gActive, gSeed, gBag, gLid;
+//                 while(getline(ss, line)) {
+//                     std::stringstream ls(line);
 
-                    getline(ls, label, ':');
+//                     getline(ls, label, ':');
 
-                    if(label == "turns") {
-                        getline(ls, gTurns, ':');
-                    } else if (label == "active") {
-                        getline(ls, gActive, ':');
-                    } else if (label == "seed") {
-                        getline(ls, gSeed, ':');
-                    } else if (label == "bag") {
-                        getline(ls, gBag, ':');
-                    } else if (label == "lid") {
-                        getline(ls, gLid, ':');
-                    }
-                }
-            }
-        }
+//                     if(label == "turns") {
+//                         getline(ls, gTurns, ':');
+//                     } else if (label == "active") {
+//                         getline(ls, gActive, ':');
+//                     } else if (label == "seed") {
+//                         getline(ls, gSeed, ':');
+//                     } else if (label == "bag") {
+//                         getline(ls, gBag, ':');
+//                     } else if (label == "lid") {
+//                         getline(ls, gLid, ':');
+//                     }
+//                 }
+//             }
+//         }
 
-        saveFile.close();
+//         saveFile.close();
 
 
-    } else {
-        std::cout << "File not found, returning to menu." << std::endl;
-        saveFile.close();
-        showMenu();
-    }
+//     } else {
+//         std::cout << "File not found, returning to menu." << std::endl;
+//         saveFile.close();
+//         showMenu();
+//     }
 
-}
+// }
 
 std::vector<TilePtr> loadTiles(std::string s, std::vector<TilePtr> v) {
     for (char &c : s) {

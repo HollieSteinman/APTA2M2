@@ -27,8 +27,15 @@ public:
      */
     void playRound();
 
-    //  Displays player's board and piles
-    void displayRound();
+    /**
+     * Gets the game going
+     */
+    void startGame();
+
+    /**
+     * Displays current player tables
+     */
+    void displayTurn();
 
     //  Returns tiles of one colour from a factory and discards the rest
     // i think this should be done by the ADT to keep in line with the struct
