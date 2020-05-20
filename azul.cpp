@@ -37,7 +37,7 @@ int main(int argc, char** argv){
     try {
 
         // basic main methods should be included in this try block
-        // showMenu();
+        showMenu();
         // TilePtr holder = new Tile(R);
         Bag* gameBag = new Bag(10);
         Factory* factory01 = new Factory();
@@ -46,11 +46,11 @@ int main(int argc, char** argv){
         // To run tests do not show the menu
         // testBag(gameBag, holder);
         // testFactory(gameBag, factory01);
-        testMosaic(mosaic, gameBag, factory01);
+        // testMosaic(mosaic, gameBag, factory01);
         // factory01->loadFactory(gameBag);
         // playp->loadPile(factory01, R, 1);
         // board->getPile()->loadPile(factory01, R, 1);
-        
+        // args.seed;
         
 
     } catch (std::exception& e){

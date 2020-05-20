@@ -13,6 +13,11 @@
 void showMenu();
 
 /**
+ * Displays game menu with seed
+ */
+void showMenu(int seed);
+
+/**
  *  Plays the game
  */
 void playGame();

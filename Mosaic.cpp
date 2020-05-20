@@ -316,11 +316,11 @@ void Mosaic::loadBroken(TilePtr tile){
 
 void Mosaic::displayMosaic(){
     // line 1
-    std::cout << "1:     " << p1.at(0)->getChar() << "||"; 
+    std::cout << "1:     " << p1.at(0)->getChar() << "|| "; 
     for (int i = 0; i < 5; ++i){
         std::cout << mosaic[0][i]->getChar();
     }
-    std::cout << "||";
+    std::cout << " ||";
     for (int i = 0; i < 5; ++i){
         std::cout << puzzle[0][i]->getChar() << " ";
     }
@@ -331,11 +331,11 @@ void Mosaic::displayMosaic(){
     for (int i = 0; i < 2; ++i){
         std::cout << p2.at(i)->getChar();
     }
-    std::cout << "||";
+    std::cout << "|| ";
     for (int i = 0; i < 5; ++i){
         std::cout << mosaic[1][i]->getChar();
     }
-    std::cout << "||";
+    std::cout << " ||";
     for (int i = 0; i < 5; ++i){
         std::cout << puzzle[1][i]->getChar() << " ";
     }
@@ -346,11 +346,11 @@ void Mosaic::displayMosaic(){
     for (int i = 0; i < 3; ++i){
         std::cout << p3.at(i)->getChar();
     }
-    std::cout << "||";
+    std::cout << "|| ";
     for (int i = 0; i < 5; ++i){
         std::cout << mosaic[2][i]->getChar();
     }
-    std::cout << "||";
+    std::cout << " ||";
     for (int i = 0; i < 5; ++i){
         std::cout << puzzle[2][i]->getChar() << " ";
     }
@@ -361,11 +361,11 @@ void Mosaic::displayMosaic(){
     for (int i = 0; i < 4; ++i){
         std::cout << p4.at(i)->getChar();
     }
-    std::cout << "||";
+    std::cout << "|| ";
     for (int i = 0; i < 5; ++i){
         std::cout << mosaic[3][i]->getChar();
     }
-    std::cout << "||";
+    std::cout << " ||";
     for (int i = 0; i < 5; ++i){
         std::cout << puzzle[3][i]->getChar() << " ";
     }
@@ -376,11 +376,11 @@ void Mosaic::displayMosaic(){
     for (int i = 0; i < 5; ++i){
         std::cout << p5.at(i)->getChar();
     }
-    std::cout << "||";
+    std::cout << "|| ";
     for (int i = 0; i < 5; ++i){
         std::cout << mosaic[4][i]->getChar();
     }
-    std::cout << "||";
+    std::cout << " ||";
     for (int i = 0; i < 5; ++i){
         std::cout << puzzle[4][i]->getChar() << " ";
     }

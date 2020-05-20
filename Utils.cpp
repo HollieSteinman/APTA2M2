@@ -58,7 +58,7 @@ void showCredits(){
     std::cout << "-------------------------------------------" << std::endl;
     std::cout << "Name: Emmanuel Chukwudi Nwordu " << std::endl;
     std::cout << "Student ID: s3667339 " << std::endl;
-    std::cout << "Email: s3667339@student.rmit.edu.au " << std::endl;
+    std::cout << "Email: s3667339@student.rmit. // playGame();edu.au " << std::endl;
     std::cout << std::endl;
     std::cout << "Name: Joel Liang Shien Tan " << std::endl;
     std::cout << "Student ID: s3758729 " << std::endl;
@@ -108,7 +108,7 @@ void loadGame() {
             getline(ls, type, ':');
             // gets type
             getline(ls, type, ':');
-
+            // start of the switch statement
             if(type == "player") {
                 std::string pId, pName, pPoints, pStarter, label;
                 int id, points, starter;
@@ -138,7 +138,7 @@ void loadGame() {
                 }
 
                 // Player player = new Player(id, pName);
-
+                // this block here will make only one type to be read
             } else if (type == "factory") {
                 Factory factory;
                 std::string facStr, facContent;
