@@ -31,7 +31,7 @@ public:
      * Returns tile pattern as 
      * its enum number
      */
-    Colour getColour();
+    char getColour();
 
     /**
      * Return tile pattern as
@@ -48,6 +48,7 @@ public:
 private:
 
     Colour colour;
+    char colours[7] = {'F','R','Y','B','L','U','E'};
 
 };
 

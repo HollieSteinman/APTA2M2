@@ -300,3 +300,20 @@ void Factory::listFactory(){
 bool Factory::pCenter(){
     return pickCenter;
 }
+
+std::string Factory::getFactoryString(int fac) {
+    std::string f;
+
+    std::vector<TilePtr> factory[6] = {fa1, fa2, fa3, fa4, fa5, center};
+
+    for (auto it = factory[fac].begin();
+         it != factory[fac].end(); it++) {
+
+        TilePtr tilePtr = *it;
+        std::string t(1, tilePtr->getColour());
+        f = f.append(t);
+    }
+
+    std::cout << f << std::endl;
+    return f;
+}

@@ -1,5 +1,3 @@
-#include <string.h>
-
 #include "Player.h"
 
 Player::Player(int id, std::string name):
@@ -19,6 +17,10 @@ int Player::getId(){
 
 std::string Player::getName(){
     return name;
+}
+
+void Player::setMosaic(Mosaic* m) {
+    mosaic = m;
 }
 
 Mosaic* Player::getMosaic(){

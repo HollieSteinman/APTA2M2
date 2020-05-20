@@ -62,6 +62,46 @@ Mosaic::Mosaic(){
     }
 }
 
+Mosaic::Mosaic(bool s, Mos m, int p, std::vector<TilePtr> v[6]) {
+
+    starter = s;
+    points = p;
+    std::copy(v[0].begin(), v[0].end(), back_inserter(p1));
+    std::copy(v[1].begin(), v[1].end(), back_inserter(p2));
+    std::copy(v[2].begin(), v[2].end(), back_inserter(p3));
+    std::copy(v[3].begin(), v[3].end(), back_inserter(p4));
+    std::copy(v[4].begin(), v[4].end(), back_inserter(p5));
+    std::copy(v[5].begin(), v[5].end(), back_inserter(broken));
+
+    // instantiate the puzzle
+    for (int i = 0; i != 5; ++i){
+        for (int j = 0; j != 5; ++j){
+            if (i == j){
+                puzzle[i][j] = new Tile(Y);
+            }
+            if (j == (i + 1) || j == (i - 4)){
+                puzzle[i][j] = new Tile(B);
+            }
+            if (j == (i + 2) || j == (i - 3)){
+                puzzle[i][j] = new Tile(L);
+            }
+            if (j == (i + 3) || j == (i - 2)){
+                puzzle[i][j] = new Tile(R);
+            }
+            if (j == (i + 4) || j == (i - 1)){
+                puzzle[i][j] = new Tile(U);
+            }
+        }
+    }
+
+    for(int i = 0; i < 5; i++) {
+        for(int j = 0; j < 5; j++) {
+            mosaic[i][j] = m[i][j];
+        };
+    }
+
+}
+
 Mosaic::~Mosaic(){
     // clear the pile
     p1.clear();
@@ -316,7 +356,7 @@ void Mosaic::loadBroken(TilePtr tile){
 
 void Mosaic::displayMosaic(){
     // line 1
-    std::cout << "1:     " << p1.at(0)->getChar() << "|| "; 
+    std::cout << "1:     " << p1.at(0)->getChar() << "||";
     for (int i = 0; i < 5; ++i){
         std::cout << mosaic[0][i]->getChar();
     }
@@ -647,4 +687,57 @@ bool Mosaic::isGameover(){
 
 bool Mosaic::toStart(){
     return starter;
+}
+
+std::string Mosaic::getMosaic() {
+    std::string m;
+
+    for(int i = 0; i < 5; i++) {
+        for(int j = 0; j < 5; j++) {
+            std::string t(1, mosaic[i][j]->getColour());
+            m = m.append(t);
+        }
+        if(i != 4) {
+            m = m.append(",");
+        }
+    }
+
+    return m;
+}
+
+std::string Mosaic::getPile() {
+    std::string p;
+
+    std::vector<TilePtr> pile[5] = {p1, p2, p3, p4, p5};
+
+    for(int i = 0; i < 5; i++) {
+        for (auto it = pile[i].begin();
+             it != pile[i].end(); it++) {
+
+            TilePtr tilePtr = *it;
+            std::string t(1, tilePtr->getColour());
+            p = p.append(t);
+        }
+
+        if(i != 4) {
+            p = p.append(",");
+        }
+    }
+
+    return p;
+}
+
+std::string Mosaic::getBroken() {
+    std::string b;
+
+    for (auto it = broken.begin();
+         it != broken.end(); it++) {
+
+        TilePtr tilePtr = *it;
+        std::string t(1, tilePtr->getColour());
+        b = b.append(t);
+    }
+
+    std::cout << b << std::endl;
+    return b;
 }

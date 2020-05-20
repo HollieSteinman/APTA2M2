@@ -25,6 +25,11 @@ public:
     std::string getName();
 
     /**
+     * Sets player mosaic
+     */
+    void setMosaic(Mosaic* m);
+
+    /**
      * Returns player board
      */
     Mosaic* getMosaic();
@@ -39,7 +44,6 @@ public:
      * Play a turn
      */
     void playTurn(Factory* factory,unsigned int fRow, Colour colour,unsigned int pRow);
-
 
 private:
 

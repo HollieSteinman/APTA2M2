@@ -60,6 +60,11 @@ public:
      */
     bool pCenter();
 
+    /**
+     * Returns factory as string
+     */
+     std::string getFactoryString(int fac);
+
 private:
 
     // std::vector<TilePtr> factory;
