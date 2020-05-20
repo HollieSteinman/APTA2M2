@@ -2,6 +2,7 @@
 #include <sstream>
 #include "Utils.h"
 #include "Player.h"
+#include "GameManager.h"
 
 void showMenu(){
     std::cout << "Welcome To Azul! " << std::endl;
@@ -15,11 +16,18 @@ void showMenu(){
     std::cout << std::endl;
     std::cout << "> ";
 
+    // int seed;
+    // try{
+    //     //std::cin.exceptions(std::istream::failbit);
+    //     std::cin >> seed;
+    // }catch(const std::ios::failure &){
+    //     std::cout << "Number is invalid";
+    // }
     int menu = 0;
     std::cin >> menu;
 
     if (menu == 1) {
-        // playGame();
+         playGame(20);
     } else if (menu == 2) {
         loadGame();
     } else if (menu == 3) {
@@ -34,20 +42,19 @@ void showMenu(){
 
 }
 
-void playGame(){
-    // setup required files
-    // Bag* gameBag = new Bag(20);
-    // Factory* factory = new Factory();
-    // Player* player1 = new Player(1, "James");
-    // Player* player2 = new Player(2, "John");
+void playGame(int seed){
+    // Start Game
+    // Initialize Bag with seed
+    Bag* gameBag = new Bag(seed);
 
-    // try {
-
-
-    // } catch (std::exception& e){
-    //     // recover from last save
-    //     std::cerr << "Exception Caught: " << e.what() << std::endl;
-    // }
+    GameManager* gameManager = new GameManager();
+    try {
+        // Game Start: Play round
+       gameManager->playRound(gameBag);
+    } catch (std::exception& e){
+        // recover from last save
+        std::cerr << "Exception Caught: " << e.what() << std::endl;
+    }
 
 
 }

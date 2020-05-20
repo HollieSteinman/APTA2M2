@@ -39,9 +39,10 @@ int main(int argc, char** argv){
         // basic main methods should be included in this try block
         showMenu();
         // TilePtr holder = new Tile(R);
-        Bag* gameBag = new Bag(10);
-        Factory* factory01 = new Factory();
-        Mosaic* mosaic = new Mosaic();
+        // Bag* gameBag = new Bag(10);
+        // Factory* factory01 = new Factory();
+        // Mosaic* mosaic = new Mosaic();
+        showMenu();
         // Pile* playp = new Pile();
         // To run tests do not show the menu
         // testBag(gameBag, holder);

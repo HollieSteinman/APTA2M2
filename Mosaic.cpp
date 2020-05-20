@@ -689,6 +689,10 @@ bool Mosaic::toStart(){
     return starter;
 }
 
+std::vector<TilePtr> Mosaic::getBrokenTile(){
+    return broken;
+}
+
 std::string Mosaic::getMosaic() {
     std::string m;
 

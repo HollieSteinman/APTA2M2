@@ -21,7 +21,7 @@ void showMenu(int seed);
 /**
  *  Plays the game
  */
-void playGame();
+void playGame(int seed);
 
 /**
  *  Loads a game from a save file
