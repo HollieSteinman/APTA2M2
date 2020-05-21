@@ -93,7 +93,7 @@ void GameManager::startGame(){
     factory->listFactory();
     std::cout << " Mosaic for " << plyr1->getName() << std::endl;
     plyr1->getMosaic()->displayMosaic();
-    std::cout << "TURN FOR PLAYER: " << plyr1->getName() << std::endl;
+    // std::cout << "TURN FOR PLAYER: " << plyr1->getName() << std::endl;
     std::cout << "> ";
     // Fix for line space leak
     // Skips all leading whitespace.
@@ -111,7 +111,7 @@ void GameManager::startGame(){
     while(getline(ss,command, ' ')) // delimiter as space
     {   
         std::stringstream stream(command);
-        std::cout<<command<<std::endl;
+        // std::cout<<command<<std::endl;
         stringcommand.push_back(command);
     }
 
@@ -138,10 +138,10 @@ void GameManager::startGame(){
 
         std::cout << "Turn successful." <<std::endl;
         std::cout << std::endl;
-        std::cout<<"< the following turns happen >" << std::endl;
-        for(std::vector<std::string>::iterator i = turns.begin(); i != turns.end(); ++i){
-            std::cout<< *i << std::endl;
-        }  
+        // std::cout<<"< the following turns happen >" << std::endl;
+        // for(std::vector<std::string>::iterator i = turns.begin(); i != turns.end(); ++i){
+        //     std::cout<< *i << std::endl;
+        // }  
     } else {
         throw std::logic_error("The game just started");
     }
@@ -153,7 +153,7 @@ void GameManager::startGame(){
 
 void GameManager::playRound() {
     // Plays the game
-    std::cout << "Round : " << round << std::endl;
+    std::cout << "Round : " << round + 1 << std::endl;
 
     // check who to start round and
     // adjust variables accordingly
@@ -188,7 +188,7 @@ void GameManager::playRound() {
         while(getline(ss,command, ' ')) // delimiter as space
         {   
             std::stringstream stream(command);
-            std::cout<<command<<std::endl;
+            // std::cout<<command<<std::endl;
             stringcommand.push_back(command);
         }
 
@@ -235,10 +235,10 @@ void GameManager::playRound() {
 
             std::cout << "Turn successful." <<std::endl;
             std::cout << std::endl;
-            std::cout<<"< the following turns happen >" << std::endl;
-            for(std::vector<std::string>::iterator i = turns.begin(); i != turns.end(); ++i){
-                std::cout<< *i << std::endl;
-            } 
+            // std::cout<<"< the following turns happen >" << std::endl;
+            // for(std::vector<std::string>::iterator i = turns.begin(); i != turns.end(); ++i){
+            //     std::cout<< *i << std::endl;
+            // } 
             std::cout<<"=== END OF TURN ==="<<std::endl;  
 
         } else if(stringcommand.front() == "save"){
