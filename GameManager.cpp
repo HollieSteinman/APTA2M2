@@ -56,10 +56,11 @@ GameManager::GameManager(int seed) {
 
 }
 
-GameManager::GameManager(Player* p1, Player* p2, int r, Factory* f):
+GameManager::GameManager(Player* p1, Player* p2, int r, Factory* f, Bag* b):
     round(r),
     plyr1(p1),
     plyr2(p2),
+    bag(b),
     factory(f)
 {
     if(plyr1->getMosaic()->toStart()) {
@@ -67,6 +68,10 @@ GameManager::GameManager(Player* p1, Player* p2, int r, Factory* f):
     } else {
         setFirstPlayer(2);
     }
+
+    gameOver = false;
+
+    std::cout << "Azul game successfully loaded" << std::endl;
 }
 
 GameManager::~GameManager() {
@@ -88,7 +93,7 @@ void GameManager::startGame(){
     factory->listFactory();
     std::cout << " Mosaic for " << plyr1->getName() << std::endl;
     plyr1->getMosaic()->displayMosaic();
-    std::cout << "TURN FOR PLAYER: " << plyr1->getName();
+    std::cout << "TURN FOR PLAYER: " << plyr1->getName() << std::endl;
     std::cout << "> ";
     // Fix for line space leak
     // Skips all leading whitespace.
@@ -229,7 +234,7 @@ void GameManager::playRound() {
         } else if(stringcommand.front() == "save"){
 
             // Save current state of the game
-            saveGame();
+            saveGame(stringcommand.at(1), plyr1, plyr2, factory, round, currPlayerID, bag);
             std::cout << "Game successfully saved to '" << stringcommand.at(1) << "'" << std::endl;
 
         } else {

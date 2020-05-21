@@ -697,7 +697,7 @@ std::string Mosaic::getMosaic() {
 
     for(int i = 0; i < 5; i++) {
         for(int j = 0; j < 5; j++) {
-            std::string t(1, mosaic[i][j]->getColour());
+            std::string t(1, mosaic[i][j]->getColourChar());
             m = m.append(t);
         }
         if(i != 4) {
@@ -718,7 +718,7 @@ std::string Mosaic::getPile() {
              it != pile[i].end(); it++) {
 
             TilePtr tilePtr = *it;
-            std::string t(1, tilePtr->getColour());
+            std::string t(1, tilePtr->getColourChar());
             p = p.append(t);
         }
 
@@ -737,7 +737,7 @@ std::string Mosaic::getBroken() {
          it != broken.end(); it++) {
 
         TilePtr tilePtr = *it;
-        std::string t(1, tilePtr->getColour());
+        std::string t(1, tilePtr->getColourChar());
         b = b.append(t);
     }
 

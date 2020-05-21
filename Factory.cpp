@@ -327,7 +327,7 @@ std::string Factory::getFactoryString(int fac) {
          it != factory[fac].end(); it++) {
 
         TilePtr tilePtr = *it;
-        std::string t(1, tilePtr->getColour());
+        std::string t(1, tilePtr->getColourChar());
         f = f.append(t);
     }
 
