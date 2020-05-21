@@ -29,7 +29,7 @@ void showMenu(int seed){
     if (menu == 1) {
          playGame(seed);
     } else if (menu == 2) {
-        // loadGame();
+        loadGame(seed);
     } else if (menu == 3) {
         showCredits();
         showMenu(seed);
@@ -77,7 +77,7 @@ void showCredits(){
     std::cout << "-------------------------------------------" << std::endl;
 }
 
-void loadGame() {
+void loadGame(int s) {
 
     std::cout << "Enter the filename from which load a game" << std::endl;
     std::cout << "> ";
@@ -85,7 +85,7 @@ void loadGame() {
     std::string filename;
     std::cin >> filename;
 
-    // filename for testing, change later
+    // file directory
     std::string dir = "saves/";
 
     // opens file
@@ -262,14 +262,13 @@ void loadGame() {
                         getline(ls, gActive, ':');
                         std::istringstream(gActive) >> active;
                     } else if (label == "seed") {
-                        // TODO store seed
                         getline(ls, gSeed, ':');
                         std::istringstream(gSeed) >> seed;
                     } else if (label == "bag") {
                         getline(ls, gBag, ':');
                         std::vector<TilePtr> tempBag;
                         tempBag = loadTiles(gBag, tempBag);
-                        bag = new Bag(tempBag);
+                        bag = new Bag(tempBag, seed);
                     } else if (label == "lid") {
                         getline(ls, gLid, ':');
                         std::vector<TilePtr> lid;
@@ -282,8 +281,8 @@ void loadGame() {
 
         saveFile.close();
 
-        // GameManager* gameManager = new GameManager(player1, player2, turns, factory);
-        // gameManager->playRound(bag);
+        GameManager* gameManager = new GameManager(player1, player2, turns, factory, bag);
+        gameManager->playRound();
 
     } else {
         // this will be a good place to throw an exception if the 
@@ -291,7 +290,7 @@ void loadGame() {
         // multiple save files the erase an old file before rewriting
         std::cout << "File not found, returning to menu." << std::endl;
         saveFile.close();
-        showMenu();
+        showMenu(s);
     }
 
 }
@@ -326,9 +325,9 @@ std::vector<TilePtr> loadTiles(std::string s, std::vector<TilePtr> v) {
     return v;
 }
 
-void saveGame(std::string filename, Player* p1, Player* p2, Factory* f, int turn, int active) {
+void saveGame(std::string filename, Player* p1, Player* p2, Factory* f, int turn, int active, Bag* bag) {
 
-    // filename for testing, change later
+    // file directory
     std::string dir = "saves/";
 
     // opens file
@@ -375,9 +374,9 @@ void saveGame(std::string filename, Player* p1, Player* p2, Factory* f, int turn
     saveFile << "type:game" << std::endl;
     saveFile << "turns:" << turn << std::endl;
     saveFile << "active:" << active << std::endl;
-    saveFile << "seed:" << std::endl; // TODO save seed
-    saveFile << "bag:" << std::endl; // TODO save bag & lid
-    saveFile << "lid:" << std::endl;
+    saveFile << "seed:" << bag->getSeed() << std::endl;
+    saveFile << "bag:" << bag->getBag() << std::endl;
+    saveFile << "lid:" << bag->getLid() << std::endl;
     saveFile << "#" << std::endl;
 
     saveFile.close();

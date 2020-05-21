@@ -2,7 +2,10 @@
 
 #include "Bag.h"
 
-Bag::Bag(int randGen){
+Bag::Bag(int randGen):
+    seed(randGen)
+{
+
     // initiate bag as a linked list
     bag = new LinkedList();
     bag->head = nullptr;
@@ -56,7 +59,9 @@ Bag::Bag(int randGen){
 
 }
 
-Bag::Bag(std::vector<TilePtr> tempBag) {
+Bag::Bag(std::vector<TilePtr> tempBag, int randGen):
+    seed(randGen)
+{
     bag = new LinkedList();
     for (unsigned int i = 0; i < tempBag.size(); ++i){
         addTile(tempBag[i]);
@@ -151,4 +156,35 @@ void Bag::putBox(std::vector<TilePtr> tiles){
 
 void Bag::clearBox(){
     boxLid.clear();
+}
+
+int Bag::getSeed() {
+    return seed;
+}
+
+std::string Bag::getBag() {
+    std::string b;
+
+    Node* current = bag->head;
+    while(current != nullptr) {
+        std::string t(1, current->value->getColourChar());
+        b = b.append(t);
+        current = current->next;
+    }
+
+    return b;
+}
+
+std::string Bag::getLid() {
+    std::string l;
+
+    for (auto it = boxLid.begin();
+         it != boxLid.end(); it++) {
+
+        TilePtr tilePtr = *it;
+        std::string t(1, tilePtr->getColourChar());
+        l = l.append(t);
+    }
+
+    return l;
 }

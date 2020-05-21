@@ -16,10 +16,9 @@ Tile::Tile(){
     colour = E;
 }
 
-// char Tile::getColour(){
-//     return colours[colour];
-// }
-// can be renamed to get colour char
+char Tile::getColourChar(){
+     return colours[colour];
+}
 
 Colour Tile::getColour(){
     return colour;

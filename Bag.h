@@ -36,7 +36,7 @@ class Bag {
          * Constructor / Deconstructor
          */
         Bag(int randGen);
-        Bag(std::vector<TilePtr> tempBag);
+        Bag(std::vector<TilePtr> tempBag, int randGen);
         ~Bag();
 
         /**
@@ -80,7 +80,23 @@ class Bag {
          */
         void clearBox();
 
+        /**
+         * Gets seed
+         */
+         int getSeed();
+
+         /**
+          * Return bag as string
+          */
+          std::string getBag();
+
+          /**
+           * Return lid as string
+           */
+           std::string getLid();
+
     private:
+        int seed;
         LinkedList* bag;
         std::vector<TilePtr> boxLid;
 };

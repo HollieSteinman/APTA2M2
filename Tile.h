@@ -28,6 +28,11 @@ public:
     Tile();
 
     /**
+     * Returns tile colour as a char
+     */
+    char getColourChar();
+
+    /**
      * Returns tile pattern as 
      * its enum number
      */
