@@ -50,9 +50,9 @@ GameManager::GameManager(int seed) {
     // load factory for the first time
     factory->loadFactory(bag);
 
-    std::cout << "Let’s Play!" ;
     // variable to check if game is over
     gameOver = false;
+    std::cout << "Let’s Play!" ;
 
 }
 
@@ -63,7 +63,7 @@ GameManager::GameManager(Player* p1, Player* p2, int r, Factory* f, Bag* b):
     bag(b),
     factory(f)
 {
-    if(plyr1->getMosaic()->toStart()) {
+    if(plyr1->toStart()) {
         setFirstPlayer(1);
     } else {
         setFirstPlayer(2);
@@ -120,7 +120,6 @@ void GameManager::startGame(){
         int fRow = std::stoi(stringcommand.at(1));
         char color = stringcommand.at(2)[0];
         int pRow = std::stoi(stringcommand.at(3));
-        std::cout << fRow << color << pRow;
         //Convert color to enum
         Colour colour = makeColour(color);
 
@@ -154,9 +153,21 @@ void GameManager::startGame(){
 
 void GameManager::playRound() {
     // Plays the game
+    std::cout << "Round : " << round << std::endl;
+
+    // check who to start round and
+    // adjust variables accordingly
+    if (plyr1->toStart()){
+        currPlayerID = plyr1->getId();
+        plyr1->getMosaic()->startReset();
+    }
+    if (plyr2->toStart()){
+        currPlayerID = plyr2->getId();
+        plyr2->getMosaic()->startReset();
+    }
 
     // Play turns until factory is empty
-    while(!factory->isEmpty()){
+    while(!factory->isEmpty() && !gameOver){
         std::cout<<"=== Start Turn ==="<<std::endl;
         //Display factories and board to user
         displayTurn();
@@ -188,11 +199,10 @@ void GameManager::playRound() {
             int fRow = std::stoi(stringcommand.at(1));
             char color = stringcommand.at(2)[0];
             int pRow = std::stoi(stringcommand.at(3));
-            std::cout << fRow << color << pRow;
             //Convert color to enum
             Colour colour = makeColour(color);
 
-            // Player Turn: Adds selected tiles to mosaic
+            // Player Turn: Adds selected tiles to the pile
             // Records history of turns to vector turns
             std::string turn =" ";
             if(currPlayerID == 1){
@@ -244,9 +254,6 @@ void GameManager::playRound() {
             // std::cout << "Please enter a valid command" <<std::endl;
         }
         // End of Turn
-        // Shows Players both their score   
-        std::cout<<"Score for Player "<<plyr1->getName()<<": "<<plyr1->getMosaic()->getPoints();
-        std::cout<<"Score for Player "<<plyr2->getName()<<": "<<plyr2->getMosaic()->getPoints();
     }
 
     // if factory is empty then the round is over 
@@ -255,6 +262,13 @@ void GameManager::playRound() {
         // score the players
         plyr1->getMosaic()->score();
         plyr2->getMosaic()->score();
+
+        // Display scores for this round
+        // Shows Players both their score   
+        std::cout<<"Score for Player "<<plyr1->getName()<<": "<<plyr1->getMosaic()->getPoints();
+        std::cout << std::endl;
+        std::cout<<"Score for Player "<<plyr2->getName()<<": "<<plyr2->getMosaic()->getPoints();
+        std::cout << std::endl;
 
         // add excess tiles to boxlid
         bag->putBox(plyr1->getMosaic()->getToBox());
@@ -287,18 +301,18 @@ void GameManager::displayTurn() {
     std::cout<< "Factories" << std::endl;
     factory->listFactory();
     if(currPlayerID == 1){
-        std::cout<< "Mosaic for" << plyr1->getName()<<std::endl;
+        std::cout<< "Mosaic for " << plyr1->getName()<<std::endl;
         plyr1->getMosaic()->displayMosaic();
         std::cout << "TURN FOR PLAYER: " << plyr1->getName();
 
     }
     else if(currPlayerID == 2){
-        std::cout<< "Mosaic for" << plyr2->getName()<<std::endl;
+        std::cout<< "Mosaic for " << plyr2->getName()<<std::endl;
         plyr2->getMosaic()->displayMosaic();
         std::cout << "TURN FOR PLAYER: " << plyr2->getName();
     }
     std::cout<<std::endl;
-            std::cout<< "> ";
+    std::cout<< "> ";
 }
 
 Colour GameManager::makeColour(char c){

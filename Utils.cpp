@@ -157,7 +157,7 @@ void loadGame(int s) {
                 std::string pId, pName, pPoints, pStarter, pMosaic,
                     pPile, pBroken, label;
                 int id, points;
-                bool starter;
+                bool starter = false;
                 Mos m;
                 std::vector<TilePtr> vectors[6], p1, p2, p3, p4, p5, broken;
 

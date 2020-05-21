@@ -125,9 +125,11 @@ void Mosaic::loadPile(Factory* factory, unsigned int fRow, Colour colour, unsign
         // get the tiles from the factory row
         std::vector<TilePtr> holder = factory->getTiles(colour, fRow);
         // check if the mosiac row has been filled
-        for (int i = 0; i < 5; ++i){
-            if (holder[0]->getColour() == mosaic[pRow - 1][i]->getColour()){
-                throw std::out_of_range("That colour has played for this row");
+        if (pRow < 6){
+            for (int i = 0; i < 5; ++i){
+                if (holder[0]->getColour() == mosaic[pRow - 1][i]->getColour()){
+                    throw std::out_of_range("That colour has played for this row");
+                }
             }
         }
         // check if the player that owns this mosaic  
@@ -627,10 +629,12 @@ void Mosaic::score(){
     // check that broken has tiles in it
     if (counter < broken.size()){
         // check if first player 
-        if (broken[0]->getColour() == F){
-            points -= 1;
-            broken[0] = new Tile(E);
-            starter = false;
+        for (unsigned int i = 0; i < broken.size(); ++i){
+            if (broken[i]->getColour() == F){
+                points -= 1;
+                broken[i] = new Tile(E);
+                // starter = false;
+            }
         }
         // score the rest of broken
         for (unsigned int i = 0; i < broken.size(); ++i){
@@ -661,7 +665,7 @@ void Mosaic::score(){
     // check if the game is over and set gameover
     // check mosaic row 1
     for (int i = 0; i < 5; ++i){
-        if (mosaic[0][i]->getColour() != E){
+        if (mosaic[0][i]->getColour() == E){
             ++counter;
         }
     }
@@ -671,7 +675,7 @@ void Mosaic::score(){
     counter = 0;
     // check mosaic row 2
     for (int i = 0; i < 5; ++i){
-        if (mosaic[1][i]->getColour() != E){
+        if (mosaic[1][i]->getColour() == E){
             ++counter;
         }
     }
@@ -681,7 +685,7 @@ void Mosaic::score(){
     counter = 0;
     // check mosaic row 3
     for (int i = 0; i < 5; ++i){
-        if (mosaic[2][i]->getColour() != E){
+        if (mosaic[2][i]->getColour() == E){
             ++counter;
         }
     }
@@ -691,7 +695,7 @@ void Mosaic::score(){
     counter = 0;
     // check mosaic row 4
     for (int i = 0; i < 5; ++i){
-        if (mosaic[3][i]->getColour() != E){
+        if (mosaic[3][i]->getColour() == E){
             ++counter;
         }
     }
@@ -701,7 +705,7 @@ void Mosaic::score(){
     counter = 0;
     // check mosiac row 5
     for (int i = 0; i < 5; ++i){
-        if (mosaic[4][i]->getColour() != E){
+        if (mosaic[4][i]->getColour() == E){
             ++counter;
         }
     }
@@ -797,4 +801,8 @@ std::string Mosaic::getBroken() {
     }
 
     return b;
+}
+
+void Mosaic::startReset(){
+    starter = false;
 }

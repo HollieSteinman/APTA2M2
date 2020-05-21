@@ -79,31 +79,25 @@ class Mosaic {
         std::vector<TilePtr> getBrokenTile();
 
         /**
-<<<<<<< HEAD
-         * Returns mosaic as a string
-=======
          * Returns mosaic as string
->>>>>>> 1beefa6825fb305f9ea55334c2b984c0147a4c6e
          */
         std::string getMosaic();
 
         /**
-<<<<<<< HEAD
-         * Returns Pile as a string
-=======
          * Returns pile as string
->>>>>>> 1beefa6825fb305f9ea55334c2b984c0147a4c6e
          */
         std::string getPile();
 
         /**
-<<<<<<< HEAD
          * Returns Broken tiles as string
-=======
-         * Returns broken as string
->>>>>>> 1beefa6825fb305f9ea55334c2b984c0147a4c6e
          */
         std::string getBroken();
+
+        /**
+         * Resets the starter status after
+         * the next round starts
+         */
+        void startReset();
 
     private:
         std::vector<TilePtr> p1;
