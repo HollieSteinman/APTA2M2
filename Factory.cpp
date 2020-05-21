@@ -321,17 +321,22 @@ bool Factory::pCenter(){
 std::string Factory::getFactoryString(int fac) {
     std::string f;
 
+    // creates array of vectors to easily find the correct factory
     std::vector<TilePtr> factory[6] = {fa1, fa2, fa3, fa4, fa5, center};
 
+    // LOOP REFERENCED FROM: https://www.geeksforgeeks.org/array-of-vectors-in-c-stl/
+    // loops through factory in the 'fac' position of the factory array
     for (auto it = factory[fac].begin();
          it != factory[fac].end(); it++) {
 
+        // create a tile object from the iterator
         TilePtr tilePtr = *it;
+        // creates a string of length 1 from the returned char
         std::string t(1, tilePtr->getColourChar());
+        // appends string with colour char
         f = f.append(t);
     }
 
-    std::cout << f << std::endl;
     return f;
 }
 

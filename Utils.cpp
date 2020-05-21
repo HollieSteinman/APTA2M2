@@ -77,6 +77,31 @@ void showCredits(){
     std::cout << "-------------------------------------------" << std::endl;
 }
 
+/* ALGORITHM loadGame(int seed)
+ * BEGIN
+ * file name entered
+ * IF file exists
+ *     WHILE not end of file (eof)
+ *          search until '$'
+ *          search until '#'
+ *          save string between '$' and '#'
+ *          read first line of string
+ *          read first line after ':'
+ *          IF remaining string equals "player"
+ *              run code to load player from rest of string
+ *          ELSE IF remaining string equals "factory"
+ *              run code to load factories from rest of string
+ *          ELSE IF remaining string equals "game"
+ *              run code to load game data from rest of string
+ *     close file
+ *     resume game
+ * ELSE
+ *     throw file not found error
+ *     return to menu
+ * END
+ */
+
+
 void loadGame(int s) {
 
     std::cout << "Enter the filename from which load a game" << std::endl;
@@ -93,22 +118,29 @@ void loadGame(int s) {
 
     // checks if file exists
     if(saveFile.good()) {
-        Player *player1, *player2;
-        Factory *factory;
-        int turns, active, seed;
-        Bag *bag;
+        // constructing new objects
+        Player *player1 = new Player(0, ""),
+                *player2 = new Player(0, "");
+        Factory *factory = new Factory();
+        int turns = 0,
+            active = 0,
+            seed = 0;
+        Bag *bag = new Bag(0);
 
         std::string input;
+
+        // continue searching for objects until end of file is reached
         while(!saveFile.eof()) {
             // searches for the start of an object
             getline(saveFile, input, '$');
-            // until the end of the object
+            // until the end of the object, save string to input
             getline(saveFile, input, '#');
 
             // creates a stringstream of each object
             std::stringstream ss(input);
             std::string line, type;
-            // first line is blank - fix
+
+            // first line is blank
             getline(ss, line);
             // gets first line (object type)
             getline(ss, line);
@@ -116,7 +148,7 @@ void loadGame(int s) {
             // creates stringstream for the first line
             std::stringstream ls(line);
 
-            // gets label
+            // gets label by searching the first line for ':'
             getline(ls, type, ':');
             // gets type
             getline(ls, type, ':');
@@ -128,9 +160,12 @@ void loadGame(int s) {
                 bool starter;
                 Mos m;
                 std::vector<TilePtr> vectors[6], p1, p2, p3, p4, p5, broken;
+
+                // continues while it has a new line
                 while(getline(ss, line)) {
                     std::stringstream ls(line);
 
+                    // gets label
                     getline(ls, label, ':');
 
                     if(label == "id") {
@@ -144,11 +179,17 @@ void loadGame(int s) {
                     } else if (label == "mosaic") {
                         getline(ls, pMosaic, ':');
                         std::stringstream ms(pMosaic);
+
+                        // for each mosaic line
                         for(int i = 0; i < 5; i++) {
+                            // get the next block in the line until ','
                             getline(ms, pMosaic, ',');
+                            // for each element in the mosaic line
                             for(int j = 0; j < 5; j++) {
+                                // convert to a char
                                 char c = pMosaic[j];
                                 TilePtr tile;
+                                // create a new tile based on the char
                                 if (c == 'F') {
                                     tile = new Tile(F);
                                 } else if (c == 'R') {
@@ -164,10 +205,12 @@ void loadGame(int s) {
                                 } else {
                                     tile = new Tile(E);
                                 }
+                                // assign the tile to the correct spot in the mosaic
                                 m[i][j] = tile;
                             }
                         }
                     } else if (label == "pile") {
+                        // converts all blocks (until next ',') to TilePtr vectors
                         getline(ls, pPile, ':');
                         std::stringstream ps(pPile);
 
@@ -186,6 +229,7 @@ void loadGame(int s) {
                         getline(ps, pPile, ',');
                         p5 = loadTiles(pPile, p5);
                     } else if (label == "broken") {
+                        // converts the block to a TilePtr vector
                         getline(ls, pBroken, ':');
                         broken = loadTiles(pBroken, broken);
                     } else if (label == "starter") {
@@ -199,6 +243,7 @@ void loadGame(int s) {
                     }
                 }
 
+                // adding vectors to array for creation of a player's mosaic
                 vectors[0] = p1;
                 vectors[1] = p2;
                 vectors[2] = p3;
@@ -206,8 +251,7 @@ void loadGame(int s) {
                 vectors[4] = p5;
                 vectors[5] = broken;
 
-                std::string p;
-
+                // if the id is 1, assign to player1, else assign to player2
                 if(id == 1) {
                     player1 = new Player(id, pName);
                     Mosaic* mosaic = new Mosaic(starter, m, points, vectors);
@@ -221,8 +265,8 @@ void loadGame(int s) {
 
             } else if (type == "factory") {
                 std::string facStr, facContent;
+                // while there is a new line (i.e. new factory)
                 while(getline(ss, line)) {
-                    // WARNING - check if empty, last line is blank
                     std::stringstream ls(line);
 
                     // gets the factory number
@@ -232,24 +276,26 @@ void loadGame(int s) {
                     if (facStr == "mid") {
                         facNo = 0;
                     } else {
+                        // convert factory number string to int and assign to facNo
                         std::istringstream(facStr.substr(
                                 facStr.length() - 1)) >> facNo;
                     }
                     // gets the content of the factory
                     getline(ls, facContent, ':');
 
+                    // loads tiles into a vector from the block
                     std::vector<TilePtr> fac;
-
-                    //TODO check if empty
-
                     fac = loadTiles(facContent, fac);
 
-                    factory = new Factory();
+                    // load the factory into the factory object
                     factory->loadFactory(facNo, fac);
+
+                    // clean up
                     fac.clear();
                 }
             } else if (type == "game") {
                 std::string label, gTurns, gActive, gSeed, gBag, gLid;
+                // continues while it has a new line
                 while(getline(ss, line)) {
                     std::stringstream ls(line);
 
@@ -266,38 +312,41 @@ void loadGame(int s) {
                         std::istringstream(gSeed) >> seed;
                     } else if (label == "bag") {
                         getline(ls, gBag, ':');
+                        // loads tiles into a vector from the string block
                         std::vector<TilePtr> tempBag;
                         tempBag = loadTiles(gBag, tempBag);
+                        // creates a new bag with the seed and vector of tiles
                         bag = new Bag(tempBag, seed);
                     } else if (label == "lid") {
                         getline(ls, gLid, ':');
+                        // loads tiles into a vector from the string block
                         std::vector<TilePtr> lid;
                         lid = loadTiles(gLid, lid);
+                        // assigns the lid contents to the bag
                         bag->putBox(lid);
                     }
                 }
             }
         }
 
+        // clean up - close file
         saveFile.close();
 
+        // creates new gameManager with loaded data and continues to play
         GameManager* gameManager = new GameManager(player1, player2, turns, factory, bag);
         gameManager->playRound();
 
     } else {
-        // this will be a good place to throw an exception if the 
-        // file entered does not exist also to check if we are using
-        // multiple save files the erase an old file before rewriting
-        std::cout << "File not found, returning to menu." << std::endl;
         saveFile.close();
-        showMenu(s);
+        throw std::logic_error("File not found.");
     }
 
 }
 
 std::vector<TilePtr> loadTiles(std::string s, std::vector<TilePtr> v) {
+    // for each char in the string create a new tile based on it's colour
+    // REFERENCED FROM: https://stackoverflow.com/a/9438329
     for (char &c : s) {
-        //TODO check referencing
         if (c == 'F') {
             TilePtr tile = new Tile(F);
             v.push_back(tile);
@@ -322,6 +371,7 @@ std::vector<TilePtr> loadTiles(std::string s, std::vector<TilePtr> v) {
         }
     }
 
+    // returns filled vector
     return v;
 }
 
@@ -330,7 +380,7 @@ void saveGame(std::string filename, Player* p1, Player* p2, Factory* f, int turn
     // file directory
     std::string dir = "saves/";
 
-    // opens file
+    // opens file (no need to check if file exists, overwrites automatically)
     std::ofstream saveFile;
     saveFile.open(dir.append(filename));
 
@@ -379,6 +429,7 @@ void saveGame(std::string filename, Player* p1, Player* p2, Factory* f, int turn
     saveFile << "lid:" << bag->getLid() << std::endl;
     saveFile << "#" << std::endl;
 
+    // clean up - close file
     saveFile.close();
 
 }

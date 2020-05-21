@@ -88,12 +88,12 @@ class Bag {
          /**
           * Return bag as string
           */
-          std::string getBag();
+         std::string getBag();
 
           /**
            * Return lid as string
            */
-           std::string getLid();
+          std::string getLid();
 
     private:
         int seed;

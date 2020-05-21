@@ -165,10 +165,15 @@ int Bag::getSeed() {
 std::string Bag::getBag() {
     std::string b;
 
+    // find the head node and the node to be referenced from inside the loop
     Node* current = bag->head;
+    // whilst the node isn't null
     while(current != nullptr) {
+        // creates a string of length 1 from the returned char
         std::string t(1, current->value->getColourChar());
+        // appends string with colour char
         b = b.append(t);
+        // sets the current node for the next loop
         current = current->next;
     }
 
@@ -178,11 +183,15 @@ std::string Bag::getBag() {
 std::string Bag::getLid() {
     std::string l;
 
+    // LOOP REFERENCED FROM: https://www.geeksforgeeks.org/array-of-vectors-in-c-stl/
     for (auto it = boxLid.begin();
          it != boxLid.end(); it++) {
 
+        // create a tile object from the iterator
         TilePtr tilePtr = *it;
+        // creates a string of length 1 from the returned char
         std::string t(1, tilePtr->getColourChar());
+        // appends string with colour char
         l = l.append(t);
     }
 

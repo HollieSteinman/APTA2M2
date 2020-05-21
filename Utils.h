@@ -34,6 +34,9 @@ void playGame(GameManager* gameManager);
  */
 void loadGame(int seed);
 
+/**
+ * Converts a string of colours to a vector of tiles
+ */
 std::vector<TilePtr> loadTiles(std::string s, std::vector<TilePtr> v);
 
 /**

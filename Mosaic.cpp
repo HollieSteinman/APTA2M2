@@ -734,12 +734,16 @@ std::vector<TilePtr> Mosaic::getBrokenTile() {
 std::string Mosaic::getMosaic() {
     std::string m;
 
+    // iterates through the 2D array
     for(int i = 0; i < 5; i++) {
         for(int j = 0; j < 5; j++) {
+            // creates a string of length 1 from the returned char
             std::string t(1, mosaic[i][j]->getColourChar());
+            // appends string with colour char
             m = m.append(t);
         }
         if(i != 4) {
+            // if not the last array, include delimiter ','
             m = m.append(",");
         }
     }
@@ -748,20 +752,28 @@ std::string Mosaic::getMosaic() {
 }
 
 std::string Mosaic::getPile() {
+    // REFERENCED FROM: https://www.geeksforgeeks.org/array-of-vectors-in-c-stl/
     std::string p;
 
+    // create an array of vectors to iterate through of just the piles
     std::vector<TilePtr> pile[5] = {p1, p2, p3, p4, p5};
 
+    // iterates through each pile
     for(int i = 0; i < 5; i++) {
+
         for (auto it = pile[i].begin();
              it != pile[i].end(); it++) {
 
+            // create a tile object from the iterator
             TilePtr tilePtr = *it;
+            // creates a string of length 1 from the returned char
             std::string t(1, tilePtr->getColourChar());
+            // appends string with colour char
             p = p.append(t);
         }
 
         if(i != 4) {
+            // if not the last array, include delimiter ','
             p = p.append(",");
         }
     }
@@ -772,14 +784,17 @@ std::string Mosaic::getPile() {
 std::string Mosaic::getBroken() {
     std::string b;
 
+    // LOOP REFERENCED FROM: https://www.geeksforgeeks.org/array-of-vectors-in-c-stl/
     for (auto it = broken.begin();
          it != broken.end(); it++) {
 
+        // create a tile object from the iterator
         TilePtr tilePtr = *it;
+        // creates a string of length 1 from the returned char
         std::string t(1, tilePtr->getColourChar());
+        // appends string with colour char
         b = b.append(t);
     }
 
-    std::cout << b << std::endl;
     return b;
 }
