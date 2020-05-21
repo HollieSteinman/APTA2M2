@@ -337,6 +337,45 @@ void Mosaic::loadPile(Factory* factory, unsigned int fRow, Colour colour, unsign
                     loadBroken(holder[0]);
                 }
             }
+        } else if (pRow == 6){
+            // get the number of empty spaces
+            for (unsigned int i = 0; i < broken.size(); ++i){
+                if (broken[i]->getColour() == E){
+                    ++counter;
+                }
+            }
+            // check that there are empty spaces
+            if (counter == 0){
+                throw std::out_of_range("There is no empty space in that row");
+            }
+            // if pile row is not empty 
+            // check that colour matches
+            // if (counter < p2.size()){
+            //     if (holder[0]->getColour() != p2[0]->getColour() && p2[0]->getColour() != E){
+            //         throw std::out_of_range("That colour does mot match with the others");
+            //     }
+            // }
+            // if space more than number of tiles 
+            if (counter >= holder.size()){
+                for (unsigned int i = 0; i < broken.size() && numTiles != 0; ++i){
+                    if (broken[i]->getColour() == E){
+                        broken[i] = holder[0];
+                        --numTiles;
+                    }
+                }
+            }
+            // if number of tiles more than space
+            if (counter < holder.size()){
+                // for (unsigned int i = 0; i < p1.size(); ++i){
+                //     if (p2[i]->getColour() == E){
+                //         p2[i] = holder[0];
+                //         --numTiles;
+                //     }
+                // }
+                // for (unsigned int i = 0; i < numTiles; ++i){
+                //     loadBroken(holder[0]);
+                // }
+            }
         }
     }
 }

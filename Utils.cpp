@@ -81,7 +81,7 @@ void loadGame() {
 
     std::cout << "Enter the filename from which load a game" << std::endl;
     std::cout << "> ";
-
+    
     std::string filename;
     std::cin >> filename;
 
@@ -282,9 +282,13 @@ void loadGame() {
 
         saveFile.close();
 
-        GameManager* gameManager = new GameManager(player1, player2, turns, factory);
-        gameManager->playRound(bag);
+        // GameManager* gameManager = new GameManager(player1, player2, turns, factory);
+        // gameManager->playRound(bag);
+
     } else {
+        // this will be a good place to throw an exception if the 
+        // file entered does not exist also to check if we are using
+        // multiple save files the erase an old file before rewriting
         std::cout << "File not found, returning to menu." << std::endl;
         saveFile.close();
         showMenu();

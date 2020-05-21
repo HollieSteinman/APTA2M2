@@ -53,7 +53,8 @@ public:
     void saveGame();
 
     /**
-     * Returns color given a char
+     * Returns colour given a char
+     * sanitises user colour input
      */
     Colour makeColour(char c);
 

@@ -88,7 +88,7 @@ void GameManager::startGame(){
     factory->listFactory();
     std::cout << " Mosaic for " << plyr1->getName() << std::endl;
     plyr1->getMosaic()->displayMosaic();
-    std::cout << "TURN FOR PLAYER: " << plyr1->getName();
+    std::cout << "TURN FOR PLAYER: " << plyr1->getName() << std::endl;
     std::cout << "> ";
     // Fix for line space leak
     // Skips all leading whitespace.
