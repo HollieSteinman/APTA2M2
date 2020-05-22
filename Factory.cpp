@@ -4,7 +4,6 @@
 
 Factory::Factory(){
     center.push_back(new Tile(F));
-    pickCenter = false;
 
     // prevent segfault
     for (int i = 0; i < 4; ++i){
@@ -46,7 +45,6 @@ std::vector<TilePtr> Factory::getTiles(Colour colour, int line){
             if (center[0]->getColour() == F){
                 toReturn.push_back(center[0]);
                 center.erase(center.begin() + 0);
-                pickCenter = true;
             }
             // copy tiles of same colour to return variable
             for (unsigned int i = 0; i < center.size(); ++i){
