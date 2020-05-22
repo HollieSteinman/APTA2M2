@@ -1,0 +1,30 @@
+Welcome To Azul! 
+------------------
+
+Menu 
+1. New Game 
+2. Load Game 
+3. Credits 
+4. Quit
+
+> Enter the filename from which load a game
+> Azul game successfully loaded
+
+=== Start Round ===
+TURN FOR PLAYER: Hollie
+Factories:
+0: F R L B 
+1: R L R R 
+2: L B L L 
+3: L L B L 
+4: 
+5: R U Y B 
+
+Mosaic for Hollie
+1:     .|| ..... ||Y B L R U 
+2:    ..|| ..... ||U Y B L R 
+3:   ...|| ..... ||R U Y B L 
+4:  ....|| ..... ||L R U Y B 
+5: .....|| ..... ||B L R U Y 
+broken: 
+> 
