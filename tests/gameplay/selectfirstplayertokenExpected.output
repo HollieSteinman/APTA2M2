@@ -31,3 +31,7 @@ broken:
 > 
 Colour not found in factory.
 > 
+Invalid Input. Usage:
+turn <factory no> <colour> <pile no>
+save <filename>
+> 
