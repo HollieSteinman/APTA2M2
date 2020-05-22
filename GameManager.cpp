@@ -52,7 +52,7 @@ GameManager::GameManager(int seed) {
 
     // variable to check if game is over
     gameOver = false;
-    std::cout << "Let’s Play!" ;
+    std::cout << "Let’s Play!" << std::endl;
 
 }
 
@@ -72,6 +72,10 @@ GameManager::GameManager(Player* p1, Player* p2, int r, Factory* f, Bag* b):
     gameOver = false;
 
     std::cout << "Azul game successfully loaded" << std::endl;
+
+    while (!gameOver){
+        playRound();
+    }
 }
 
 GameManager::~GameManager() {
