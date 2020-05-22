@@ -95,32 +95,32 @@ void GameManager::playRound() {
             gameOver = true;
             std::cout << "=== GAME OVER ===" << std::endl;
             if (plyr1->getMosaic()->getPoints() > plyr2->getMosaic()->getPoints()){
-                std::cout << "Player 1 wins with " << plyr1->getMosaic()->getPoints() << std::endl;
+                std::cout << "Player 1 wins with " << plyr1->getMosaic()->getPoints() << " points" << std::endl;
             } else {
-                std::cout << "Player 2 wins with " << plyr2->getMosaic()->getPoints() << std::endl;
+                std::cout << "Player 2 wins with " << plyr2->getMosaic()->getPoints() << " points" << std::endl;
             }
-        }
+        } else {
+            // reload the bag if it is empty
+            if (bag->size() == 0){
+                bag->reload();
+            }
+            factory->loadFactory(bag);
+            ++round;
+            std::cout<<"=== END OF ROUND ==="<<std::endl;
 
-        // reload the bag if it is empty
-        if (bag->size() == 0){
-            bag->reload();
-        }
-        factory->loadFactory(bag);
-        ++round;
-        std::cout<<"=== END OF ROUND ==="<<std::endl;
+            // check who to start round and
+            // adjust variables accordingly
+            if (plyr1->toStart()){
+                currPlayerID = plyr1->getId();
+                plyr1->getMosaic()->startReset();
+            }
+            if (plyr2->toStart()){
+                currPlayerID = plyr2->getId();
+                plyr2->getMosaic()->startReset();
+            }
 
-        // check who to start round and
-        // adjust variables accordingly
-        if (plyr1->toStart()){
-            currPlayerID = plyr1->getId();
-            plyr1->getMosaic()->startReset();
+            playRound();
         }
-        if (plyr2->toStart()){
-            currPlayerID = plyr2->getId();
-            plyr2->getMosaic()->startReset();
-        }
-
-        playRound();
     }
     
 }
