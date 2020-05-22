@@ -423,7 +423,7 @@ void Mosaic::displayMosaic(){
 
     // broken tiles
     std::cout << "broken: ";
-    for (int i = 0; i < broken.size(); ++i){
+    for (unsigned int i = 0; i < broken.size(); ++i){
         std::cout << broken.at(i)->getChar();
     }
     std::cout << std::endl;
