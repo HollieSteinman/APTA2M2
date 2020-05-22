@@ -759,7 +759,3 @@ std::string Mosaic::getBroken() {
 void Mosaic::startReset(){
     starter = false;
 }
-
-void Mosaic::forceStart() {
-    starter = true;
-}

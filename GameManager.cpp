@@ -10,7 +10,6 @@ GameManager::GameManager(int seed) {
     std::cin >> playerName1;
 
     plyr1 = new Player(1, playerName1);
-    plyr1->getMosaic()->forceStart();
 
     std::cout << "Enter a name for player 2" << std::endl;
     std::cout << "> ";
@@ -152,7 +151,7 @@ void GameManager::playTurn(int fRow, char color, int pRow, Colour colour) {
     // Player Turn: Adds selected tiles to the pile
     // Records history of turns to vector turns
 
-    if (factory->colourExists(fRow, colour)) {
+    try {
         std::string turn =" ";
         if(currPlayerID == 1){
             plyr1->playTurn(factory,fRow,colour,pRow);
@@ -177,8 +176,8 @@ void GameManager::playTurn(int fRow, char color, int pRow, Colour colour) {
 
         std::cout << "Turn successful." <<std::endl;
         std::cout << std::endl;
-    } else {
-        std::cout << "Colour not found in factory." << std::endl;
+    } catch (std::exception& e) {
+        std::cerr << "Exception Caught: " << e.what() << std::endl;
         runCommand();
     }
 }

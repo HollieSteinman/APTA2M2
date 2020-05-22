@@ -94,11 +94,6 @@ class Mosaic {
          */
         void startReset();
 
-        /**
-         * Forces the starter status to be true,
-         * used for start of a game
-         */
-         void forceStart();
 
     private:
         std::vector<TilePtr> p1;
