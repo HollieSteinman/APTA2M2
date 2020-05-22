@@ -316,7 +316,7 @@ void loadGame(int s) {
         saveFile.close();
 
         // creates new gameManager with loaded data and continues to play
-        GameManager* gameManager = new GameManager(player1, player2, turns, factory, bag);
+        GameManager* gameManager = new GameManager(player1, player2, turns, factory, bag, active);
         gameManager->playRound();
 
     } else {

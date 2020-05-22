@@ -1,0 +1,54 @@
+Welcome To Azul! 
+------------------
+
+Menu 
+1. New Game 
+2. Load Game 
+3. Credits 
+4. Quit
+
+> 2
+Enter the filename from which load a game
+> save1.input
+Azul game successfully loaded
+
+=== Start Round ===
+TURN FOR PLAYER: John
+Factories:
+0: Y B Y Y R B 
+1: B Y L B 
+2: 
+3: 
+4: Y U U B 
+5: 
+
+Mosaic for John
+1:     Y|| ..... ||Y B L R U 
+2:    UU|| ..... ||U Y B L R 
+3:   ...|| ..... ||R U Y B L 
+4:  ....|| ..... ||L R U Y B 
+5: .....|| ..... ||B L R U Y 
+broken: 
+> turn 0 Y 3
+
+Turn successful.
+
+TURN FOR PLAYER: Jane
+Factories:
+0: B R B 
+1: B Y L B 
+2: 
+3: 
+4: Y U U B 
+5: 
+
+Mosaic for Jane
+1:     U|| ..... ||Y B L R U 
+2:    RR|| ..... ||U Y B L R 
+3:   ...|| ..... ||R U Y B L 
+4:  ....|| ..... ||L R U Y B 
+5: .....|| ..... ||B L R U Y 
+broken: F
+> save save1-2.output
+
+Game successfully saved to 'save1-2.output'

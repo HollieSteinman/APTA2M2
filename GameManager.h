@@ -15,7 +15,7 @@ public:
 
     //  Constructor / Destructor
     GameManager(int seed);
-    GameManager(Player* p1, Player* p2, int r, Factory* f, Bag* b);
+    GameManager(Player* p1, Player* p2, int r, Factory* f, Bag* b, int active);
     ~GameManager();
 
     /**

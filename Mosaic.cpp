@@ -117,7 +117,7 @@ int Mosaic::getPoints(){
 void Mosaic::loadPile(Factory* factory, unsigned int fRow, Colour colour, unsigned int pRow){
     
     // check that valid factory row and pile row is entered
-    if (fRow > 5 || pRow > 5){
+    if (fRow > 5 || pRow > 6){
         throw std::out_of_range("Invalid selection, please reselect");
     } else {
         // get the tiles from the factory row
@@ -336,6 +336,10 @@ void Mosaic::loadPile(Factory* factory, unsigned int fRow, Colour colour, unsign
                 for (unsigned int i = 0; i < numTiles; ++i){
                     loadBroken(holder[0]);
                 }
+            }
+        } else if(pRow == 6) {
+            for(unsigned int i = 0; i < holder.size(); i++) {
+                loadBroken(holder[i]);
             }
         }
     }

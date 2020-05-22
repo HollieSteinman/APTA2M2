@@ -28,28 +28,23 @@ GameManager::GameManager(int seed) {
     gameOver = false;
     std::cout << "Let’s Play!" << std::endl;
 
+    currPlayerID = 1;
+
 }
 
-GameManager::GameManager(Player* p1, Player* p2, int r, Factory* f, Bag* b):
+GameManager::GameManager(Player* p1, Player* p2, int r, Factory* f, Bag* b, int active):
     round(r),
     plyr1(p1),
     plyr2(p2),
     bag(b),
     factory(f)
 {
-    if(plyr1->toStart()) {
-        setFirstPlayer(1);
-    } else {
-        setFirstPlayer(2);
-    }
 
+    currPlayerID = active;
     gameOver = false;
 
     std::cout << "Azul game successfully loaded" << std::endl;
 
-    while (!gameOver){
-        playRound();
-    }
 }
 
 GameManager::~GameManager() {
@@ -62,19 +57,9 @@ GameManager::~GameManager() {
 }
 
 void GameManager::playRound() {
+    std::cout << std::endl;
     std::cout<<"=== Start Round ==="<<std::endl;
     // Plays the game
-    // check who to start round and
-    // adjust variables accordingly
-    if (plyr1->toStart()){
-        currPlayerID = plyr1->getId();
-        plyr1->getMosaic()->startReset();
-    }
-    if (plyr2->toStart()){
-        currPlayerID = plyr2->getId();
-        plyr2->getMosaic()->startReset();
-    }
-
     // Play turns until factory is empty
     while(!factory->isEmpty() && !gameOver){
         //Display factories and board to user
@@ -82,8 +67,6 @@ void GameManager::playRound() {
         displayTurn();
         runCommand();
 
-        displayTurn();
-        runCommand();
         // End of Turn
 
     }
@@ -126,7 +109,18 @@ void GameManager::playRound() {
         factory->loadFactory(bag);
         ++round;
         std::cout<<"=== END OF ROUND ==="<<std::endl;
-        std::cout << std::endl;
+
+        // check who to start round and
+        // adjust variables accordingly
+        if (plyr1->toStart()){
+            currPlayerID = plyr1->getId();
+            plyr1->getMosaic()->startReset();
+        }
+        if (plyr2->toStart()){
+            currPlayerID = plyr2->getId();
+            plyr2->getMosaic()->startReset();
+        }
+
         playRound();
     }
     
