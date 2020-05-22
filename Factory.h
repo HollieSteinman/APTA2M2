@@ -50,21 +50,9 @@ public:
     void listFactory();
 
     /**
-     * Factory Accessor
-     * use 0 to access the center
-     * factory
-     */
-    std::vector<TilePtr> getFactory(int line);
-
-    /**
      * Returns factory as string
      */
      std::string getFactoryString(int fac);
-
-    /**
-     * Finds if a colour is in a factory
-     */
-    bool colourExists(int fac, Colour colour);
 
 private:
 

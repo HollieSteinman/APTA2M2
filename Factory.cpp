@@ -220,7 +220,6 @@ void Factory::loadFactory(Bag* bag){
 }
 
 void Factory::loadFactory(int factoryNo, std::vector<TilePtr> factory) {
-    //TODO copy vector
     if(factoryNo == 0) {
         center = factory;
     } else if (factoryNo == 1) {
@@ -249,29 +248,6 @@ bool Factory::isEmpty(){
                     }
                 }
             }
-        }
-    }
-    return toReturn;
-}
-
-std::vector<TilePtr> Factory::getFactory(int line){
-    std::vector<TilePtr> toReturn;
-
-    if (line < 0 || line > 6){
-        throw std::out_of_range("The index selected is out of bounds");
-    } else {
-        if (line == 0){
-            toReturn = center;
-        } else if (line == 1){
-            toReturn = fa1;
-        } else if (line == 2){
-            toReturn = fa2;
-        } else if (line == 3){
-            toReturn = fa3;
-        } else if (line == 4){
-            toReturn = fa4;
-        } else if (line == 5){
-            toReturn = fa5;
         }
     }
     return toReturn;
@@ -314,40 +290,22 @@ void Factory::listFactory(){
 
 std::string Factory::getFactoryString(int fac) {
     std::string f;
-
     // creates array of vectors to easily find the correct factory
     std::vector<TilePtr> factory[6] = {fa1, fa2, fa3, fa4, fa5, center};
-
-    // LOOP REFERENCED FROM: https://www.geeksforgeeks.org/array-of-vectors-in-c-stl/
-    // loops through factory in the 'fac' position of the factory array
-    for (auto it = factory[fac].begin();
-         it != factory[fac].end(); it++) {
-
-        // create a tile object from the iterator
-        TilePtr tilePtr = *it;
-        // creates a string of length 1 from the returned char
-        std::string t(1, tilePtr->getColourChar());
-        // appends string with colour char
-        f = f.append(t);
-    }
-
-    return f;
-}
-
-bool Factory::colourExists(int fac, Colour colour) {
-    bool found = false;
-    std::vector<TilePtr> currentFac = getFactory(fac);
-
-    for (auto it = currentFac.begin();
-         it != currentFac.end(); it++) {
-
-        // create a tile object from the iterator
-        TilePtr tilePtr = *it;
-        // creates a string of length 1 from the returned char
-        if(tilePtr->getColour() == colour) {
-            found = true;
+    if(factory[fac].empty()) {
+        f = "EEEE";
+    } else {
+        // LOOP REFERENCED FROM: https://www.geeksforgeeks.org/array-of-vectors-in-c-stl/
+        // loops through factory in the 'fac' position of the factory array
+        for (auto it = factory[fac].begin();
+             it != factory[fac].end(); it++) {
+            // create a tile object from the iterator
+            TilePtr tilePtr = *it;
+            // creates a string of length 1 from the returned char
+            std::string t(1, tilePtr->getColourChar());
+            // appends string with colour char
+            f = f.append(t);
         }
     }
-
-    return found;
+    return f;
 }

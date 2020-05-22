@@ -171,12 +171,16 @@ void Mosaic::loadPile(Factory* factory, unsigned int fRow, Colour colour, unsign
             }
             // if number of tiles more than space
             if (counter < holder.size()){
-                for (int i = p1.size() - 1; i >= 0; --i){
-                    if (p1[i]->getColour() == E){
-                        p1[i] = holder[0];
+                // LOOP REFERENCES FROM: https://stackoverflow.com/a/24851790
+                for (auto it = p1.rbegin(); it != p1.rend(); ++it)
+                {
+                    TilePtr tile = *it;
+                    if(tile->getColour() == E) {
+                        *it = holder[0];
                         --numTiles;
                     }
                 }
+
                 for (unsigned int i = 0; i < numTiles; ++i){
                     loadBroken(holder[0]);
                 }
@@ -210,9 +214,12 @@ void Mosaic::loadPile(Factory* factory, unsigned int fRow, Colour colour, unsign
             }
             // if number of tiles more than space
             if (counter < holder.size()){
-                for (unsigned int i = p2.size() - 1; i >= 0; --i){
-                    if (p2[i]->getColour() == E){
-                        p2[i] = holder[0];
+                // LOOP REFERENCES FROM: https://stackoverflow.com/a/24851790
+                for (auto it = p2.rbegin(); it != p2.rend(); ++it)
+                {
+                    TilePtr tile = *it;
+                    if(tile->getColour() == E) {
+                        *it = holder[0];
                         --numTiles;
                     }
                 }
@@ -249,9 +256,12 @@ void Mosaic::loadPile(Factory* factory, unsigned int fRow, Colour colour, unsign
             }
             // if number of tiles more than space
             if (counter < holder.size()){
-                for (unsigned int i = p3.size() - 1; i >= 0; --i){
-                    if (p3[i]->getColour() == E){
-                        p3[i] = holder[0];
+                // LOOP REFERENCES FROM: https://stackoverflow.com/a/24851790
+                for (auto it = p3.rbegin(); it != p3.rend(); ++it)
+                {
+                    TilePtr tile = *it;
+                    if(tile->getColour() == E) {
+                        *it = holder[0];
                         --numTiles;
                     }
                 }
@@ -288,9 +298,12 @@ void Mosaic::loadPile(Factory* factory, unsigned int fRow, Colour colour, unsign
             }
             // if number of tiles more than space
             if (counter < holder.size()){
-                for (unsigned int i = p4.size() - 1; i >= 0; --i){
-                    if (p4[i]->getColour() == E){
-                        p4[i] = holder[0];
+                // LOOP REFERENCES FROM: https://stackoverflow.com/a/24851790
+                for (auto it = p4.rbegin(); it != p4.rend(); ++it)
+                {
+                    TilePtr tile = *it;
+                    if(tile->getColour() == E) {
+                        *it = holder[0];
                         --numTiles;
                     }
                 }
@@ -327,9 +340,12 @@ void Mosaic::loadPile(Factory* factory, unsigned int fRow, Colour colour, unsign
             }
             // if number of tiles more than space
             if (counter < holder.size()){
-                for (unsigned int i = p5.size() - 1; i >= 0; --i){
-                    if (p5[i]->getColour() == E){
-                        p5[i] = holder[0];
+                // LOOP REFERENCES FROM: https://stackoverflow.com/a/24851790
+                for (auto it = p5.rbegin(); it != p5.rend(); ++it)
+                {
+                    TilePtr tile = *it;
+                    if(tile->getColour() == E) {
+                        *it = holder[0];
                         --numTiles;
                     }
                 }
