@@ -27,7 +27,8 @@ void showMenu(int seed){
     std::cin >> menu;
 
     if (menu == 1) {
-         playGame(seed);
+        GameManager* gameManager = new GameManager(seed);
+        gameManager->playRound();
     } else if (menu == 2) {
         loadGame(seed);
     } else if (menu == 3) {
@@ -39,24 +40,6 @@ void showMenu(int seed){
     } else {
         throw std::range_error("Please select an item from the list");
     }
-
-}
-
-void playGame(int seed){
-    // Start Game
-        GameManager* gameManager = new GameManager(seed);
-        gameManager->startGame();
-    // try {
-    //     // Game Start: Play round
-    //    gameManager->playRound(gameBag);
-    // } catch (std::exception& e){
-    //     // recover from last save
-    //     std::cerr << "Exception Caught: " << e.what() << std::endl;
-    // }
-
-}
-
-void playGame(GameManager* gameManager) {
 
 }
 

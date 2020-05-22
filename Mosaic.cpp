@@ -20,9 +20,6 @@ Mosaic::Mosaic(){
     for (int i = 0; i < 5; ++i){
         p5.push_back(new Tile(E));
     }
-    for (int i = 0; i < 7; ++i){
-        broken.push_back(new Tile(E));
-    }
 
     // instantiate the score
     points = 0;
@@ -110,6 +107,7 @@ Mosaic::~Mosaic(){
     p4.clear();
     p5.clear();
     broken.clear();
+    toBox.clear();
 }
 
 int Mosaic::getPoints(){
@@ -119,7 +117,7 @@ int Mosaic::getPoints(){
 void Mosaic::loadPile(Factory* factory, unsigned int fRow, Colour colour, unsigned int pRow){
     
     // check that valid factory row and pile row is entered
-    if (fRow > 5 || pRow > 6){
+    if (fRow > 5 || pRow > 5){
         throw std::out_of_range("Invalid selection, please reselect");
     } else {
         // get the tiles from the factory row
@@ -159,12 +157,12 @@ void Mosaic::loadPile(Factory* factory, unsigned int fRow, Colour colour, unsign
             // check that colour matches
             if (counter < p1.size()){
                 if (holder[0]->getColour() != p1[0]->getColour() && p1[0]->getColour() != E){
-                    throw std::out_of_range("That colour does mot match with the others");
+                    throw std::out_of_range("That colour does not match with the others");
                 }
             }
             // if space more than number of tiles 
             if (counter >= holder.size()){
-                for (unsigned int i = 0; i < p1.size() && numTiles != 0; ++i){
+                for (unsigned int i = p1.size() - 1; i >= 0 && numTiles != 0; --i){
                     if (p1[i]->getColour() == E){
                         p1[i] = holder[0];
                         --numTiles;
@@ -173,7 +171,7 @@ void Mosaic::loadPile(Factory* factory, unsigned int fRow, Colour colour, unsign
             }
             // if number of tiles more than space
             if (counter < holder.size()){
-                for (unsigned int i = 0; i < p1.size(); ++i){
+                for (int i = p1.size() - 1; i >= 0; --i){
                     if (p1[i]->getColour() == E){
                         p1[i] = holder[0];
                         --numTiles;
@@ -203,7 +201,7 @@ void Mosaic::loadPile(Factory* factory, unsigned int fRow, Colour colour, unsign
             }
             // if space more than number of tiles 
             if (counter >= holder.size()){
-                for (unsigned int i = 0; i < p2.size() && numTiles != 0; ++i){
+                for (unsigned int i = p2.size() - 1; i >= 0 && numTiles != 0; --i){
                     if (p2[i]->getColour() == E){
                         p2[i] = holder[0];
                         --numTiles;
@@ -212,7 +210,7 @@ void Mosaic::loadPile(Factory* factory, unsigned int fRow, Colour colour, unsign
             }
             // if number of tiles more than space
             if (counter < holder.size()){
-                for (unsigned int i = 0; i < p1.size(); ++i){
+                for (unsigned int i = p2.size() - 1; i >= 0; --i){
                     if (p2[i]->getColour() == E){
                         p2[i] = holder[0];
                         --numTiles;
@@ -242,7 +240,7 @@ void Mosaic::loadPile(Factory* factory, unsigned int fRow, Colour colour, unsign
             }
             // if space more than number of tiles 
             if (counter >= holder.size()){
-                for (unsigned int i = 0; i < p3.size() && numTiles != 0; ++i){
+                for (unsigned int i = p3.size() - 1; i >= 0 && numTiles != 0; --i){
                     if (p3[i]->getColour() == E){
                         p3[i] = holder[0];
                         --numTiles;
@@ -251,7 +249,7 @@ void Mosaic::loadPile(Factory* factory, unsigned int fRow, Colour colour, unsign
             }
             // if number of tiles more than space
             if (counter < holder.size()){
-                for (unsigned int i = 0; i < p3.size(); ++i){
+                for (unsigned int i = p3.size() - 1; i >= 0; --i){
                     if (p3[i]->getColour() == E){
                         p3[i] = holder[0];
                         --numTiles;
@@ -281,7 +279,7 @@ void Mosaic::loadPile(Factory* factory, unsigned int fRow, Colour colour, unsign
             }
             // if space more than number of tiles 
             if (counter >= holder.size()){
-                for (unsigned int i = 0; i < p4.size() && numTiles != 0; ++i){
+                for (unsigned int i = p4.size() - 1; i >= 0 && numTiles != 0; --i){
                     if (p4[i]->getColour() == E){
                         p4[i] = holder[0];
                         --numTiles;
@@ -290,7 +288,7 @@ void Mosaic::loadPile(Factory* factory, unsigned int fRow, Colour colour, unsign
             }
             // if number of tiles more than space
             if (counter < holder.size()){
-                for (unsigned int i = 0; i < p4.size(); ++i){
+                for (unsigned int i = p4.size() - 1; i >= 0; --i){
                     if (p4[i]->getColour() == E){
                         p4[i] = holder[0];
                         --numTiles;
@@ -320,7 +318,7 @@ void Mosaic::loadPile(Factory* factory, unsigned int fRow, Colour colour, unsign
             }
             // if space more than number of tiles 
             if (counter >= holder.size()){
-                for (unsigned int i = 0; i < p5.size() && numTiles != 0; ++i){
+                for (unsigned int i = p5.size() - 1; i >= 0 && numTiles != 0; --i){
                     if (p5[i]->getColour() == E){
                         p5[i] = holder[0];
                         --numTiles;
@@ -329,7 +327,7 @@ void Mosaic::loadPile(Factory* factory, unsigned int fRow, Colour colour, unsign
             }
             // if number of tiles more than space
             if (counter < holder.size()){
-                for (unsigned int i = 0; i < p5.size(); ++i){
+                for (unsigned int i = p5.size() - 1; i >= 0; --i){
                     if (p5[i]->getColour() == E){
                         p5[i] = holder[0];
                         --numTiles;
@@ -339,59 +337,12 @@ void Mosaic::loadPile(Factory* factory, unsigned int fRow, Colour colour, unsign
                     loadBroken(holder[0]);
                 }
             }
-        } else if (pRow == 6){
-            // get the number of empty spaces
-            for (unsigned int i = 0; i < broken.size(); ++i){
-                if (broken[i]->getColour() == E){
-                    ++counter;
-                }
-            }
-            // check that there are empty spaces
-            if (counter == 0){
-                throw std::out_of_range("There is no empty space in that row");
-            }
-            // if pile row is not empty 
-            // check that colour matches
-            // if (counter < p2.size()){
-            //     if (holder[0]->getColour() != p2[0]->getColour() && p2[0]->getColour() != E){
-            //         throw std::out_of_range("That colour does mot match with the others");
-            //     }
-            // }
-            // if space more than number of tiles 
-            if (counter >= holder.size()){
-                for (unsigned int i = 0; i < broken.size() && numTiles != 0; ++i){
-                    if (broken[i]->getColour() == E){
-                        broken[i] = holder[0];
-                        --numTiles;
-                    }
-                }
-            }
-            // if number of tiles more than space
-            if (counter < holder.size()){
-                // for (unsigned int i = 0; i < p1.size(); ++i){
-                //     if (p2[i]->getColour() == E){
-                //         p2[i] = holder[0];
-                //         --numTiles;
-                //     }
-                // }
-                // for (unsigned int i = 0; i < numTiles; ++i){
-                //     loadBroken(holder[0]);
-                // }
-            }
         }
     }
 }
 
 void Mosaic::loadBroken(TilePtr tile){
-    // Variable to ckeck once the first 
-    // empty space is reached
-    int count = 0;
-    for (int i = 0; i < 7 && count != 1; ++i){
-        if (broken[i]->getColour() == E){
-            broken[i] = tile;
-            ++count;
-        }
-    }
+    broken.push_back(tile);
 }
 
 void Mosaic::displayMosaic(){
@@ -468,7 +419,7 @@ void Mosaic::displayMosaic(){
 
     // broken tiles
     std::cout << "broken: ";
-    for (int i = 0; i < 7; ++i){
+    for (int i = 0; i < broken.size(); ++i){
         std::cout << broken.at(i)->getChar();
     }
     std::cout << std::endl;
@@ -662,6 +613,8 @@ void Mosaic::score(){
         counter = 0;
     }
 
+    broken.clear();
+
     // check if the game is over and set gameover
     // check mosaic row 1
     for (int i = 0; i < 5; ++i){
@@ -729,10 +682,6 @@ bool Mosaic::isGameover(){
 
 bool Mosaic::toStart(){
     return starter;
-}
-
-std::vector<TilePtr> Mosaic::getBrokenTile() {
-    return broken;
 }
 
 std::string Mosaic::getMosaic() {
@@ -805,4 +754,8 @@ std::string Mosaic::getBroken() {
 
 void Mosaic::startReset(){
     starter = false;
+}
+
+void Mosaic::forceStart() {
+    starter = true;
 }

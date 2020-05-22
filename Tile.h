@@ -44,11 +44,6 @@ public:
      */
     char getChar();
 
-    /**
-     * For destructive purposes
-     */
-    void clear();
-
 
 private:
 

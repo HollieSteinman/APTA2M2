@@ -8,7 +8,7 @@ Player::Player(int id, std::string name):
 }
 
 Player::~Player(){
-
+    delete(mosaic);
 }
 
 int Player::getId(){

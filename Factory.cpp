@@ -314,10 +314,6 @@ void Factory::listFactory(){
 
 }
 
-bool Factory::pCenter(){
-    return pickCenter;
-}
-
 std::string Factory::getFactoryString(int fac) {
     std::string f;
 
@@ -340,6 +336,20 @@ std::string Factory::getFactoryString(int fac) {
     return f;
 }
 
-void Factory::clear(){
+bool Factory::colourExists(int fac, Colour colour) {
+    bool found = false;
+    std::vector<TilePtr> currentFac = getFactory(fac);
 
+    for (auto it = currentFac.begin();
+         it != currentFac.end(); it++) {
+
+        // create a tile object from the iterator
+        TilePtr tilePtr = *it;
+        // creates a string of length 1 from the returned char
+        if(tilePtr->getColour() == colour) {
+            found = true;
+        }
+    }
+
+    return found;
 }

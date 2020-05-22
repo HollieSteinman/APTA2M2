@@ -14,13 +14,9 @@ class GameManager {
 public:
 
     //  Constructor / Destructor
-    GameManager();
     GameManager(int seed);
     GameManager(Player* p1, Player* p2, int r, Factory* f, Bag* b);
     ~GameManager();
-
-    //  Returns the current round - used for saving
-    void getRound();
 
     /**
      * Plays a round through each player 
@@ -29,24 +25,18 @@ public:
     void playRound();
 
     /**
-     * Gets the game going
-     */
-    void startGame();
-
-    /**
      * Displays current player tables
      */
     void displayTurn();
 
-    //  Returns tiles of one colour from a factory and discards the rest
-    // i think this should be done by the ADT to keep in line with the struct
-    Tile* getFactory(int pile, char colour);
+    /**
+     * Plays a single turn
+     */
+     void playTurn(int fRow, char color, int pRow, Colour colour);
 
-    //  Generates piles from the bag
-    // this is also handled by the ADT
-    void generatePiles();
-
-    //  Sets player to play first
+    /**
+     * Sets the player to play first
+     */
     void setFirstPlayer(int playerID);
 
     /**
@@ -54,6 +44,13 @@ public:
      * sanitises user colour input
      */
     Colour makeColour(char c);
+
+    /**
+     * Runs relevant methods based
+     * on command
+     */
+     void runCommand();
+
 
 private:
 
@@ -66,8 +63,7 @@ private:
     Tile* currTile;
     std::vector<std::string> turns;
     std::vector<std::string> stringcommand;
-    bool gameOver;  
-    // TODO variables for game
+    bool gameOver;
 
 };
 

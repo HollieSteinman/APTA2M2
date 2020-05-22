@@ -7,27 +7,10 @@
 #include "Tile.h"
 #include "GameManager.h"
 
-#define BAG_SIZE 100
-
-/**
- *  Displays the game menu
- */
-void showMenu();
-
 /**
  * Displays game menu with seed
  */
 void showMenu(int seed);
-
-/**
- *  Plays the game
- */
-void playGame(int seed);
-
-/**
- *  Plays the game from a saved gameManager
- */
-void playGame(GameManager* gameManager);
 
 /**
  *  Loads a game from a save file

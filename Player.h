@@ -41,12 +41,6 @@ public:
     bool toStart();
 
     /**
-     * Force this player to
-     * start the game
-     */
-    void makeStart();
-
-    /**
      * Play a turn
      */
     void playTurn(Factory* factory,unsigned int fRow, Colour colour,unsigned int pRow);
@@ -56,7 +50,6 @@ private:
     int id;
     std::string name;
     Mosaic* mosaic;
-    bool isStarter;
 
 };
 

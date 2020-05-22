@@ -57,30 +57,23 @@ public:
     std::vector<TilePtr> getFactory(int line);
 
     /**
-     * Was the center picked
-     */
-    bool pCenter();
-
-    /**
      * Returns factory as string
      */
      std::string getFactoryString(int fac);
 
     /**
-     * Delete the factory
+     * Finds if a colour is in a factory
      */
-    void clear();
+    bool colourExists(int fac, Colour colour);
 
 private:
 
-    // std::vector<TilePtr> factory;
     std::vector<TilePtr> fa1;
     std::vector<TilePtr> fa2;
     std::vector<TilePtr> fa3;
     std::vector<TilePtr> fa4;
     std::vector<TilePtr> fa5;
     std::vector<TilePtr> center;
-    bool pickCenter;
 
 };
 

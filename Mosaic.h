@@ -72,11 +72,6 @@ class Mosaic {
          * row is filled
          */
         bool isGameover();
-        
-        /**
-         * Returns broken tiles
-         */
-        std::vector<TilePtr> getBrokenTile();
 
         /**
          * Returns mosaic as string
@@ -98,6 +93,12 @@ class Mosaic {
          * the next round starts
          */
         void startReset();
+
+        /**
+         * Forces the starter status to be true,
+         * used for start of a game
+         */
+         void forceStart();
 
     private:
         std::vector<TilePtr> p1;

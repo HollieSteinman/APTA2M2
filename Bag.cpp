@@ -44,7 +44,7 @@ Bag::Bag(int randGen):
         if(tempBag[value] != nullptr){
             addTile(tempBag[value]);
             tempBag[value] = nullptr;
-            for (int i = value; i < 100; ++i){
+            for (int i = value; i < 99; ++i){
                 tempBag[i] = tempBag[i+1];
                 tempBag[i+1] = nullptr;
             }
@@ -69,7 +69,7 @@ Bag::Bag(std::vector<TilePtr> tempBag, int randGen):
 }
 
 Bag::~Bag(){
-
+    clear();
 }
 
 int Bag::size() {
