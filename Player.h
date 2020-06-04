@@ -12,7 +12,7 @@ public:
      * Constructor / Deconstructor
      */
     Player(int id, std::string name);
-    ~Player();
+    virtual ~Player();
 
     /**
      * Returns player id
@@ -43,9 +43,9 @@ public:
     /**
      * Play a turn
      */
-    void playTurn(Factory* factory,unsigned int fRow, Colour colour,unsigned int pRow);
+    virtual void playTurn(Factory* factory,unsigned int fRow, Colour colour,unsigned int pRow);
 
-private:
+protected:
 
     int id;
     std::string name;

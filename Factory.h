@@ -54,6 +54,8 @@ public:
      */
      std::string getFactoryString(int fac);
 
+     int countColourTiles(int fac, Colour colour);
+
 private:
 
     std::vector<TilePtr> fa1;

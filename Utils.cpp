@@ -16,19 +16,26 @@ void showMenu(int seed){
     std::cout << std::endl;
     std::cout << "> ";
 
-    // int seed;
-    // try{
-    //     //std::cin.exceptions(std::istream::failbit);
-    //     std::cin >> seed;
-    // }catch(const std::ios::failure &){
-    //     std::cout << "Number is invalid";
-    // }
     int menu = 0;
     std::cin >> menu;
 
     if (menu == 1) {
-        GameManager* gameManager = new GameManager(seed);
-        gameManager->playRound();
+        std::cout<< "New Game " << std::endl;
+        std::cout<< "1. Two Players " << std::endl;
+        std::cout<< "2. One Player (AI Opponent) " << std::endl;
+        std::cout << std::endl;
+        std::cout << "> ";
+
+        std::cin >> menu;
+
+        if(menu == 1) {
+            GameManager* gameManager = new GameManager(seed, 0);
+            gameManager->playRound();
+        } else if (menu == 2) {
+            //TODO run AI
+        } else {
+            throw std::range_error("Please select an item from the list");
+        }
     } else if (menu == 2) {
         loadGame(seed);
     } else if (menu == 3) {
@@ -373,9 +380,9 @@ void saveGame(std::string filename, Player* p1, Player* p2, Factory* f, int turn
     saveFile << "id:" << p1->getId() << std::endl;
     saveFile << "name:" << p1->getName() << std::endl;
     saveFile << "points:" << p1->getMosaic()->getPoints() << std::endl;
-    saveFile << "mosaic:" << p1->getMosaic()->getMosaic() << std::endl;
-    saveFile << "pile:" << p1->getMosaic()->getPile() << std::endl;
-    saveFile << "broken:" << p1->getMosaic()->getBroken() << std::endl;
+    saveFile << "mosaic:" << p1->getMosaic()->getMosaicString() << std::endl;
+    saveFile << "pile:" << p1->getMosaic()->getPileString() << std::endl;
+    saveFile << "broken:" << p1->getMosaic()->getBrokenString() << std::endl;
     saveFile << "starter:" << p1->getMosaic()->toStart() << std::endl;
     saveFile << "#" << std::endl;
 
@@ -385,9 +392,9 @@ void saveGame(std::string filename, Player* p1, Player* p2, Factory* f, int turn
     saveFile << "id:" << p2->getId() << std::endl;
     saveFile << "name:" << p2->getName() << std::endl;
     saveFile << "points:" << p2->getMosaic()->getPoints() << std::endl;
-    saveFile << "mosaic:" << p2->getMosaic()->getMosaic() << std::endl;
-    saveFile << "pile:" << p2->getMosaic()->getPile() << std::endl;
-    saveFile << "broken:" << p2->getMosaic()->getBroken() << std::endl;
+    saveFile << "mosaic:" << p2->getMosaic()->getMosaicString() << std::endl;
+    saveFile << "pile:" << p2->getMosaic()->getPileString() << std::endl;
+    saveFile << "broken:" << p2->getMosaic()->getBrokenString() << std::endl;
     saveFile << "starter:" << p2->getMosaic()->toStart() << std::endl;
     saveFile << "#" << std::endl;
 

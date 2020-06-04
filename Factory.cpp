@@ -309,3 +309,47 @@ std::string Factory::getFactoryString(int fac) {
     }
     return f;
 }
+
+int Factory::countColourTiles(int fac, Colour colour) {
+    int count = 0;
+
+    if(count == 0) {
+        for (unsigned int i = 0; i < center.size(); ++i){
+            if(center[i]->getColour() == colour) {
+                count++;
+            }
+        }
+    } else if (count == 1) {
+        for (unsigned int i = 0; i < fa1.size(); ++i){
+            if(fa1[i]->getColour() == colour) {
+                count++;
+            }
+        }
+    } else if (count == 2) {
+        for (unsigned int i = 0; i < fa2.size(); ++i){
+            if(fa2[i]->getColour() == colour) {
+                count++;
+            }
+        }
+    } else if (count == 3) {
+        for (unsigned int i = 0; i < fa3.size(); ++i){
+            if(fa3[i]->getColour() == colour) {
+                count++;
+            }
+        }
+    } else if (count == 4) {
+        for (unsigned int i = 0; i < fa4.size(); ++i){
+            if(fa4[i]->getColour() == colour) {
+                count++;
+            }
+        }
+    } else if (count == 5) {
+        for (unsigned int i = 0; i < fa5.size(); ++i){
+            if(fa5[i]->getColour() == colour) {
+                count++;
+            }
+        }
+    }
+
+    return count;
+}

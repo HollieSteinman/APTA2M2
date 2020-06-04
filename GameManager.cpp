@@ -1,7 +1,8 @@
 #include "GameManager.h"
 #include "Utils.h"
+#include "AI.h"
 
-GameManager::GameManager(int seed) {
+GameManager::GameManager(int seed, int numPlayers) {
 
     std::string playerName1, playerName2;
 
@@ -11,17 +12,23 @@ GameManager::GameManager(int seed) {
 
     plyr1 = new Player(1, playerName1);
 
-    std::cout << "Enter a name for player 2" << std::endl;
-    std::cout << "> ";
-    std::cin >> playerName2;
-
-    plyr2 = new Player(2, playerName2);
-
     // instantiate bag and factory
     bag = new Bag(seed);
     factory = new Factory();
     // load factory for the first time
     factory->loadFactory(bag);
+
+    if(numPlayers == 1) {
+        plyr2 = new AI(2, factory);
+    } else {
+        std::cout << "Enter a name for player 2" << std::endl;
+        std::cout << "> ";
+        std::cin >> playerName2;
+
+        plyr2 = new Player(2, playerName2);
+    }
+
+
 
     // variable to check if game is over
     gameOver = false;
@@ -64,7 +71,11 @@ void GameManager::playRound() {
         //Display factories and board to user
 
         displayTurn();
-        runCommand();
+        if(singlePlayer && currPlayerID == 2) {
+            dynamic_cast<AI*>(plyr2)->playTurn();
+        } else {
+            runCommand();
+        }
 
         // End of Turn
 
@@ -94,10 +105,19 @@ void GameManager::playRound() {
         if (plyr1->getMosaic()->isGameover() || plyr2->getMosaic()->isGameover()){
             gameOver = true;
             std::cout << "=== GAME OVER ===" << std::endl;
+            plyr1->getMosaic()->endScore();
+            plyr2->getMosaic()->endScore();
+
+            std::cout<<"Score for Player "<<plyr1->getName()<<": "<<plyr1->getMosaic()->getPoints();
+            std::cout << std::endl;
+            std::cout<<"Score for Player "<<plyr2->getName()<<": "<<plyr2->getMosaic()->getPoints();
+            std::cout << std::endl;
+            std::cout << std::endl;
+
             if (plyr1->getMosaic()->getPoints() > plyr2->getMosaic()->getPoints()){
-                std::cout << "Player 1 wins with " << plyr1->getMosaic()->getPoints() << " points" << std::endl;
+                std::cout << "Player 1 wins with " << plyr1->getMosaic()->getPoints() << " points!" << std::endl;
             } else {
-                std::cout << "Player 2 wins with " << plyr2->getMosaic()->getPoints() << " points" << std::endl;
+                std::cout << "Player 2 wins with " << plyr2->getMosaic()->getPoints() << " points!" << std::endl;
             }
         } else {
             // reload the bag if it is empty

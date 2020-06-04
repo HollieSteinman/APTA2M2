@@ -14,7 +14,7 @@ class GameManager {
 public:
 
     //  Constructor / Destructor
-    GameManager(int seed);
+    GameManager(int seed, int numPlayers);
     GameManager(Player* p1, Player* p2, int r, Factory* f, Bag* b, int active);
     ~GameManager();
 
@@ -64,6 +64,7 @@ private:
     std::vector<std::string> turns;
     std::vector<std::string> stringcommand;
     bool gameOver;
+    bool singlePlayer;
 
 };
 

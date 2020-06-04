@@ -16,6 +16,7 @@
 #include "Bag.h"
 #include "Factory.h"
 #include "Mosaic.h"
+#include "AI.h"
 
 
 class Args {
@@ -32,7 +33,17 @@ int main(int argc, char** argv){
     processArgs(argc, argv, &args);
 
     try {
-        showMenu(args.seed);
+        //showMenu(args.seed);
+
+        Bag* bag = new Bag(args.seed);
+        Factory* factory = new Factory();
+        // load factory for the first time
+        factory->loadFactory(bag);
+        AI* ai = new AI(2, factory);
+
+
+
+
     } catch (std::exception& e){
 
         std::cerr << "Exception Caught: " << e.what() << std::endl;

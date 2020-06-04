@@ -56,6 +56,12 @@ class Mosaic {
         void score();
 
         /**
+         * Calculates scores at the
+         * end of the game
+         */
+        void endScore();
+
+        /**
          * Returns tiles meant for 
          * the box lid
          */
@@ -76,23 +82,33 @@ class Mosaic {
         /**
          * Returns mosaic as string
          */
-        std::string getMosaic();
+        std::string getMosaicString();
+
+        /**
+         * Returns mosaic 2D array
+         */
+        TilePtr** getMosaic();
 
         /**
          * Returns pile as string
          */
-        std::string getPile();
+        std::string getPileString();
 
         /**
          * Returns Broken tiles as string
          */
-        std::string getBroken();
+        std::string getBrokenString();
 
         /**
          * Resets the starter status after
          * the next round starts
          */
         void startReset();
+
+        /**
+         * Returns copy of vectors in an array
+         */
+        std::vector<TilePtr>* getVectors();
 
 
     private:
