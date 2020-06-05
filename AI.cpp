@@ -3,6 +3,7 @@
 AI::AI(int id):
     Player(id, "AI")
 {
+    //  creates the puzzle to compare the mosaic to
     for (int i = 0; i != 5; ++i){
         for (int j = 0; j != 5; ++j){
             if (i == j){
@@ -28,6 +29,7 @@ AI::AI(int id, Factory* factory):
     Player(id, "AI"),
     factory(factory)
 {
+    //  creates the puzzle to compare the mosaic to
     for (int i = 0; i < 5; ++i){
         for (int j = 0; j < 5; ++j){
             if (i == j){
@@ -83,11 +85,50 @@ void AI::setFactory(Factory* f) {
 
 /* ALGORITHM playTurn()
  * BEGIN
- * FIND current mosaic and piles
- * DETERMINE moves for each pile
- * FOR each move
- *    FIND gained points
- * PLAY best move
+ * GET piles and 2D mosaic
+ * INITIALISE best turn variables
+ * FOR each pile
+ *     IF the pile is empty
+ *         FIND available colours
+ *         FOR each available colour
+ *             FOR each factory
+ *                 COUNT how many tiles of the colour the factory contains
+ *                 IF the factory contains the colour
+ *                     CALCULATE the estimated score
+ *                     IF the score is greater than the best turn OR if there is no best turn
+ *                         SET the best turn as the current turn
+ *                         IF the current turn does not fill the pile
+ *                             SET the best turn as incomplete
+ *                     ELSE IF the best turn is incomplete AND the score is the same AND the current turn is complete
+ *                         SET the best turn as the current turn
+ *                         SET the best turn as complete
+ *     ELSE IF the pile is not full
+ *         FIND the colour in the pile
+ *         FOR each factory
+ *             COUNT how many tiles of the colour the factory contains
+ *             IF the factory contains the colour
+ *                 CALCULATE the estimated score
+ *                 IF the score is greater than the best turn OR if there is no best turn
+ *                     SET the best turn as the current turn
+ *                     IF the current turn does not fill the pile
+ *                         SET the best turn as incomplete
+ *                     ELSE IF the best turn is incomplete AND the score is the same AND the current turn is complete
+ *                         SET the best turn as the current turn
+ *                         SET the best turn as complete
+ *
+ * IF the there is no best turn
+ *     FOR each factory
+ *         IF the factory contains a colour
+ *             SET the best turn to moving that tile to the broken pile
+ *
+ * TRY
+ *     PLAY the turn
+ * CATCH exception
+ *     RERUN playTurn()
+ *
+ * PRINT the ai's turn
+ * PRINT successful turn notification
+ * END
  */
 
 void AI::playTurn() {
@@ -103,6 +144,7 @@ void AI::playTurn() {
 
     // for each pile
     for(int i = 0; i < 5; i++) {
+        //  count empty slots
         int empty = isEmpty(v[i]);
         //  if it is empty
         if(empty == v[i].size()) {
@@ -116,22 +158,23 @@ void AI::playTurn() {
                     //  if the factory contains those colours
                     int noAvailable = factory->countColourTiles(k, available[j]);
                     if(noAvailable > 0) {
+                        //  calculate the turn's score
                         int turnScore = calculateScore(i, available[j], noAvailable, v, k);
-                        std::cout << "e:" << empty << ", fac:" << k << ", c:" << available[j] << ", no:" << noAvailable << ", pile:" << i + 1 << ": " << turnScore << std::endl;
+                        //TODO remove std::cout << "e:" << empty << ", fac:" << k << ", c:" << available[j] << ", no:" << noAvailable << ", pile:" << i + 1 << ": " << turnScore << std::endl;
                         if(turnScore > score || current.tile->getColour() == E) {
                             score = turnScore;
                             current = {k, new Tile(available[j]), i + 1};
-                            std::cout << "chosen";
+                            //TODO remove std::cout << "chosen";
                             if(noAvailable < empty) {
                                 incomplete = true;
-                                std::cout << " incomplete";
+                                //TODO remove std::cout << " incomplete";
                             }
-                            std::cout << std::endl;
+                            //TODO remove std::cout << std::endl;
                         } else if (incomplete && score == turnScore && noAvailable == empty) {
                             score = turnScore;
                             current = {k, new Tile(available[j]), i + 1};
                             incomplete = false;
-                            std::cout << "chosen complete" << std::endl;
+                            //TODO remove std::cout << "chosen complete" << std::endl;
                         }
                     }
                 }
@@ -144,21 +187,21 @@ void AI::playTurn() {
                 int noAvailable = factory->countColourTiles(k, available);
                 if(noAvailable > 0) {
                     int turnScore = calculateScore(i, available, noAvailable, v, k);
-                    std::cout << "e:" << empty << ", fac:" << k << ", c:" << available << ", no:" << noAvailable << ", pile:" << i + 1 << ": " << turnScore << std::endl;
+                    //TODO remove std::cout << "e:" << empty << ", fac:" << k << ", c:" << available << ", no:" << noAvailable << ", pile:" << i + 1 << ": " << turnScore << std::endl;
                     if(turnScore > score || current.tile->getColour() == E) {
                         score = turnScore;
                         current = {k, new Tile(available), i + 1};
-                        std::cout << "chosen";
+                        //TODO remove std::cout << "chosen";
                         if(noAvailable < empty) {
                             incomplete = true;
-                            std::cout << " incomplete";
+                            //TODO remove std::cout << " incomplete";
                         }
-                        std::cout << std::endl;
+                        //TODO remove std::cout << std::endl;
                     } else if (incomplete && score == turnScore && noAvailable == empty) {
                         score = turnScore;
                         current = {k, new Tile(available), i + 1};
                         incomplete = false;
-                        std::cout << "chosen complete" << std::endl;
+                        //TODO remove std::cout << "chosen complete" << std::endl;
                     }
                 }
             }
@@ -275,6 +318,7 @@ int AI::calculateScore(int row, Colour colour, int num, std::vector<std::vector<
             brokenTiles++;
         }
 
+        //  finds how many tiles are already broken
         int preBroken = 0;
         for(unsigned int i = 0; i < v[5].size(); i++) {
             if(v[5][i]->getColour() != E) {
@@ -399,35 +443,46 @@ int AI::calculateScore(int row, Colour colour, int num, std::vector<std::vector<
 
         //  completed row
         int tiles = 0;
+        //  for all of the selected row
         for(int i = 0; i < 5; i++) {
+            // if the slot is not empty or the slot is the proposed turn
             if(mos[row][i]->getColour() != E || i == col) {
+                //  add to the tile count for the row
                 tiles++;
             }
         }
+        //  if there is a complete row add to the score
         if(tiles == 5) {
             turnScore += 2;
         }
 
         //  completed column
         tiles = 0;
+        //  for all of the selected column
         for(int i = 0; i < 5; i++) {
-            if(mos[i][col]->getColour() != E || i == row - 1) {
+            //  if the slot is not empty or the slot is the proposed turn
+            if(mos[i][col]->getColour() != E || i == row) {
                 tiles++;
             }
         }
+        // if there is a complete column add to the score
         if(tiles == 5) {
             turnScore += 7;
         }
 
         //  set of colours
         tiles = 0;
+        // for each row
         for(int i = 0; i < 5; i++) {
+            // for each column
             for(int j = 0; j < 5; j++) {
+                // if the colour matches the proposed turn's colour
                 if(mos[i][j]->getColour() == colour) {
                     tiles++;
                 }
             }
         }
+        // if there are already four of the same colour add to the score
         if(tiles == 4) {
             turnScore += 10;
         }

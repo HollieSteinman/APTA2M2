@@ -54,6 +54,13 @@ public:
      */
      std::string getFactoryString(int fac);
 
+     /**
+      * Returns the number of tiles
+      * of a colour in a factory
+      * @param fac - Factory number
+      * @param colour - Colour
+      * @return - Int number of matches
+      */
      int countColourTiles(int fac, Colour colour);
 
 private:

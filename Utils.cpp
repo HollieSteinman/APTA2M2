@@ -1,4 +1,3 @@
-#include <fstream>
 #include <sstream>
 #include "Utils.h"
 #include "Player.h"
@@ -22,18 +21,18 @@ void showMenu(int seed){
 
     if (menu == 1) {
         std::cout<< "New Game " << std::endl;
-        std::cout<< "1. Two Players " << std::endl;
-        std::cout<< "2. One Player (AI Opponent) " << std::endl;
+        std::cout<< "1. One Player (AI Opponent) " << std::endl;
+        std::cout<< "2. Two Players " << std::endl;
         std::cout << std::endl;
         std::cout << "> ";
 
         std::cin >> menu;
 
         if(menu == 1) {
-            GameManager* gameManager = new GameManager(seed, 2);
+            GameManager* gameManager = new GameManager(seed, 1);
             gameManager->playRound();
         } else if (menu == 2) {
-            GameManager* gameManager = new GameManager(seed, 1);
+            GameManager* gameManager = new GameManager(seed, 2);
             gameManager->playRound();
         } else {
             throw std::range_error("Please select an item from the list");

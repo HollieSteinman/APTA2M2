@@ -75,11 +75,15 @@ void GameManager::playRound() {
         //Display factories and board to user
 
         displayTurn();
+        // if the player is an AI
         if(singlePlayer && currPlayerID == 2) {
+            // cast to AI object and play a turn
             dynamic_cast<AI*>(plyr2)->setFactory(factory);
             dynamic_cast<AI*>(plyr2)->playTurn();
+            // set back to first player after turn is completed
             currPlayerID = 1;
         } else {
+            // else ask the player for a command
             runCommand();
         }
 
