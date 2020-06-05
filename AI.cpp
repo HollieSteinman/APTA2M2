@@ -59,30 +59,6 @@ void AI::setFactory(Factory* f) {
     factory = f;
 }
 
-/*
- *  -Look for move that results in most points
- *      -Doesn't account for filling up of piles?
- *  -Look for move that follows strategies/most points
- *
- *  -Start with pile 1 & 2
- *  -Start from centre
- *  -Keep broken minimal
- *  -Top is placed before bottom
- *  -Row of 5 = end of game
- *
- *  -Opponent sabotage?
- *
- *  -End of round points:
- *      -Minus broken
- *      -count linked tiles vertically
- *      -count linked tiles horizontally
- *  -End of game bonuses:
- *      -2 points for horizontal line
- *      -7 points for vertical line
- *      -10 points for all 5 of single colour
- *      -Tie = more horizontal lines
- */
-
 /* ALGORITHM playTurn()
  * BEGIN
  * GET piles and 2D mosaic
@@ -160,21 +136,16 @@ void AI::playTurn() {
                     if(noAvailable > 0) {
                         //  calculate the turn's score
                         int turnScore = calculateScore(i, available[j], noAvailable, v, k);
-                        //TODO remove std::cout << "e:" << empty << ", fac:" << k << ", c:" << available[j] << ", no:" << noAvailable << ", pile:" << i + 1 << ": " << turnScore << std::endl;
                         if(turnScore > score || current.tile->getColour() == E) {
                             score = turnScore;
                             current = {k, new Tile(available[j]), i + 1};
-                            //TODO remove std::cout << "chosen";
                             if(noAvailable < empty) {
                                 incomplete = true;
-                                //TODO remove std::cout << " incomplete";
                             }
-                            //TODO remove std::cout << std::endl;
                         } else if (incomplete && score == turnScore && noAvailable == empty) {
                             score = turnScore;
                             current = {k, new Tile(available[j]), i + 1};
                             incomplete = false;
-                            //TODO remove std::cout << "chosen complete" << std::endl;
                         }
                     }
                 }
@@ -187,21 +158,16 @@ void AI::playTurn() {
                 int noAvailable = factory->countColourTiles(k, available);
                 if(noAvailable > 0) {
                     int turnScore = calculateScore(i, available, noAvailable, v, k);
-                    //TODO remove std::cout << "e:" << empty << ", fac:" << k << ", c:" << available << ", no:" << noAvailable << ", pile:" << i + 1 << ": " << turnScore << std::endl;
                     if(turnScore > score || current.tile->getColour() == E) {
                         score = turnScore;
                         current = {k, new Tile(available), i + 1};
-                        //TODO remove std::cout << "chosen";
                         if(noAvailable < empty) {
                             incomplete = true;
-                            //TODO remove std::cout << " incomplete";
                         }
-                        //TODO remove std::cout << std::endl;
                     } else if (incomplete && score == turnScore && noAvailable == empty) {
                         score = turnScore;
                         current = {k, new Tile(available), i + 1};
                         incomplete = false;
-                        //TODO remove std::cout << "chosen complete" << std::endl;
                     }
                 }
             }
