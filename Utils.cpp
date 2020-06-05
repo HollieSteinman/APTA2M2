@@ -3,6 +3,7 @@
 #include "Utils.h"
 #include "Player.h"
 #include "GameManager.h"
+#include "AI.h"
 
 void showMenu(int seed){
     std::cout << "Welcome To Azul! " << std::endl;
@@ -29,10 +30,11 @@ void showMenu(int seed){
         std::cin >> menu;
 
         if(menu == 1) {
-            GameManager* gameManager = new GameManager(seed, 0);
+            GameManager* gameManager = new GameManager(seed, 2);
             gameManager->playRound();
         } else if (menu == 2) {
-            //TODO run AI
+            GameManager* gameManager = new GameManager(seed, 1);
+            gameManager->playRound();
         } else {
             throw std::range_error("Please select an item from the list");
         }
@@ -116,6 +118,7 @@ void loadGame(int s) {
             active = 0,
             seed = 0;
         Bag *bag = new Bag(0);
+        bool singleplayer = false;
 
         std::string input;
 
@@ -143,7 +146,7 @@ void loadGame(int s) {
             // gets type
             getline(ls, type, ':');
 
-            if(type == "player") {
+            if(type == "player" || type == "ai") {
                 std::string pId, pName, pPoints, pStarter, pMosaic,
                     pPile, pBroken, label;
                 int id, points;
@@ -246,6 +249,11 @@ void loadGame(int s) {
                     player1 = new Player(id, pName);
                     Mosaic* mosaic = new Mosaic(starter, m, points, vectors);
                     player1->setMosaic(mosaic);
+                } else if(type == "ai") {
+                    player2 = new AI(id);
+                    Mosaic* mosaic = new Mosaic(starter, m, points, vectors);
+                    player2->setMosaic(mosaic);
+                    singleplayer = true;
                 } else {
                     player2 = new Player(id, pName);
                     Mosaic* mosaic = new Mosaic(starter, m, points, vectors);
@@ -275,7 +283,28 @@ void loadGame(int s) {
 
                     // loads tiles into a vector from the block
                     std::vector<TilePtr> fac;
-                    fac = loadTiles(facContent, fac);
+
+                    for (char &c : facContent) {
+                        if (c == 'F') {
+                            TilePtr tile = new Tile(F);
+                            fac.push_back(tile);
+                        } else if (c == 'R') {
+                            TilePtr tile = new Tile(R);
+                            fac.push_back(tile);
+                        } else if (c == 'Y') {
+                            TilePtr tile = new Tile(Y);
+                            fac.push_back(tile);
+                        } else if (c == 'B') {
+                            TilePtr tile = new Tile(B);
+                            fac.push_back(tile);
+                        } else if (c == 'L') {
+                            TilePtr tile = new Tile(L);
+                            fac.push_back(tile);
+                        } else if (c == 'U') {
+                            TilePtr tile = new Tile(U);
+                            fac.push_back(tile);
+                        }
+                    }
 
                     // load the factory into the factory object
                     factory->loadFactory(facNo, fac);
@@ -322,8 +351,13 @@ void loadGame(int s) {
         // clean up - close file
         saveFile.close();
 
+        if(singleplayer) {
+            dynamic_cast<AI*>(player2)->setFactory(factory);
+        }
+
         // creates new gameManager with loaded data and continues to play
-        GameManager* gameManager = new GameManager(player1, player2, turns, factory, bag, active);
+        GameManager* gameManager = new GameManager(player1, player2, turns,
+                                                   factory, bag, active, singleplayer);
         gameManager->playRound();
 
     } else {
@@ -365,7 +399,9 @@ std::vector<TilePtr> loadTiles(std::string s, std::vector<TilePtr> v) {
     return v;
 }
 
-void saveGame(std::string filename, Player* p1, Player* p2, Factory* f, int turn, int active, Bag* bag) {
+void
+saveGame(std::string filename, Player *p1, Player *p2, Factory *f, int turn,
+         int active, Bag *bag, bool AI) {
 
     // file directory
     std::string dir = "saves/";
@@ -386,9 +422,13 @@ void saveGame(std::string filename, Player* p1, Player* p2, Factory* f, int turn
     saveFile << "starter:" << p1->getMosaic()->toStart() << std::endl;
     saveFile << "#" << std::endl;
 
-    // Player 2
+    // Player 2 / AI
     saveFile << "$" << std::endl;
-    saveFile << "type:player" << std::endl;
+    if(AI) {
+        saveFile << "type:ai" << std::endl;
+    } else {
+        saveFile << "type:player" << std::endl;
+    }
     saveFile << "id:" << p2->getId() << std::endl;
     saveFile << "name:" << p2->getName() << std::endl;
     saveFile << "points:" << p2->getMosaic()->getPoints() << std::endl;

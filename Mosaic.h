@@ -106,9 +106,9 @@ class Mosaic {
         void startReset();
 
         /**
-         * Returns copy of vectors in an array
+         * Returns copy of vectors
          */
-        std::vector<TilePtr>* getVectors();
+        std::vector<std::vector<TilePtr>> getVectors();
 
 
     private:

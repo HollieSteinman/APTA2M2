@@ -58,14 +58,17 @@ std::vector<TilePtr> Factory::getTiles(Colour colour, int line){
                     holder.push_back(center[i]);
                 }
             }
-            // clean up workspace
-            center.clear();
-            center = holder;
-            holder.clear();
+
             // Trap wrong colour entry
             if (toReturn.empty()){
                 throw std::logic_error("No such colours");
+            } else {
+                // clean up workspace
+                center.clear();
+                center = holder;
+                holder.clear();
             }
+
         } else if (line == 1){
             // copy tiles of same colour to return variable
             for (unsigned int i = 0; i < fa1.size(); ++i){
@@ -83,12 +86,14 @@ std::vector<TilePtr> Factory::getTiles(Colour colour, int line){
             for (unsigned int i = 0; i < holder.size(); ++i){
                 center.push_back(holder[i]);
             }
-            // cleanup workspace
-            fa1.clear();
-            holder.clear();
+
             // Trap wrong colour entry
             if (toReturn.empty()){
                 throw std::logic_error("No such colours");
+            } else {
+                // cleanup workspace
+                fa1.clear();
+                holder.clear();
             }
         } else if (line == 2){
             // copy tiles of same colour to return variable
@@ -107,12 +112,14 @@ std::vector<TilePtr> Factory::getTiles(Colour colour, int line){
             for (unsigned int i = 0; i < holder.size(); ++i){
                 center.push_back(holder[i]);
             }
-            // cleanup workspace
-            fa2.clear();
-            holder.clear();
+
             // Trap wrong colour entry
             if (toReturn.empty()){
                 throw std::logic_error("No such colours");
+            } else {
+                // cleanup workspace
+                fa2.clear();
+                holder.clear();
             }
         } else if (line == 3){
             // copy tiles of same colour to return variable
@@ -131,12 +138,14 @@ std::vector<TilePtr> Factory::getTiles(Colour colour, int line){
             for (unsigned int i = 0; i < holder.size(); ++i){
                 center.push_back(holder[i]);
             }
-            // cleanup workspace
-            fa3.clear();
-            holder.clear();
+
             // Trap wrong colour entry
             if (toReturn.empty()){
                 throw std::logic_error("No such colours");
+            } else {
+                // cleanup workspace
+                fa3.clear();
+                holder.clear();
             }
         } else if (line == 4){
             // copy tiles of same colour to return variable
@@ -155,12 +164,13 @@ std::vector<TilePtr> Factory::getTiles(Colour colour, int line){
             for (unsigned int i = 0; i < holder.size(); ++i){
                 center.push_back(holder[i]);
             }
-            // cleanup workspace
-            fa4.clear();
-            holder.clear();
             // Trap wrong colour entry
             if (toReturn.empty()){
                 throw std::logic_error("No such colours");
+            } else {
+                // cleanup workspace
+                fa4.clear();
+                holder.clear();
             }
         } else if (line == 5){
             // copy tiles of same colour to return variable
@@ -179,12 +189,14 @@ std::vector<TilePtr> Factory::getTiles(Colour colour, int line){
             for (unsigned int i = 0; i < holder.size(); ++i){
                 center.push_back(holder[i]);
             }
-            // cleanup workspace
-            fa5.clear();
-            holder.clear();
+
             // Trap wrong colour entry
             if (toReturn.empty()){
                 throw std::logic_error("No such colours");
+            } else {
+                // cleanup workspace
+                fa5.clear();
+                holder.clear();
             }
         }
         return toReturn;
@@ -313,37 +325,37 @@ std::string Factory::getFactoryString(int fac) {
 int Factory::countColourTiles(int fac, Colour colour) {
     int count = 0;
 
-    if(count == 0) {
+    if(fac == 0) {
         for (unsigned int i = 0; i < center.size(); ++i){
             if(center[i]->getColour() == colour) {
                 count++;
             }
         }
-    } else if (count == 1) {
+    } else if (fac == 1) {
         for (unsigned int i = 0; i < fa1.size(); ++i){
             if(fa1[i]->getColour() == colour) {
                 count++;
             }
         }
-    } else if (count == 2) {
+    } else if (fac == 2) {
         for (unsigned int i = 0; i < fa2.size(); ++i){
             if(fa2[i]->getColour() == colour) {
                 count++;
             }
         }
-    } else if (count == 3) {
+    } else if (fac == 3) {
         for (unsigned int i = 0; i < fa3.size(); ++i){
             if(fa3[i]->getColour() == colour) {
                 count++;
             }
         }
-    } else if (count == 4) {
+    } else if (fac == 4) {
         for (unsigned int i = 0; i < fa4.size(); ++i){
             if(fa4[i]->getColour() == colour) {
                 count++;
             }
         }
-    } else if (count == 5) {
+    } else if (fac == 5) {
         for (unsigned int i = 0; i < fa5.size(); ++i){
             if(fa5[i]->getColour() == colour) {
                 count++;

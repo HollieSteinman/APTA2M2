@@ -20,12 +20,14 @@ GameManager::GameManager(int seed, int numPlayers) {
 
     if(numPlayers == 1) {
         plyr2 = new AI(2, factory);
+        singlePlayer = true;
     } else {
         std::cout << "Enter a name for player 2" << std::endl;
         std::cout << "> ";
         std::cin >> playerName2;
 
         plyr2 = new Player(2, playerName2);
+        singlePlayer = false;
     }
 
 
@@ -38,12 +40,14 @@ GameManager::GameManager(int seed, int numPlayers) {
 
 }
 
-GameManager::GameManager(Player* p1, Player* p2, int r, Factory* f, Bag* b, int active):
+GameManager::GameManager(Player *p1, Player *p2, int r, Factory *f, Bag *b,
+                         int active, bool sp) :
     round(r),
     plyr1(p1),
     plyr2(p2),
     bag(b),
-    factory(f)
+    factory(f),
+    singlePlayer(sp)
 {
 
     currPlayerID = active;
@@ -72,7 +76,9 @@ void GameManager::playRound() {
 
         displayTurn();
         if(singlePlayer && currPlayerID == 2) {
+            dynamic_cast<AI*>(plyr2)->setFactory(factory);
             dynamic_cast<AI*>(plyr2)->playTurn();
+            currPlayerID = 1;
         } else {
             runCommand();
         }
@@ -104,13 +110,13 @@ void GameManager::playRound() {
         // check if game is over
         if (plyr1->getMosaic()->isGameover() || plyr2->getMosaic()->isGameover()){
             gameOver = true;
-            std::cout << "=== GAME OVER ===" << std::endl;
+            std::cout << "=== GAME OVER ===" << std::endl << std::endl;
             plyr1->getMosaic()->endScore();
             plyr2->getMosaic()->endScore();
 
-            std::cout<<"Score for Player "<<plyr1->getName()<<": "<<plyr1->getMosaic()->getPoints();
+            std::cout<<"Final score for Player "<<plyr1->getName()<<": "<<plyr1->getMosaic()->getPoints();
             std::cout << std::endl;
-            std::cout<<"Score for Player "<<plyr2->getName()<<": "<<plyr2->getMosaic()->getPoints();
+            std::cout<<"Final score for Player "<<plyr2->getName()<<": "<<plyr2->getMosaic()->getPoints();
             std::cout << std::endl;
             std::cout << std::endl;
 
@@ -257,7 +263,8 @@ void GameManager::runCommand() {
         playTurn(fRow, color, pRow, colour);
     } else if(stringcommand.front() == "save"){
         // Save current state of the game
-        saveGame(stringcommand.at(1), plyr1, plyr2, factory, round, currPlayerID, bag);
+        saveGame(stringcommand.at(1), plyr1, plyr2, factory, round,
+                 currPlayerID, bag, singlePlayer);
         std::cout << "Game successfully saved to '" << stringcommand.at(1) << "'" << std::endl;
     } else if(stringcommand.front() == "^D"){
         std::cout << "Bye Bye" << std::endl;

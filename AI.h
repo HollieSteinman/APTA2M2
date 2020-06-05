@@ -6,29 +6,32 @@
 class AI : public Player{
 public:
 
+    AI(int id);
     AI(int id, Factory *factory);
     virtual ~AI();
 
+    void setFactory(Factory* f);
+
     void playTurn();
 
-    bool isEmpty(std::vector<TilePtr> v);
+    int isEmpty(std::vector<TilePtr> v);
 
-    TilePtr** simulateRound(TilePtr** mos, std::vector<TilePtr>* v, int row);
+    TilePtr** simulateRound(TilePtr** mos, std::vector<std::vector<TilePtr>> v, int row);
 
-    Colour* availableColours(TilePtr** mos, int row);
+    std::vector<Colour> availableColours(TilePtr** mos, int row);
 
-    int calculateScore(int row, Colour colour, int num, std::vector<TilePtr>* v);
+    int calculateScore(int row, Colour colour, int num, std::vector<std::vector<TilePtr>> v, int facNo);
 
 private:
 
     typedef struct Turn {
         int fRow;
-        Colour colour;
+        TilePtr tile;
         int pRow;
-    };
+    } Turn;
 
     Factory* factory;
-    TilePtr** puzzle;
+    TilePtr puzzle[5][5];
 };
 
 #endif //AI_H

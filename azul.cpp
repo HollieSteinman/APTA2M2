@@ -33,16 +33,7 @@ int main(int argc, char** argv){
     processArgs(argc, argv, &args);
 
     try {
-        //showMenu(args.seed);
-
-        Bag* bag = new Bag(args.seed);
-        Factory* factory = new Factory();
-        // load factory for the first time
-        factory->loadFactory(bag);
-        AI* ai = new AI(2, factory);
-
-
-
+        showMenu(args.seed);
 
     } catch (std::exception& e){
 

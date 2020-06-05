@@ -25,8 +25,9 @@ std::vector<TilePtr> loadTiles(std::string s, std::vector<TilePtr> v);
 /**
  *  Saves a game to a save file
  */
-void saveGame(std::string filename, Player *p1, Player *p2,
-              Factory *f, int turns, int active, Bag* bag);
+void
+saveGame(std::string filename, Player *p1, Player *p2, Factory *f, int turn,
+         int active, Bag *bag, bool AI);
 
 /**
  *  Display programmers

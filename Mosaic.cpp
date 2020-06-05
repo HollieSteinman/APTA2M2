@@ -115,11 +115,16 @@ int Mosaic::getPoints(){
 }
 
 void Mosaic::loadPile(Factory* factory, unsigned int fRow, Colour colour, unsigned int pRow){
-    
+
     // check that valid factory row and pile row is entered
-    if (fRow > 5 || pRow > 6){
+    if (fRow > 5 || pRow > 6 || pRow < 1){
         throw std::out_of_range("Invalid selection, please reselect");
     } else {
+        for(int i = 0; i < 5; i++) {
+            if(mosaic[pRow - 1][i]->getColour() == colour && pRow < 6) {
+                throw std::out_of_range("That colour has played for this row");
+            }
+        }
         // get the tiles from the factory row
         std::vector<TilePtr> holder = factory->getTiles(colour, fRow);
         // check if the mosiac row has been filled
@@ -449,9 +454,15 @@ void Mosaic::score(){
     std::vector<TilePtr> v[5] = {p1, p2, p3, p4, p5};
 
     //  for each pile
-    for(int i = 0; i < sizeof(v); i++) {
+    for(int i = 0; i < 5; i++) {
+        int full = 0;
+        for(int j = 0; j < v[i].size(); j++) {
+            if(v[i][j]->getColour() != E) {
+                full++;
+            }
+        }
         //  if the pile is full
-        if(v[i].size() == i + 1) {
+        if(full == i + 1) {
             //  for each column in the corresponding puzzle row
             for(int j = 0; j < 5; j++) {
                 //  if the tile equals the tiles in the pile
@@ -476,23 +487,27 @@ void Mosaic::score(){
 
                     // score column
                     // if the first row
-                    if(i == 0 && mosaic[i + 1][j]->getColour() != E) {
-                        // initial point for places tile
-                        points++;
-                        // for each tile connected in the column add a point
-                        for(int k = i + 1; k < 5; k++) {
-                            if(mosaic[k][j]->getColour() != E) {
-                                points++;
+                    if(i == 0) {
+                        if(mosaic[i + 1][j]->getColour() != E) {
+                            // initial point for places tile
+                            points++;
+                            // for each tile connected in the column add a point
+                            for(int k = i + 1; k < 5; k++) {
+                                if(mosaic[k][j]->getColour() != E) {
+                                    points++;
+                                }
                             }
                         }
-                    } else if(i == 4 && mosaic[i - 1][j]->getColour() != E) {
-                        // if the last row
-                        // initial point for places tile
-                        points++;
-                        // for each tile connected in the column add a point
-                        for(int k = i - 1; k >= 0; k--) {
-                            if(mosaic[k][j]->getColour() != E) {
-                                points++;
+                    } else if(i == 4) {
+                        if(mosaic[i - 1][j]->getColour() != E) {
+                            // if the last row
+                            // initial point for places tile
+                            points++;
+                            // for each tile connected in the column add a point
+                            for(int k = i - 1; k >= 0; k--) {
+                                if(mosaic[k][j]->getColour() != E) {
+                                    points++;
+                                }
                             }
                         }
                     } else if(mosaic[i + 1][j]->getColour() != E
@@ -515,23 +530,27 @@ void Mosaic::score(){
 
                     // score row
                     // if first column
-                    if(j == 0 && mosaic[i][j + 1]->getColour() != E) {
-                        // initial point for places tile
-                        points++;
-                        // for each tile connected in the row add a point
-                        for(int k = j + 1; k < 5; k++) {
-                            if(mosaic[i][k]->getColour() != E) {
-                                points++;
+                    if(j == 0) {
+                        if(mosaic[i][j + 1]->getColour() != E) {
+                            // initial point for places tile
+                            points++;
+                            // for each tile connected in the row add a point
+                            for(int k = j + 1; k < 5; k++) {
+                                if(mosaic[i][k]->getColour() != E) {
+                                    points++;
+                                }
                             }
                         }
-                    } else if(j == 4 && mosaic[i][j - 1]->getColour() != E) {
-                        // if the last row
-                        // initial point for places tile
-                        points++;
-                        // for each tile connected in the row add a point
-                        for(int k = j - 1; k >= 0; k--) {
-                            if(mosaic[i][k]->getColour() != E) {
-                                points++;
+                    } else if(j == 4) {
+                        if(mosaic[i][j - 1]->getColour() != E) {
+                            // if the last row
+                            // initial point for places tile
+                            points++;
+                            // for each tile connected in the row add a point
+                            for(int k = j - 1; k >= 0; k--) {
+                                if(mosaic[i][k]->getColour() != E) {
+                                    points++;
+                                }
                             }
                         }
                     } else if(mosaic[i][j + 1]->getColour() != E
@@ -559,8 +578,14 @@ void Mosaic::score(){
 
                 }
             }
+
+            for(int j = 0; j < v[i].size(); j++) {
+                v[i][j] = new Tile(E);
+            }
         }
     }
+
+    p1 = v[0], p2 = v[1], p3 = v[2], p4 = v[3], p5 = v[4];
 
     int counter = 0;
     // score broken tiles
@@ -832,13 +857,14 @@ TilePtr** Mosaic::getMosaic() {
     return toReturn;
 }
 
-std::vector<TilePtr>* Mosaic::getVectors() {
-    std::vector<TilePtr> v[6];
-    std::copy(p1.begin(), p1.end(), back_inserter(v[0]));
-    std::copy(p2.begin(), p2.end(), back_inserter(v[1]));
-    std::copy(p3.begin(), p3.end(), back_inserter(v[2]));
-    std::copy(p4.begin(), p4.end(), back_inserter(v[3]));
-    std::copy(p5.begin(), p5.end(), back_inserter(v[4]));
-    std::copy(broken.begin(), broken.end(), back_inserter(v[5]));
+std::vector<std::vector<TilePtr>> Mosaic::getVectors() {
+    std::vector<std::vector<TilePtr>> v;
+    std::vector<TilePtr> v1 = p1, v2 = p2, v3 = p3, v4 = p4, v5 = p5, v6 = broken;
+    v.push_back(v1);
+    v.push_back(v2);
+    v.push_back(v3);
+    v.push_back(v4);
+    v.push_back(v5);
+    v.push_back(v6);
     return v;
 }

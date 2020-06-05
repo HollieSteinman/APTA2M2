@@ -43,7 +43,7 @@ public:
     /**
      * Play a turn
      */
-    virtual void playTurn(Factory* factory,unsigned int fRow, Colour colour,unsigned int pRow);
+    void playTurn(Factory* factory,unsigned int fRow, Colour colour,unsigned int pRow);
 
 protected:
 
